@@ -467,7 +467,7 @@ font-weight:bold;
     }
 
     .category-card{
-        width: 310px; /* full width */
+         width: min(100%, 310px); /* full width */
         height: auto;
         border-radius: 12px;
         overflow: hidden;
