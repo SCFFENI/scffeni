@@ -397,7 +397,7 @@ margin-top:5px;
 
 
 .main-container{ background-color: #c1c3c4;
-display:flex;
+display:flex;flex-wrap:wrap;
 width:100%;
 margin:auto;
 gap:10px;
