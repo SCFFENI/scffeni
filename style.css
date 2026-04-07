@@ -456,28 +456,30 @@ font-weight:bold;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px; /* card এর মধ্যে gap */
 
-
 }
 @media (max-width:768px){
 
     .card-container{
-        grid-template-columns: 1fr; /* single column */
-        gap: 5px; /* space between cards */
-        margin: 5px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin: 10px;
     }
 
     .category-card{
-         width: min(100%, 310px); /* full width */
+        width: 100%;
         height: auto;
         border-radius: 12px;
         overflow: hidden;
         background: #fff;
         box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-        border: 1px solid #eee; /* frame look */
+        border: 1px solid #eee;
     }
 
     .category-card img{
-        height: 200px; /* better mobile height */
+        width: 100%;   /* important */
+        height: 200px;
+        object-fit: cover; /* prevents stretching */
     }
 
     .category-card .card-info{
@@ -485,7 +487,6 @@ font-weight:bold;
         font-size: 12px;
     }
 }
-
 @media (max-width:768px){
 
 .main-container{
