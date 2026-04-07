@@ -467,7 +467,7 @@ font-weight:bold;
     }
 
     .category-card{
-        width: 100%;
+        width: max-content;
         height: auto;
         border-radius: 12px;
         overflow: hidden;
