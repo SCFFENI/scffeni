@@ -206,8 +206,38 @@
 
 </nav>
 
+
+
+
 <!-- Main Content -->
 <div class="main-content">
+  <div class="reels-section">
+  <h2>🔥 Reels</h2>
+
+  <div class="reels-container">
+
+    <div class="reel">
+      <video src="video1.mp4" muted loop></video>
+      <div class="reel-info">Caption here</div>
+    </div>
+
+    <div class="reel">
+      <video src="video2.mp4" muted loop></video>
+      <div class="reel-info">Another reel</div>
+    </div>
+
+    <div class="reel">
+      <video src="video3.mp4" muted loop></video>
+      <div class="reel-info">More content</div>
+    </div>
+
+ <div class="reel">
+      <video src="video4.mp4" muted loop></video>
+      <div class="reel-info">More content</div>
+    </div>
+
+  </div>
+</div>
 <div class="card-container">
 <div class="category-card">
 <a href="#">
@@ -472,7 +502,29 @@
 
   
 </main>
+<script>
+const reels = document.querySelectorAll(".reel video");
 
+reels.forEach(video => {
+  // autoplay when visible
+  video.addEventListener("mouseenter", () => {
+    video.play();
+  });
+
+  video.addEventListener("mouseleave", () => {
+    video.pause();
+  });
+
+  // mobile tap play
+  video.addEventListener("click", () => {
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  });
+});
+</script>
  <script src="script.js"></script>
  
 </body>
