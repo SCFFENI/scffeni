@@ -55,67 +55,7 @@ document.querySelectorAll(".btn").forEach(button => {
     });
 });
 
-// ===== Slider Script =====
-const slides = document.querySelectorAll(".slide");
-const slidesContainer = document.querySelector(".slides");
-const prevBtn = document.querySelector(".prev");
-const nextBtn = document.querySelector(".next");
-const dotsContainer = document.querySelector(".dots");
 
-let currentIndex = 0;
-let interval = setInterval(nextSlide, 5000);
-
-// Create dots
-slides.forEach((_, index) => {
-    const dot = document.createElement("span");
-    dot.addEventListener("click", () => goToSlide(index));
-    dotsContainer.appendChild(dot);
-});
-
-const dots = document.querySelectorAll(".dots span");
-
-function updateSlider() {
-    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-    dots.forEach(dot => dot.classList.remove("active-dot"));
-    dots[currentIndex].classList.add("active-dot");
-}
-
-function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    updateSlider();
-}
-
-function prevSlide() {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    updateSlider();
-}
-
-function goToSlide(index) {
-    currentIndex = index;
-    updateSlider();
-}
-
-// Button events
-nextBtn.addEventListener("click", nextSlide);
-prevBtn.addEventListener("click", prevSlide);
-
-// Initialize
-updateSlider();
-
-
-function loadHTML(id,file){
-
-fetch(file)
-.then(response => response.text())
-.then(data=>{
-document.getElementById(id).innerHTML=data;
-});
-
-}
-
-loadHTML("header","header.html");
-loadHTML("footer","footer.html");
-loadHTML("sidebar","sidebar.html");
 
 
 const btn = document.getElementById("goTopBtn");
