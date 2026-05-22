@@ -1,270 +1,313 @@
 <!DOCTYPE html>
 <html lang="bn">
-
 <head>
-<meta charset="UTF-8">
-<title>নেতৃত্ব</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>নেতৃত্ব — সোনাগাজী কালচারাল ফোরাম, ফেনী</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="leaders.css">
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    body {
+      font-family: 'Hind Siliguri', sans-serif;
+      background: #f4f7fb;
+      color: #1a1a2e;
+    }
+
+    /* ===== SECTION ===== */
+    .executive-panel {
+      padding: 80px 20px;
+      background: #f4f7fb;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ===== HEADER ===== */
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .section-header .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 14px;
+    }
+    .section-header .eyebrow::before,
+    .section-header .eyebrow::after {
+      content: '';
+      width: 36px;
+      height: 1px;
+      background: #ccc;
+    }
+
+    .section-header h2 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #0d1b4c;
+      letter-spacing: -0.025em;
+      margin-bottom: 10px;
+    }
+
+    .section-header p {
+      font-size: 15px;
+      color: #666;
+    }
+
+    /* ===== GRID ===== */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    /* ===== CARD ===== */
+    .team-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #e8ecf4;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(13, 27, 76, 0.1);
+    }
+
+    /* top accent bar */
+    .card-accent {
+      height: 5px;
+      width: 100%;
+    }
+    .card-accent.blue   { background: linear-gradient(90deg, #185FA5, #378ADD); }
+    .card-accent.green  { background: linear-gradient(90deg, #0F6E56, #1D9E75); }
+    .card-accent.amber  { background: linear-gradient(90deg, #854F0B, #EF9F27); }
+
+    /* card body */
+    .card-body {
+      padding: 28px 24px 20px;
+      text-align: center;
+    }
+
+    /* avatar */
+    .avatar-wrap {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      overflow: hidden;
+      border: 3px solid #e8ecf4;
+      background: #f0f4fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .avatar-init {
+      font-size: 28px;
+      font-weight: 700;
+      color: #aaa;
+      display: none;
+    }
+
+    /* founder ribbon */
+    .ribbon {
+      position: absolute;
+      top: 14px;
+      left: -26px;
+      background: #185FA5;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 32px;
+      transform: rotate(-45deg);
+      font-family: 'Hind Siliguri', sans-serif;
+      white-space: nowrap;
+    }
+
+    /* role badge */
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .role-badge.blue  { background: #E6F1FB; color: #185FA5; }
+    .role-badge.green { background: #E1F5EE; color: #0F6E56; }
+    .role-badge.amber { background: #FAEEDA; color: #854F0B; }
+
+    .card-name {
+      font-size: 19px;
+      font-weight: 700;
+      color: #0d1b4c;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .card-desc {
+      font-size: 13.5px;
+      color: #777;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    /* card footer */
+    .card-footer {
+      border-top: 1px solid #f0f3fa;
+      background: #fafbff;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      border: 1px solid #e4e9f4;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
+    }
+    .social-btn:hover {
+      background: #0d1b4c;
+      color: #fff;
+      border-color: #0d1b4c;
+      transform: translateY(-2px);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .section-header h2 { font-size: 26px; }
+      .team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- Menu -->
-<header> 
-<nav class="main-menu">
-
-<div class="nav-container">
-
-<div class="brand">
-<div class="menu-icon">&#9776;</div>
-<img src="logo.jpg">
-<span>সোনাগাজী কালচারাল ফোরাম,ফেনী</span>
-</div>
-
-<ul class="nav-links">
-
-<li><a href="index.html">
-<i class="fa-solid fa-house"></i> হোম
-</a></li>
-
-<li><a href="about.html">
-<i class="fa-solid fa-landmark"></i> আমাদের সম্পর্কে
-</a></li>
-
-<li><a href="events.html">
-<i class="fa-solid fa-masks-theater"></i> সাংস্কৃতিক অনুষ্ঠান
-</a></li>
-
-<li><a href="leaders.html">
-<i class="fa-solid fa-users"></i> নেতৃত্ব
-</a></li>
-
-<li><a href="gallery.html">
-<i class="fa-solid fa-image"></i> গ্যালারি
-</a></li>
-
-<li><a href="contact.html">
-<i class="fa-solid fa-envelope"></i> যোগাযোগ
-</a></li>
-
-</ul>
-
-</div>
-</nav>
-</header>
-
-<main>
-
-<!-- Executive Panel Section -->
 <section class="executive-panel">
   <div class="container">
-    
-    <div class="section-title">
-      <h2>Executive Committee</h2>
-      <p>Meet Our Dedicated Leadership Team</p>
+
+    <div class="section-header">
+      <div class="eyebrow">সোনাগাজী কালচারাল ফোরাম, ফেনী</div>
+      <h2>নির্বাহী কমিটি</h2>
+      <p>আমাদের নিবেদিতপ্রাণ নেতৃত্ব দলের সাথে পরিচিত হোন</p>
     </div>
 
     <div class="team-grid">
 
-      <!-- Card 1 -->
+      <!-- সভাপতি -->
       <div class="team-card">
-        <div class="card-image">
-          <img src="images/president.jpg" alt="President">
-        </div>
-
-        <div class="card-content">
-          <h3>Abdullah Al Maruf</h3>
-          <span>Founder & President</span>
-
-          <p>
-            Leading SCF Feni with creativity, leadership, and youth empowerment initiatives.
-          </p>
-
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#"><i class="fab fa-envelope"></i></a>
+        <div class="card-accent blue"></div>
+        <div class="card-body">
+          <div class="avatar-wrap">
+            <div class="ribbon">প্রতিষ্ঠাতা</div>
+            <img
+              src="https://scffeni.github.io/scffeni/images/president.jpg"
+              alt="আব্দুল্লাহ আল মারুফ"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div class="avatar-init">আ</div>
           </div>
+          <div class="role-badge blue">
+            <i class="fa-solid fa-crown" style="font-size:11px"></i> সভাপতি
+          </div>
+          <p class="card-name">আব্দুল্লাহ আল মারুফ</p>
+          <p class="card-desc">সৃজনশীলতা ও নেতৃত্বের মাধ্যমে যুব ক্ষমতায়নে অবিরাম কাজ করে যাচ্ছেন।</p>
+        </div>
+        <div class="card-footer">
+          <a class="social-btn" href="#" aria-label="ফেসবুক"><i class="fa-brands fa-facebook-f"></i></a>
+          <a class="social-btn" href="#" aria-label="ইউটিউব"><i class="fa-brands fa-youtube"></i></a>
+          <a class="social-btn" href="#" aria-label="লিংকডইন"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
       </div>
 
-      <!-- Card 2 -->
+      <!-- সাধারণ সম্পাদক -->
       <div class="team-card">
-        <div class="card-image">
-          <img src="images/secretary.jpg" alt="Secretary">
-        </div>
-
-        <div class="card-content">
-          <h3>Member Name</h3>
-          <span>General Secretary</span>
-
-          <p>
-            Managing organizational activities and coordinating community development programs.
-          </p>
-
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#"><i class="fab fa-envelope"></i></a>
+        <div class="card-accent green"></div>
+        <div class="card-body">
+          <div class="avatar-wrap">
+            <img
+              src="https://scffeni.github.io/scffeni/images/secretary.jpg"
+              alt="সাধারণ সম্পাদক"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div class="avatar-init">স</div>
           </div>
+          <div class="role-badge green">
+            <i class="fa-solid fa-clipboard-list" style="font-size:11px"></i> সাধারণ সম্পাদক
+          </div>
+          <p class="card-name">সদস্যের নাম</p>
+          <p class="card-desc">সাংগঠনিক কার্যক্রম পরিচালনা ও সামাজিক উন্নয়ন কার্যক্রম সমন্বয় করেন।</p>
+        </div>
+        <div class="card-footer">
+          <a class="social-btn" href="#" aria-label="ফেসবুক"><i class="fa-brands fa-facebook-f"></i></a>
+          <a class="social-btn" href="#" aria-label="ইউটিউব"><i class="fa-brands fa-youtube"></i></a>
+          <a class="social-btn" href="#" aria-label="লিংকডইন"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
       </div>
 
-      <!-- Card 3 -->
+      <!-- আইসিটি পরিচালক -->
       <div class="team-card">
-        <div class="card-image">
-          <img src="images/director.jpg" alt="ICT Director">
-        </div>
-
-        <div class="card-content">
-          <h3>Member Name</h3>
-          <span>ICT Director</span>
-
-          <p>
-            Responsible for technology development, website management, and digital innovation.
-          </p>
-
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#"><i class="fab fa-envelope"></i></a>
+        <div class="card-accent amber"></div>
+        <div class="card-body">
+          <div class="avatar-wrap">
+            <img
+              src="https://scffeni.github.io/scffeni/images/director.jpg"
+              alt="আইসিটি পরিচালক"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div class="avatar-init">আ</div>
           </div>
+          <div class="role-badge amber">
+            <i class="fa-solid fa-laptop-code" style="font-size:11px"></i> আইসিটি পরিচালক
+          </div>
+          <p class="card-name">সদস্যের নাম</p>
+          <p class="card-desc">প্রযুক্তি উন্নয়ন, ওয়েবসাইট ব্যবস্থাপনা ও ডিজিটাল উদ্ভাবনের দায়িত্বে আছেন।</p>
+        </div>
+        <div class="card-footer">
+          <a class="social-btn" href="#" aria-label="ফেসবুক"><i class="fa-brands fa-facebook-f"></i></a>
+          <a class="social-btn" href="#" aria-label="ইউটিউব"><i class="fa-brands fa-youtube"></i></a>
+          <a class="social-btn" href="#" aria-label="লিংকডইন"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
       </div>
 
-    </div>
-  </div>
+    </div><!-- /team-grid -->
+  </div><!-- /container -->
 </section>
 
- <footer>
-    <p>© 2026 সোনাগাজী কালচারাল ফোরাম,ফেনী. All Rights Reserved.</p>
 
-    <div class="social-icons" >
-  <a href="https://facebook.com/yourpage" target="_blank">
-    <i class="fa-brands fa-facebook-f"></i>
-  </a>
-
-  <a href="https://youtube.com/yourchannel" target="_blank">
-    <i class="fa-brands fa-youtube"></i>
-  </a>
-</div>
-<p class="developer">Developed by Abdullah Al Maruf</p>
-
-  </footer>
-</main>
-/* Executive Panel */
-
-.executive-panel{
-  padding: 80px 20px;
-  background: #f5f8ff;
-}
-
-.container{
-  max-width: 1200px;
-  margin: auto;
-}
-
-.section-title{
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.section-title h2{
-  font-size: 40px;
-  color: #0d1b4c;
-  margin-bottom: 10px;
-}
-
-.section-title p{
-  color: #666;
-  font-size: 17px;
-}
-
-.team-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-  gap: 30px;
-}
-
-.team-card{
-  background: #fff;
-  border-radius: 25px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  transition: 0.4s ease;
-  position: relative;
-}
-
-.team-card:hover{
-  transform: translateY(-10px);
-}
-
-.card-image{
-  position: relative;
-  overflow: hidden;
-}
-
-.card-image img{
-  width: 100%;
-  height: 340px;
-  object-fit: cover;
-  transition: 0.5s;
-}
-
-.team-card:hover .card-image img{
-  transform: scale(1.08);
-}
-
-.card-content{
-  padding: 30px;
-  text-align: center;
-}
-
-.card-content h3{
-  font-size: 24px;
-  color: #0d1b4c;
-  margin-bottom: 8px;
-}
-
-.card-content span{
-  display: inline-block;
-  margin-bottom: 15px;
-  color: #1f6bff;
-  font-weight: 600;
-}
-
-.card-content p{
-  color: #666;
-  line-height: 1.7;
-  font-size: 15px;
-}
-
-.social-links{
-  margin-top: 20px;
-}
-
-.social-links a{
-  width: 42px;
-  height: 42px;
-  line-height: 42px;
-  display: inline-block;
-  border-radius: 50%;
-  background: #eef3ff;
-  color: #1f6bff;
-  margin: 0 5px;
-  transition: 0.3s;
-}
-
-.social-links a:hover{
-  background: #1f6bff;
-  color: #fff;
-}
-
+  
 
 <script src="script.js"></script>
 </body>
