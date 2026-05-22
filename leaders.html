@@ -18,7 +18,6 @@
       color: #1a1a2e;
     }
 
-    /* ===== SECTION ===== */
     .executive-panel {
       padding: 80px 20px;
       background: #f4f7fb;
@@ -29,12 +28,11 @@
       margin: 0 auto;
     }
 
-    /* ===== HEADER ===== */
+    /* HEADER */
     .section-header {
       text-align: center;
       margin-bottom: 56px;
     }
-
     .section-header .eyebrow {
       display: inline-flex;
       align-items: center;
@@ -52,7 +50,6 @@
       height: 1px;
       background: #ccc;
     }
-
     .section-header h2 {
       font-size: 36px;
       font-weight: 700;
@@ -60,20 +57,18 @@
       letter-spacing: -0.025em;
       margin-bottom: 10px;
     }
-
     .section-header p {
       font-size: 15px;
       color: #666;
     }
 
-    /* ===== GRID ===== */
+    /* BIG CARDS GRID */
     .team-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 24px;
     }
 
-    /* ===== CARD ===== */
     .team-card {
       background: #fff;
       border-radius: 20px;
@@ -82,28 +77,21 @@
       transition: transform 0.25s ease, box-shadow 0.25s ease;
       position: relative;
     }
-
     .team-card:hover {
       transform: translateY(-6px);
       box-shadow: 0 20px 48px rgba(13, 27, 76, 0.1);
     }
 
-    /* top accent bar */
-    .card-accent {
-      height: 5px;
-      width: 100%;
-    }
-    .card-accent.blue   { background: linear-gradient(90deg, #185FA5, #378ADD); }
-    .card-accent.green  { background: linear-gradient(90deg, #0F6E56, #1D9E75); }
-    .card-accent.amber  { background: linear-gradient(90deg, #854F0B, #EF9F27); }
+    .card-accent { height: 5px; width: 100%; }
+    .card-accent.blue  { background: linear-gradient(90deg, #185FA5, #378ADD); }
+    .card-accent.green { background: linear-gradient(90deg, #0F6E56, #1D9E75); }
+    .card-accent.amber { background: linear-gradient(90deg, #854F0B, #EF9F27); }
 
-    /* card body */
     .card-body {
       padding: 28px 24px 20px;
       text-align: center;
     }
 
-    /* avatar */
     .avatar-wrap {
       width: 88px;
       height: 88px;
@@ -117,19 +105,9 @@
       justify-content: center;
       position: relative;
     }
-    .avatar-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .avatar-init {
-      font-size: 28px;
-      font-weight: 700;
-      color: #aaa;
-      display: none;
-    }
+    .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-init { font-size: 28px; font-weight: 700; color: #aaa; display: none; }
 
-    /* founder ribbon */
     .ribbon {
       position: absolute;
       top: 14px;
@@ -142,11 +120,9 @@
       text-transform: uppercase;
       padding: 4px 32px;
       transform: rotate(-45deg);
-      font-family: 'Hind Siliguri', sans-serif;
       white-space: nowrap;
     }
 
-    /* role badge */
     .role-badge {
       display: inline-flex;
       align-items: center;
@@ -172,10 +148,8 @@
       font-size: 13.5px;
       color: #777;
       line-height: 1.7;
-      margin-bottom: 0;
     }
 
-    /* card footer */
     .card-footer {
       border-top: 1px solid #f0f3fa;
       background: #fafbff;
@@ -195,7 +169,6 @@
       justify-content: center;
       color: #888;
       font-size: 14px;
-      cursor: pointer;
       text-decoration: none;
       transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
     }
@@ -206,10 +179,95 @@
       transform: translateY(-2px);
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* MEMBERS SECTION */
+    .members-section {
+      margin-top: 64px;
+    }
+
+    .members-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .members-divider span {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0d1b4c;
+      white-space: nowrap;
+      letter-spacing: 0.04em;
+    }
+    .members-divider::before,
+    .members-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #dde4f0;
+    }
+
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .member-card {
+      background: #fff;
+      border: 1px solid #e8ecf4;
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .member-card:hover {
+      transform: translateY(-2px);
+      border-color: #c5d3eb;
+    }
+
+    .member-avatar {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: 50%;
+      background: #eef3ff;
+      border: 1.5px solid #dce6f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #5a7abf;
+      overflow: hidden;
+    }
+    .member-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .member-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0d1b4c;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .member-role {
+      font-size: 12px;
+      color: #888;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* RESPONSIVE */
     @media (max-width: 600px) {
       .section-header h2 { font-size: 26px; }
       .team-grid { grid-template-columns: 1fr; }
+      .members-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 400px) {
+      .members-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -224,19 +282,16 @@
       <p>আমাদের নিবেদিতপ্রাণ নেতৃত্ব দলের সাথে পরিচিত হোন</p>
     </div>
 
+    <!-- বড় কার্ড -->
     <div class="team-grid">
 
-      <!-- সভাপতি -->
       <div class="team-card">
         <div class="card-accent blue"></div>
         <div class="card-body">
           <div class="avatar-wrap">
             <div class="ribbon">প্রতিষ্ঠাতা</div>
-            <img
-              src="https://scffeni.github.io/scffeni/images/president.jpg"
-              alt="আব্দুল্লাহ আল মারুফ"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-            />
+            <img src="https://scffeni.github.io/scffeni/images/president.jpg" alt="আব্দুল্লাহ আল মারুফ"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
             <div class="avatar-init">আ</div>
           </div>
           <div class="role-badge blue">
@@ -252,16 +307,12 @@
         </div>
       </div>
 
-      <!-- সাধারণ সম্পাদক -->
       <div class="team-card">
         <div class="card-accent green"></div>
         <div class="card-body">
           <div class="avatar-wrap">
-            <img
-              src="https://scffeni.github.io/scffeni/images/secretary.jpg"
-              alt="সাধারণ সম্পাদক"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-            />
+            <img src="https://scffeni.github.io/scffeni/images/secretary.jpg" alt="সাধারণ সম্পাদক"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
             <div class="avatar-init">স</div>
           </div>
           <div class="role-badge green">
@@ -277,16 +328,12 @@
         </div>
       </div>
 
-      <!-- আইসিটি পরিচালক -->
       <div class="team-card">
         <div class="card-accent amber"></div>
         <div class="card-body">
           <div class="avatar-wrap">
-            <img
-              src="https://scffeni.github.io/scffeni/images/director.jpg"
-              alt="আইসিটি পরিচালক"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-            />
+            <img src="https://scffeni.github.io/scffeni/images/director.jpg" alt="আইসিটি পরিচালক"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
             <div class="avatar-init">আ</div>
           </div>
           <div class="role-badge amber">
@@ -303,120 +350,129 @@
       </div>
 
     </div><!-- /team-grid -->
+
+
+    <!-- ছোট সদস্য কার্ড -->
+    <div class="members-section">
+      <div class="members-divider"><span>কমিটি সদস্যবৃন্দ</span></div>
+      <div class="members-grid">
+
+        <!--
+          নতুন সদস্য যোগ করতে নিচের ব্লকটি copy করুন:
+
+          <div class="member-card">
+            <div class="member-avatar">আদ্যক্ষর</div>
+            <div>
+              <p class="member-name">নাম লিখুন</p>
+              <p class="member-role">দায়িত্ব লিখুন</p>
+            </div>
+          </div>
+
+          ছবি দিতে চাইলে member-avatar এর ভেতরে আদ্যক্ষর সরিয়ে লিখুন:
+          <img src="ছবির_লিংক" alt="নাম">
+        -->
+
+        <div class="member-card">
+          <div class="member-avatar">স</div>
+          <div>
+            <p class="member-name">সদস্যের নাম</p>
+            <p class="member-role">সহ-সভাপতি</p>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">য</div>
+          <div>
+            <p class="member-name">সদস্যের নাম</p>
+            <p class="member-role">যুগ্ম সম্পাদক</p>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">সা</div>
+          <div>
+            <p class="member-name">সদস্যের নাম</p>
+            <p class="member-role">সাংস্কৃতিক সম্পাদক</p>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">অ</div>
+          <div>
+            <p class="member-name">সদস্যের নাম</p>
+            <p class="member-role">অর্থ সম্পাদক</p>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">প</div>
+          <div>
+            <p class="member-name">সদস্যের নাম</p>
+            <p class="member-role">প্রচার সম্পাদক</p>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">ক</div>
+          <div>
+            <p class="member-name">সদস্যের নাম</p>
+            <p class="member-role">ক্রীড়া সম্পাদক</p>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">সম</div>
+          <div>
+            <p class="member-name">সদস্যের নাম</p>
+            <p class="member-role">সমাজকল্যাণ সম্পাদক</p>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">ত</div>
+          <div>
+            <p class="member-name">সদস্যের নাম</p>
+            <p class="member-role">তথ্য ও গবেষণা সম্পাদক</p>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">শ</div>
+          <div>
+            <p class="member-name">সদস্যের নাম</p>
+            <p class="member-role">শিক্ষা ও প্রশিক্ষণ সম্পাদক</p>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">স</div>
+          <div>
+            <p class="member-name">সদস্যের নাম</p>
+            <p class="member-role">সদস্য</p>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">স</div>
+          <div>
+            <p class="member-name">সদস্যের নাম</p>
+            <p class="member-role">সদস্য</p>
+          </div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">স</div>
+          <div>
+            <p class="member-name">সদস্যের নাম</p>
+            <p class="member-role">সদস্য</p>
+          </div>
+        </div>
+
+      </div><!-- /members-grid -->
+    </div><!-- /members-section -->
+
   </div><!-- /container -->
 </section>
 
-
-  
-
-<script src="script.js"></script>
 </body>
 </html>
-
-/* Executive Panel */
-
-.executive-panel{
-  padding: 80px 20px;
-  background: #f5f8ff;
-}
-
-.container{
-  max-width: 1200px;
-  margin: auto;
-}
-
-.section-title{
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.section-title h2{
-  font-size: 40px;
-  color: #0d1b4c;
-  margin-bottom: 10px;
-}
-
-.section-title p{
-  color: #666;
-  font-size: 17px;
-}
-
-.team-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-  gap: 30px;
-}
-
-.team-card{
-  background: #fff;
-  border-radius: 25px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  transition: 0.4s ease;
-  position: relative;
-}
-
-.team-card:hover{
-  transform: translateY(-10px);
-}
-
-.card-image{
-  position: relative;
-  overflow: hidden;
-}
-
-.card-image img{
-  width: 100%;
-  height: 340px;
-  object-fit: cover;
-  transition: 0.5s;
-}
-
-.team-card:hover .card-image img{
-  transform: scale(1.08);
-}
-
-.card-content{
-  padding: 30px;
-  text-align: center;
-}
-
-.card-content h3{
-  font-size: 24px;
-  color: #0d1b4c;
-  margin-bottom: 8px;
-}
-
-.card-content span{
-  display: inline-block;
-  margin-bottom: 15px;
-  color: #1f6bff;
-  font-weight: 600;
-}
-
-.card-content p{
-  color: #666;
-  line-height: 1.7;
-  font-size: 15px;
-}
-
-.social-links{
-  margin-top: 20px;
-}
-
-.social-links a{
-  width: 42px;
-  height: 42px;
-  line-height: 42px;
-  display: inline-block;
-  border-radius: 50%;
-  background: #eef3ff;
-  color: #1f6bff;
-  margin: 0 5px;
-  transition: 0.3s;
-}
-
-.social-links a:hover{
-  background: #1f6bff;
-  color: #fff;
-}
