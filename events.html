@@ -17,6 +17,8 @@
       --border: #dde8dd;
       --white: #fff;
       --radius: 10px;
+      --navy: #0d1b2e;
+      --navy-hover: rgba(255,255,255,0.12);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,7 +31,7 @@
 
     /* ── NAV ── */
     nav {
-      background: var(--green-dark);
+      background: var(--navy);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -37,8 +39,42 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+      box-shadow: 0 2px 10px rgba(0,0,0,.4);
     }
+
+    /* বাম গ্রুপ */
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* হ্যামবার্গার — সবসময় দৃশ্যমান */
+    .hamburger {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 8px 10px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      transition: background .2s;
+      flex-shrink: 0;
+    }
+    .hamburger:hover { background: var(--navy-hover); }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2.5px;
+      background: #fff;
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
     .nav-brand {
       display: flex;
@@ -56,7 +92,7 @@
       height: 44px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid rgba(255,255,255,.4);
+      border: 2px solid #e9c46a;
     }
 
     .nav-links {
@@ -77,19 +113,36 @@
 
     .nav-links a:hover,
     .nav-links a.active {
-      color: var(--white);
-      background: rgba(255,255,255,.12);
+      color: #e9c46a;
+      background: var(--navy-hover);
     }
 
-    .hamburger {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 10px;
+    /* Mobile dropdown */
+    .mobile-nav {
+      background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,.1);
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .35s ease;
     }
+    .mobile-nav.open { max-height: 420px; }
+    .mobile-nav ul {
+      list-style: none;
+      padding: 8px 16px 16px;
+    }
+    .mobile-nav ul li a {
+      display: block;
+      color: rgba(255,255,255,.88);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 2px;
+      transition: background .2s;
+    }
+    .mobile-nav ul li a:hover  { background: var(--navy-hover); color: #e9c46a; }
+    .mobile-nav ul li a.active { background: rgba(255,255,255,.15); color: #e9c46a; }
 
     /* ── HERO ── */
     .hero {
@@ -108,18 +161,8 @@
       background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
 
-    .hero h1 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      position: relative;
-    }
-
-    .hero p {
-      font-size: 1.05rem;
-      opacity: .88;
-      position: relative;
-    }
+    .hero h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 10px; position: relative; }
+    .hero p  { font-size: 1.05rem; opacity: .88; position: relative; }
 
     /* ── FILTER TABS ── */
     .filter-bar {
@@ -193,18 +236,10 @@
       border: 1px solid var(--border);
     }
 
-    .event-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0,0,0,.14);
-    }
-
+    .event-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.14); }
     .event-card.hidden { display: none; }
 
-    .card-img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
+    .card-img { width: 100%; height: 180px; object-fit: cover; }
 
     .card-img-placeholder {
       width: 100%;
@@ -216,19 +251,9 @@
       font-size: 3rem;
     }
 
-    .card-body {
-      padding: 18px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
+    .card-body { padding: 18px; flex: 1; display: flex; flex-direction: column; }
 
-    .card-meta {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
+    .card-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
 
     .badge {
       font-size: .72rem;
@@ -239,39 +264,12 @@
       letter-spacing: .5px;
     }
 
-    .badge-ongoing {
-      background: #fff3cd;
-      color: #856404;
-      border: 1px solid #ffc107;
-    }
+    .badge-ongoing  { background: #fff3cd; color: #856404; border: 1px solid #ffc107; }
+    .badge-upcoming { background: #d1e7dd; color: #0a5c36; border: 1px solid #5bb885; }
+    .badge-ended    { background: #f0f0f0; color: #666;    border: 1px solid #ccc; }
 
-    .badge-upcoming {
-      background: #d1e7dd;
-      color: #0a5c36;
-      border: 1px solid #5bb885;
-    }
-
-    .badge-ended {
-      background: #f0f0f0;
-      color: #666;
-      border: 1px solid #ccc;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--green-dark);
-      margin-bottom: 8px;
-      line-height: 1.4;
-    }
-
-    .card-desc {
-      font-size: .88rem;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 14px;
-      flex: 1;
-    }
+    .card-title { font-size: 1.1rem; font-weight: 700; color: var(--green-dark); margin-bottom: 8px; line-height: 1.4; }
+    .card-desc  { font-size: .88rem; color: var(--muted); line-height: 1.6; margin-bottom: 14px; flex: 1; }
 
     .card-info {
       border-top: 1px solid var(--border);
@@ -283,21 +281,10 @@
       color: var(--muted);
     }
 
-    .card-info span {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .card-info span { display: flex; align-items: center; gap: 6px; }
+    .card-info .icon { font-size: .95rem; }
 
-    .card-info .icon {
-      font-size: .95rem;
-    }
-
-    .card-actions {
-      margin-top: 16px;
-      display: flex;
-      gap: 10px;
-    }
+    .card-actions { margin-top: 16px; display: flex; gap: 10px; }
 
     .btn {
       padding: 9px 20px;
@@ -311,28 +298,13 @@
       transition: all .2s;
     }
 
-    .btn-primary {
-      background: var(--green);
-      color: var(--white);
-      border: 2px solid var(--green);
-    }
-
+    .btn-primary { background: var(--green); color: var(--white); border: 2px solid var(--green); }
     .btn-primary:hover { background: var(--green-dark); border-color: var(--green-dark); }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--green);
-      border: 2px solid var(--green);
-    }
-
+    .btn-outline { background: transparent; color: var(--green); border: 2px solid var(--green); }
     .btn-outline:hover { background: var(--green-light); }
 
     /* ── PAST EVENTS TABLE ── */
-    .past-section {
-      max-width: 1100px;
-      margin: 0 auto 50px;
-      padding: 0 20px;
-    }
+    .past-section { max-width: 1100px; margin: 0 auto 50px; padding: 0 20px; }
 
     .past-table {
       width: 100%;
@@ -343,20 +315,8 @@
       box-shadow: 0 2px 10px rgba(0,0,0,.07);
     }
 
-    .past-table th {
-      background: var(--green-dark);
-      color: var(--white);
-      padding: 12px 16px;
-      text-align: left;
-      font-size: .9rem;
-    }
-
-    .past-table td {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      font-size: .88rem;
-    }
-
+    .past-table th { background: var(--navy); color: var(--white); padding: 12px 16px; text-align: left; font-size: .9rem; }
+    .past-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: .88rem; }
     .past-table tr:last-child td { border-bottom: none; }
     .past-table tr:nth-child(even) td { background: var(--green-light); }
 
@@ -370,7 +330,7 @@
     }
 
     .cta-banner h2 { font-size: 1.6rem; margin-bottom: 10px; }
-    .cta-banner p { opacity: .88; margin-bottom: 22px; font-size: 1rem; }
+    .cta-banner p  { opacity: .88; margin-bottom: 22px; font-size: 1rem; }
 
     .btn-white {
       background: var(--white);
@@ -384,31 +344,33 @@
       cursor: pointer;
       transition: all .2s;
     }
-
     .btn-white:hover { background: transparent; color: var(--white); }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--green-dark);
+      background: var(--navy);
       color: rgba(255,255,255,.8);
       text-align: center;
       padding: 20px;
       font-size: .85rem;
     }
 
-    footer a { color: rgba(255,255,255,.6); text-decoration: none; margin: 0 8px; }
+    footer a { color: #e9c46a; text-decoration: none; margin: 0 8px; }
     footer a:hover { color: var(--white); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 700px) {
-      .nav-links { display: none; flex-direction: column; width: 100%; background: var(--green-dark); }
-      .nav-links.open { display: flex; }
-      .nav-links a { padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,.1); }
-      nav { flex-wrap: wrap; }
-      .hamburger { display: block; }
+    @media (max-width: 900px) { .nav-links { display: none; } }
+
+    @media (max-width: 600px) {
       .hero h1 { font-size: 1.6rem; }
       .past-table { font-size: .8rem; }
       .past-table th, .past-table td { padding: 9px 10px; }
+      nav { padding: 0 14px; }
+    }
+
+    @media (max-width: 400px) {
+      .nav-brand { font-size: .85rem; }
+      .nav-brand img { width: 36px; height: 36px; }
     }
   </style>
 </head>
@@ -416,11 +378,18 @@
 
 <!-- NAV -->
 <nav>
-  <a class="nav-brand" href="index.html">
-    <img src="https://scffeni.github.io/scffeni/logo.jpg" alt="লোগো" />
-    সোনাগাজী কালচারাল ফোরাম, ফেনী
-  </a>
-  <button class="hamburger" id="menuBtn" aria-label="মেনু">☰</button>
+  <div class="nav-left">
+    <!-- ☰ হ্যামবার্গার -->
+    <button class="hamburger" id="menuBtn" aria-label="মেনু">
+      <span></span><span></span><span></span>
+    </button>
+    <!-- লোগো + নাম -->
+    <a class="nav-brand" href="index.html">
+      <img src="logo.jpg" alt="লোগো" />
+      সোনাগাজী কালচারাল ফোরাম,ফেনী
+    </a>
+  </div>
+  <!-- ডেস্কটপ লিংক -->
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html">হোম</a></li>
     <li><a href="about.html">আমাদের সম্পর্কে</a></li>
@@ -430,6 +399,18 @@
     <li><a href="contact.html">যোগাযোগ</a></li>
   </ul>
 </nav>
+
+<!-- Mobile Dropdown -->
+<div class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="index.html">হোম</a></li>
+    <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+    <li><a href="events.html" class="active">সাংস্কৃতিক অনুষ্ঠান</a></li>
+    <li><a href="leaders.html">নেতৃত্ব</a></li>
+    <li><a href="gallery.html">গ্যালারি</a></li>
+    <li><a href="contact.html">যোগাযোগ</a></li>
+  </ul>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -455,13 +436,9 @@
     <img class="card-img" src="https://scffeni.github.io/scffeni/galla.jpg" alt="বৈশাখী অনুষ্ঠান" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
     <div class="card-img-placeholder" style="display:none">🎉</div>
     <div class="card-body">
-      <div class="card-meta">
-        <span class="badge badge-ongoing">চলমান</span>
-      </div>
+      <div class="card-meta"><span class="badge badge-ongoing">চলমান</span></div>
       <div class="card-title">বৈশাখী সাংস্কৃতিক অনুষ্ঠান</div>
-      <div class="card-desc">
-        বাংলা নববর্ষ উপলক্ষে আয়োজিত বিশেষ সাংস্কৃতিক সন্ধ্যা। নাচ, গান, কবিতা আবৃত্তি ও নাটিকা পরিবেশিত হবে।
-      </div>
+      <div class="card-desc">বাংলা নববর্ষ উপলক্ষে আয়োজিত বিশেষ সাংস্কৃতিক সন্ধ্যা। নাচ, গান, কবিতা আবৃত্তি ও নাটিকা পরিবেশিত হবে।</div>
       <div class="card-info">
         <span><span class="icon">📅</span> ১৪ এপ্রিল ২০২৬</span>
         <span><span class="icon">📍</span> সোনাগাজী মডেল স্কুল মাঠ</span>
@@ -479,13 +456,9 @@
     <img class="card-img" src="https://scffeni.github.io/scffeni/gallary1.jpg" alt="কবিতা সন্ধ্যা" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
     <div class="card-img-placeholder" style="display:none">📜</div>
     <div class="card-body">
-      <div class="card-meta">
-        <span class="badge badge-upcoming">আসন্ন</span>
-      </div>
+      <div class="card-meta"><span class="badge badge-upcoming">আসন্ন</span></div>
       <div class="card-title">কবিতা ও আবৃত্তি সন্ধ্যা</div>
-      <div class="card-desc">
-        তরুণ কবি ও আবৃত্তিকারদের নিয়ে আয়োজিত কবিতার সন্ধ্যা। নতুন কবিদের কবিতা প্রকাশের সুযোগ থাকবে।
-      </div>
+      <div class="card-desc">তরুণ কবি ও আবৃত্তিকারদের নিয়ে আয়োজিত কবিতার সন্ধ্যা। নতুন কবিদের কবিতা প্রকাশের সুযোগ থাকবে।</div>
       <div class="card-info">
         <span><span class="icon">📅</span> ২০ মে ২০২৬</span>
         <span><span class="icon">📍</span> সোনাগাজী মিলনায়তন</span>
@@ -502,13 +475,9 @@
   <div class="event-card" data-status="upcoming">
     <div class="card-img-placeholder">🕌</div>
     <div class="card-body">
-      <div class="card-meta">
-        <span class="badge badge-upcoming">আসন্ন</span>
-      </div>
+      <div class="card-meta"><span class="badge badge-upcoming">আসন্ন</span></div>
       <div class="card-title">ইসলামী সাংস্কৃতিক প্রতিযোগিতা</div>
-      <div class="card-desc">
-        কুরআন তিলাওয়াত, হামদ-নাত ও ইসলামী বক্তৃতা প্রতিযোগিতা। বিজয়ীদের পুরস্কার প্রদান করা হবে।
-      </div>
+      <div class="card-desc">কুরআন তিলাওয়াত, হামদ-নাত ও ইসলামী বক্তৃতা প্রতিযোগিতা। বিজয়ীদের পুরস্কার প্রদান করা হবে।</div>
       <div class="card-info">
         <span><span class="icon">📅</span> ১০ জুন ২০২৬</span>
         <span><span class="icon">📍</span> সোনাগাজী কেন্দ্রীয় জামে মসজিদ</span>
@@ -525,13 +494,9 @@
   <div class="event-card" data-status="upcoming">
     <div class="card-img-placeholder">🌱</div>
     <div class="card-body">
-      <div class="card-meta">
-        <span class="badge badge-upcoming">আসন্ন</span>
-      </div>
+      <div class="card-meta"><span class="badge badge-upcoming">আসন্ন</span></div>
       <div class="card-title">বৃক্ষরোপণ ও পরিবেশ উৎসব</div>
-      <div class="card-desc">
-        পরিবেশ রক্ষায় সচেতনতা তৈরি ও গাছ লাগানো কার্যক্রম। শিশু-কিশোর ও তরুণদের জন্য বিশেষ উদ্যোগ।
-      </div>
+      <div class="card-desc">পরিবেশ রক্ষায় সচেতনতা তৈরি ও গাছ লাগানো কার্যক্রম। শিশু-কিশোর ও তরুণদের জন্য বিশেষ উদ্যোগ।</div>
       <div class="card-info">
         <span><span class="icon">📅</span> ৫ জুলাই ২০২৬</span>
         <span><span class="icon">📍</span> সোনাগাজী পার্ক</span>
@@ -549,13 +514,9 @@
     <img class="card-img" src="https://scffeni.github.io/scffeni/gallary3.jpg" alt="পুরস্কার বিতরণ" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
     <div class="card-img-placeholder" style="display:none">🏆</div>
     <div class="card-body">
-      <div class="card-meta">
-        <span class="badge badge-ended">সমাপ্ত</span>
-      </div>
+      <div class="card-meta"><span class="badge badge-ended">সমাপ্ত</span></div>
       <div class="card-title">ইসলামী জ্ঞান প্রতিযোগিতা ও পুরস্কার বিতরণ</div>
-      <div class="card-desc">
-        শিশু-কিশোরদের মধ্যে ইসলামী জ্ঞান যাচাই প্রতিযোগিতা। ৫০+ শিক্ষার্থী অংশগ্রহণ করেছিল।
-      </div>
+      <div class="card-desc">শিশু-কিশোরদের মধ্যে ইসলামী জ্ঞান যাচাই প্রতিযোগিতা। ৫০+ শিক্ষার্থী অংশগ্রহণ করেছিল।</div>
       <div class="card-info">
         <span><span class="icon">📅</span> ১৫ মার্চ ২০২৬</span>
         <span><span class="icon">📍</span> সোনাগাজী মিলনায়তন</span>
@@ -570,13 +531,9 @@
   <div class="event-card" data-status="ended">
     <div class="card-img-placeholder">🤝</div>
     <div class="card-body">
-      <div class="card-meta">
-        <span class="badge badge-ended">সমাপ্ত</span>
-      </div>
+      <div class="card-meta"><span class="badge badge-ended">সমাপ্ত</span></div>
       <div class="card-title">শীতবস্ত্র বিতরণ কার্যক্রম</div>
-      <div class="card-desc">
-        শীতার্ত ও দুস্থ মানুষের মাঝে শীতবস্ত্র বিতরণ। ১০০টিরও বেশি পরিবার উপকৃত হয়েছে।
-      </div>
+      <div class="card-desc">শীতার্ত ও দুস্থ মানুষের মাঝে শীতবস্ত্র বিতরণ। ১০০টিরও বেশি পরিবার উপকৃত হয়েছে।</div>
       <div class="card-info">
         <span><span class="icon">📅</span> ১০ জানুয়ারি ২০২৬</span>
         <span><span class="icon">📍</span> সোনাগাজী সদর</span>
@@ -654,22 +611,32 @@
 </footer>
 
 <script>
-  // Hamburger
-  document.getElementById('menuBtn').addEventListener('click', function () {
-    document.getElementById('navLinks').classList.toggle('open');
+  // Hamburger — mobile dropdown
+  var btn  = document.getElementById('menuBtn');
+  var mob  = document.getElementById('mobileNav');
+
+  btn.addEventListener('click', function () {
+    btn.classList.toggle('open');
+    mob.classList.toggle('open');
+  });
+
+  mob.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      btn.classList.remove('open');
+      mob.classList.remove('open');
+    });
   });
 
   // Filter buttons
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.event-card');
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  var cards = document.querySelectorAll('.event-card');
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', function () {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-
-      const filter = this.dataset.filter;
-      cards.forEach(card => {
+  filterBtns.forEach(function(fbtn) {
+    fbtn.addEventListener('click', function () {
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      fbtn.classList.add('active');
+      var filter = fbtn.dataset.filter;
+      cards.forEach(function(card) {
         if (filter === 'all' || card.dataset.status === filter) {
           card.classList.remove('hidden');
         } else {
@@ -680,4 +647,4 @@
   });
 </script>
 </body>
- </html>
+</html>
