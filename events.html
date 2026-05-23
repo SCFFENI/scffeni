@@ -31,76 +31,56 @@
 
     /* ── NAV ── */
     nav {
-      background: var(--navy);
+      background: #0f2d4a;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
+      justify-content: center;
+      padding: 0 16px;
       position: sticky;
       top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 10px rgba(0,0,0,.4);
+      z-index: 200;
+      box-shadow: 0 2px 8px rgba(0,0,0,.35);
+      min-height: 60px;
     }
 
-    /* বাম গ্রুপ */
-    .nav-left {
-      display: flex;
+    .nav-mobile-brand {
+      display: none;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      flex: 1;
+      text-decoration: none;
+    }
+    .nav-mobile-brand img {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255,255,255,.45);
+      flex-shrink: 0;
+    }
+    .nav-mobile-brand span {
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.2;
     }
 
-    /* হ্যামবার্গার — সবসময় দৃশ্যমান */
     .hamburger {
+      display: none;
       background: none;
       border: none;
       color: white;
+      font-size: 1.6rem;
       cursor: pointer;
-      padding: 8px 10px;
-      border-radius: 6px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      transition: background .2s;
+      padding: 10px 12px 10px 4px;
+      line-height: 1;
       flex-shrink: 0;
-    }
-    .hamburger:hover { background: var(--navy-hover); }
-    .hamburger span {
-      display: block;
-      width: 24px;
-      height: 2.5px;
-      background: #fff;
-      border-radius: 2px;
-      transition: transform .3s, opacity .3s;
-    }
-    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--white);
-      font-weight: 700;
-      font-size: 1rem;
-      padding: 10px 0;
-    }
-
-    .nav-brand img {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #e9c46a;
     }
 
     .nav-links {
       display: flex;
-      gap: 4px;
+      gap: 2px;
       list-style: none;
     }
-
     .nav-links a {
       color: rgba(255,255,255,.85);
       text-decoration: none;
@@ -109,40 +89,12 @@
       display: block;
       transition: color .2s, background .2s;
       border-radius: 4px;
+      white-space: nowrap;
     }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: #e9c46a;
-      background: var(--navy-hover);
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--white);
+      background: rgba(255,255,255,.12);
     }
-
-    /* Mobile dropdown */
-    .mobile-nav {
-      background: var(--navy);
-      border-top: 1px solid rgba(255,255,255,.1);
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height .35s ease;
-    }
-    .mobile-nav.open { max-height: 420px; }
-    .mobile-nav ul {
-      list-style: none;
-      padding: 8px 16px 16px;
-    }
-    .mobile-nav ul li a {
-      display: block;
-      color: rgba(255,255,255,.88);
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 500;
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 2px;
-      transition: background .2s;
-    }
-    .mobile-nav ul li a:hover  { background: var(--navy-hover); color: #e9c46a; }
-    .mobile-nav ul li a.active { background: rgba(255,255,255,.15); color: #e9c46a; }
 
     /* ── HERO ── */
     .hero {
@@ -359,18 +311,26 @@
     footer a:hover { color: var(--white); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 900px) { .nav-links { display: none; } }
-
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
+      .nav-mobile-brand { display: flex; }
+      .hamburger { display: block; }
+      nav { justify-content: flex-start; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: #0f2d4a;
+        position: absolute;
+        top: 60px;
+        left: 0; right: 0;
+        box-shadow: 0 6px 16px rgba(0,0,0,.4);
+        z-index: 300;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,.08); border-radius: 0; }
       .hero h1 { font-size: 1.6rem; }
       .past-table { font-size: .8rem; }
       .past-table th, .past-table td { padding: 9px 10px; }
-      nav { padding: 0 14px; }
-    }
-
-    @media (max-width: 400px) {
-      .nav-brand { font-size: .85rem; }
-      .nav-brand img { width: 36px; height: 36px; }
     }
   </style>
 </head>
@@ -378,18 +338,11 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-left">
-    <!-- ☰ হ্যামবার্গার -->
-    <button class="hamburger" id="menuBtn" aria-label="মেনু">
-      <span></span><span></span><span></span>
-    </button>
-    <!-- লোগো + নাম -->
-    <a class="nav-brand" href="index.html">
-      <img src="logo.jpg" alt="লোগো" />
-      সোনাগাজী কালচারাল ফোরাম,ফেনী
-    </a>
-  </div>
-  <!-- ডেস্কটপ লিংক -->
+  <button class="hamburger" id="menuBtn" aria-label="মেনু">☰</button>
+  <a class="nav-mobile-brand" href="index.html">
+    <img src="logo.jpg" alt="লোগো" />
+    <span>সোনাগাজী কালচারাল ফোরাম, ফেনী</span>
+  </a>
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html">হোম</a></li>
     <li><a href="about.html">আমাদের সম্পর্কে</a></li>
@@ -399,18 +352,6 @@
     <li><a href="contact.html">যোগাযোগ</a></li>
   </ul>
 </nav>
-
-<!-- Mobile Dropdown -->
-<div class="mobile-nav" id="mobileNav">
-  <ul>
-    <li><a href="index.html">হোম</a></li>
-    <li><a href="about.html">আমাদের সম্পর্কে</a></li>
-    <li><a href="events.html" class="active">সাংস্কৃতিক অনুষ্ঠান</a></li>
-    <li><a href="leaders.html">নেতৃত্ব</a></li>
-    <li><a href="gallery.html">গ্যালারি</a></li>
-    <li><a href="contact.html">যোগাযোগ</a></li>
-  </ul>
-</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -611,20 +552,9 @@
 </footer>
 
 <script>
-  // Hamburger — mobile dropdown
-  var btn  = document.getElementById('menuBtn');
-  var mob  = document.getElementById('mobileNav');
-
-  btn.addEventListener('click', function () {
-    btn.classList.toggle('open');
-    mob.classList.toggle('open');
-  });
-
-  mob.querySelectorAll('a').forEach(function(link) {
-    link.addEventListener('click', function() {
-      btn.classList.remove('open');
-      mob.classList.remove('open');
-    });
+  // Hamburger
+  document.getElementById('menuBtn').addEventListener('click', function () {
+    document.getElementById('navLinks').classList.toggle('open');
   });
 
   // Filter buttons
