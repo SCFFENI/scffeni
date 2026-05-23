@@ -29,6 +29,30 @@
       color: var(--text);
     }
 
+        /* ── TOP HEADER ── */
+    .top-header {
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 10px 24px;
+    }
+    .top-header img {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255,255,255,.5);
+      flex-shrink: 0;
+    }
+    .top-header-name {
+      color: var(--white);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .top-header-icon { font-size: 1.6rem; flex-shrink: 0; }
+
+
         /* ── NAV ── */
     nav {
       background: #0f2d4a;
@@ -310,6 +334,7 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
+      .top-header { display: none; }
       .nav-mobile-brand { display: flex; }
       .hamburger { display: block; }
       nav { justify-content: flex-start; }
@@ -334,6 +359,12 @@
 </head>
 <body>
 
+  <!-- TOP HEADER -->
+<div class="top-header">
+  <img src="https://scffeni.github.io/scffeni/logo.jpg" alt="লোগো" />
+  <span class="top-header-name">সোনাগাজী কালচারাল ফোরাম, ফেনী</span>
+</div>
+  
 <!-- NAV -->
 <nav>
   <button class="hamburger" id="menuBtn" aria-label="মেনু">☰</button>
