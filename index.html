@@ -8,345 +8,542 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+<style>
+/* ===== NEW HERO SECTION ===== */
+.hero-new {
+  background: #0b2e22;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-new::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(34,197,94,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 30%, rgba(16,185,129,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50px;
+  padding: 8px 18px;
+  color: #e2f5ec;
+  font-size: 0.9rem;
+  margin-bottom: 28px;
+  backdrop-filter: blur(8px);
+}
+
+.hero-new h1 {
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.hero-new h1 span {
+  color: #4ade80;
+  display: block;
+}
+
+.hero-new p {
+  font-size: 1rem;
+  color: #b4d4c3;
+  max-width: 520px;
+  line-height: 1.7;
+  margin: 0 auto 36px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.btn-primary-new {
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-primary-new:hover { background: #16a34a; transform: translateY(-1px); }
+
+.btn-secondary-new {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s;
+  backdrop-filter: blur(6px);
+}
+.btn-secondary-new:hover { background: rgba(255,255,255,0.18); }
+
+/* Stats Grid */
+.stats-section {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 28px 24px;
+  width: 100%;
+  max-width: 560px;
+  backdrop-filter: blur(10px);
+}
+
+.stats-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #4ade80;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.stat-card {
+  background: rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 20px 16px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.stat-card .stat-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-card .stat-label {
+  font-size: 0.82rem;
+  color: #94c4ab;
+}
+
+/* ===== SOCIAL FOLLOW SECTION ===== */
+.social-follow-section {
+  background: #0f0f1a;
+  padding: 50px 24px;
+  text-align: center;
+}
+
+.social-follow-section h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.social-follow-section h2 span {
+  margin-right: 8px;
+}
+
+.social-follow-section p {
+  color: #aaa;
+  font-size: 0.92rem;
+  max-width: 360px;
+  margin: 0 auto 28px;
+  line-height: 1.6;
+}
+
+.social-follow-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.btn-facebook {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #1877f2;
+  color: #fff;
+  padding: 15px 24px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.btn-facebook:hover { background: #1464d0; }
+
+.btn-youtube {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #ff0000;
+  color: #fff;
+  padding: 15px 24px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.btn-youtube:hover { background: #cc0000; }
+
+/* ===== NEW FOOTER ===== */
+footer.footer-new {
+  background: #0f0f1a;
+  border-top: 1px solid #1e1e2e;
+  padding: 40px 24px 24px;
+  color: #ccc;
+}
+
+.footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.footer-brand-icon {
+  width: 44px;
+  height: 44px;
+  background: #1a5c42;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4ade80;
+  font-size: 1.2rem;
+}
+
+.footer-brand-text h3 {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 2px;
+}
+
+.footer-brand-text p {
+  color: #aaa;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.footer-desc {
+  color: #999;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.footer-section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  padding-left: 12px;
+  border-left: 3px solid #22c55e;
+  margin-bottom: 14px;
+}
+
+.footer-list {
+  list-style: disc;
+  padding-left: 20px;
+  margin-bottom: 28px;
+}
+
+.footer-list li {
+  color: #aaa;
+  font-size: 0.88rem;
+  margin-bottom: 6px;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #aaa;
+  font-size: 0.88rem;
+}
+
+.footer-contact-item i {
+  color: #22c55e;
+  width: 18px;
+}
+
+.footer-bottom {
+  border-top: 1px solid #1e1e2e;
+  padding-top: 18px;
+  text-align: center;
+}
+
+.footer-bottom p {
+  color: #666;
+  font-size: 0.8rem;
+  margin: 4px 0;
+}
+
+.footer-bottom .dev {
+  color: #888;
+}
+
+.footer-bottom .dev strong {
+  color: #ddd;
+}
+
+.footer-bottom .heart {
+  color: #ff4444;
+}
+</style>
 </head>
 <body>
 
 <header>
   <nav class="main-menu">
-
     <div class="nav-container">
-
-      <!-- Left -->
-    <div class="brand">
+      <div class="brand">
         <div class="menu-icon">&#9776;</div>
        <a href="index.html">  <img src="logo.jpg" alt="logo">
         <span>সোনাগাজী কালচারাল ফোরাম,ফেনী</span>
       </div></a> 
 
-      <!-- Right -->
       <ul class="nav-links">
   <li><a href="index.html"><i class="fa-solid fa-house"></i> হোম</a></li>
-
-  <li><a href="about.html">
-    <i class="fa-solid fa-landmark"></i> আমাদের সম্পর্কে
-  </a></li>
-
-  <li><a href="events.html">
-    <i class="fa-solid fa-masks-theater"></i> সাংস্কৃতিক অনুষ্ঠান
-  </a></li>
-
-  <li><a href="leaders.html">
-    <i class="fa-solid fa-users"></i> নেতৃত্ব
-  </a></li>
-
-  <li><a href="gallery.html">
-    <i class="fa-solid fa-image"></i> গ্যালারি
-  </a></li>
-
-  <li><a href="contact.html">
-    <i class="fa-solid fa-envelope"></i> যোগাযোগ
-  </a></li>
+  <li><a href="about.html"><i class="fa-solid fa-landmark"></i> আমাদের সম্পর্কে</a></li>
+  <li><a href="events.html"><i class="fa-solid fa-masks-theater"></i> সাংস্কৃতিক অনুষ্ঠান</a></li>
+  <li><a href="leaders.html"><i class="fa-solid fa-users"></i> নেতৃত্ব</a></li>
+  <li><a href="gallery.html"><i class="fa-solid fa-image"></i> গ্যালারি</a></li>
+  <li><a href="contact.html"><i class="fa-solid fa-envelope"></i> যোগাযোগ</a></li>
 </ul>
-
     </div>
-
   </nav>
 </header>
+
 <main> 
   <div class="body1">
-  <section class="hero">
-    <h1>সোনাগাজী কালচারাল ফোরাম,ফেনী </h1>
-    <p>সুস্থ সংস্কৃতি ছড়িয়ে যাক এ দেশের প্রতিটি ঘরে ঘরে.....</p>
-    <a class="btn" href="#join">সদস্য হোন</a>
-<a class="btn" href="#donate">অনুদান দিন</a>
+
+  <!-- ===== NEW HERO SECTION ===== -->
+  <section class="hero-new">
+    <div class="hero-badge">
+      🎭 সোনাগাজী কালচারাল ফোরাম, ফেনী
+    </div>
+
+    <h1>
+      শিল্প ও সংস্কৃতির হাত ধরে
+      <span>গড়বো এক অকৃত্রিম সমাজ</span>
+    </h1>
+
+    <p>আমরা ফেনী জেলার সোনাগাজী উপজেলা ভিত্তিক একটি ঐতিহাবাহী সামাজিক, সাংস্কৃতিক এবং স্বেচ্ছাসেবী প্ল্যাটফর্ম। তরুণ সমাজকে একত্রিত করে সাহিত্যচর্চা, সমাজসেবা এবং সুন্দর সমাজ গঠনে আমরা নিবেদিতপ্রাণ।</p>
+
+    <div class="hero-buttons">
+      <a class="btn-primary-new" href="leaders.html">নেতৃত্ব দেখুন</a>
+      <a class="btn-secondary-new" href="gallery.html">গ্যালারি ভিজিট করুন</a>
+    </div>
+
+    <div class="stats-section">
+      <div class="stats-header">
+        <span>🏅</span>
+        <span>এক নজরে আমাদের ফোরাম</span>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">২৫০ +</div>
+          <div class="stat-label">সক্রিয় সদস্য</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">২০ +</div>
+          <div class="stat-label">সম্পন্ন ইভেন্ট</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">৪ টি</div>
+          <div class="stat-label">প্রধান বিভাগ</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">০৫ বছর+</div>
+          <div class="stat-label">সেবার গৌরব</div>
+        </div>
+      </div>
+    </div>
   </section>
 
+  <!-- ===== SWIPER SLIDER (unchanged) ===== -->
  <div class="swiper mySwiper">
   <div class="swiper-wrapper">
-
     <div class="swiper-slide">
       <img src="galla.jpg" />
       <div class="caption">সোনাগাজী সাংস্কৃতিক ফোরাম অনুষ্ঠান</div>
     </div>
-
     <div class="swiper-slide">
       <img src="gallary1.jpg" />
       <div class="caption">শিশু-কিশোরদের অংশগ্রহণমূলক কার্যক্রম</div>
     </div>
-
     <div class="swiper-slide">
       <img src="gallary3.jpg" />
       <div class="caption">ইসলামী জ্ঞানের প্রতিযোগিতা ও পুরস্কার বিতরণ</div>
     </div>
-
   </div>
-
-  <!-- Navigation -->
   <div class="swiper-button-next"></div>
   <div class="swiper-button-prev"></div>
-
-  <!-- Dots -->
   <div class="swiper-pagination"></div>
 </div>
 </div>
 
-
-
 <div class="main-container">
-
-
-
-
 
 <nav class="sidebar">
   <h3 class="sidebar-title">বিভাগসমূহ</h3>
-                <ul>
-                    <li>
-                        <a href="/category/কুরআনের-আলো">কুরআনের আলো</a>
-                    </li>
-                    <li>
-                        <a href="/category/হাদীসের-আলো">হাদীসের আলো</a>
-                    </li>
-                    <li>
-                        <a href="/category/দেশ-মহাদেশ">দেশ-মহাদেশ</a>
-                    </li>
-                    <li>
-                        <a href="/category/বিশেষ-রচনা">বিশেষ রচনা</a>
-                    </li>
-
-                    <li>
-                        <a href="/category/তোমাদের-গল্প">তোমাদের গল্প</a>
-                    </li>
-                   
-                    <li>
-                        <a href="/category/সাক্ষাৎকার">সাক্ষাৎকার</a>
-                    </li>
-                  
-                   
-                    <li>
-                        <a href="/category/রং-তুলি">রং-তুলি</a>
-                    </li>
-                   
-                    <li>
-                        <a href="/category/ছড়া-কবিতা">ছড়া-কবিতা</a>
-                    </li>
-                  
-            
-                
-                    <li>
-                        <a href="/category/খেলার-চমক">খেলার চমক</a>
-                    </li>
-                    <!--<li>-->
-                    <!--    <a href="/category/সূচিপত্র">সূচিপত্র</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                    <!--    <a href="/category/কৌতুক">কৌতুক</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                    <!--    <a href="/category/ঐতিহাসিক">ঐতিহাসিক</a\>-->
-                    <!--</li>-->
-
-                    <!--<li>-->
-                    <!--    <a href="/category/মনীষী">মনীষী</a>-->
-                    <!--</li>-->
-
-                    <!--<li>-->
-                    <!--    <a href="/category/চলো প্রোগ্রামিং শিখি">চলো প্রোগ্রামিং শিখি</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                    <!--    <a href="/category/বলতে পারো">বলতে পারো</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                    <!--    <a href="/category/বুদ্ধির খেলা">বুদ্ধির খেলা</a>-->
-                    <!--</li>-->
-                    <li>
-                        <a href="/category/প্রতিবেদন">প্রতিবেদন</a>
-                    </li>
-            
-                    <li>
-                        <a href="/category/মৃতিকথা">স্মৃতিকথা</a>
-                    </li>
-                    <li>
-                        <a href="/category/স্বাস্থ্যকথা">স্বাস্থ্যকথা</a>
-                    </li>
-                    <li>
-                        <a href="/category/আইটি-কর্নার">আইটি কর্নার</a>
-                    </li>
-                    <li>
-                        <a href="/category/বিজ্ঞান">বিজ্ঞান ও বিশ্ব</a>
-                    </li>
-                    <li>
-                        <a href="/category/চিত্র-বিচিত্র">চিত্র-বিচিত্র</a>
-                    </li>
-                    <li>
-                        <a href="/category/নাটিকা">নাটিকা</a>
-                    </li>
-                    <li>
-                        <a href="/category/পাঠক-ফোরাম">পাঠক ফোরাম</a>
-                    </li>
-                    <li>
-                        <a href="/category/সাহিত্য-পুরস্কার">সাহিত্য পুরস্কার</a>
-                    </li>
-                
-                    <li>
-                        <a href="/category/সাইন্স-ফিকশন">সাইন্স ফিকশন</a>
-                    </li>
-                    <li>
-                        <a href="/category/ক্যারিয়ার-গাইডলাইন">ক্যারিয়ার গাইডলাইন</a>
-                    </li>
-                    
-                
-</ul>
-
+  <ul>
+    <li><a href="/category/কুরআনের-আলো">কুরআনের আলো</a></li>
+    <li><a href="/category/হাদীসের-আলো">হাদীসের আলো</a></li>
+    <li><a href="/category/দেশ-মহাদেশ">দেশ-মহাদেশ</a></li>
+    <li><a href="/category/বিশেষ-রচনা">বিশেষ রচনা</a></li>
+    <li><a href="/category/তোমাদের-গল্প">তোমাদের গল্প</a></li>
+    <li><a href="/category/সাক্ষাৎকার">সাক্ষাৎকার</a></li>
+    <li><a href="/category/রং-তুলি">রং-তুলি</a></li>
+    <li><a href="/category/ছড়া-কবিতা">ছড়া-কবিতা</a></li>
+    <li><a href="/category/খেলার-চমক">খেলার চমক</a></li>
+    <li><a href="/category/প্রতিবেদন">প্রতিবেদন</a></li>
+    <li><a href="/category/মৃতিকথা">স্মৃতিকথা</a></li>
+    <li><a href="/category/স্বাস্থ্যকথা">স্বাস্থ্যকথা</a></li>
+    <li><a href="/category/আইটি-কর্নার">আইটি কর্নার</a></li>
+    <li><a href="/category/বিজ্ঞান">বিজ্ঞান ও বিশ্ব</a></li>
+    <li><a href="/category/চিত্র-বিচিত্র">চিত্র-বিচিত্র</a></li>
+    <li><a href="/category/নাটিকা">নাটিকা</a></li>
+    <li><a href="/category/পাঠক-ফোরাম">পাঠক ফোরাম</a></li>
+    <li><a href="/category/সাহিত্য-পুরস্কার">সাহিত্য পুরস্কার</a></li>
+    <li><a href="/category/সাইন্স-ফিকশন">সাইন্স ফিকশন</a></li>
+    <li><a href="/category/ক্যারিয়ার-গাইডলাইন">ক্যারিয়ার গাইডলাইন</a></li>
+  </ul>
 </nav>
-
-
-
 
 <!-- Main Content -->
 <div class="main-content">
   <div class="reels-section">
   <h2>🔥 Reels</h2>
-
   <div class="reels-container">
-
     <div class="reel">
       <iframe src="https://www.youtube.com/embed/VIDEO_ID"></iframe>
       <div class="reel-info">Caption here</div>
     </div>
-
-    <div class="reel">     <video src=https://youtu.be/sbxGsF-7zxU?si=EtnHrfxsLD68GYad"></video>
+    <div class="reel">
+      <video src="https://youtu.be/sbxGsF-7zxU?si=EtnHrfxsLD68GYad"></video>
       <div class="reel-info">Another reel</div>
     </div>
-
     <div class="reel">
       <video src="reels/video3.mp4" muted loop></video>
       <div class="reel-info">More content</div>
     </div>
-
- <div class="reel">
+    <div class="reel">
       <video src="reels/video3.mp4" muted loop></video>
       <div class="reel-info">More content</div>
     </div>
-
   </div>
 </div>
+
 <div class="card-container">
 <div class="category-card">
-<a href="#">
-<img src="galla.jpg">
-
+<a href="#"><img src="galla.jpg">
 <div class="card-info">
-<p>সবুজ পাখি</p>
-<p>বিলাল হোসাইন নূরী</p>
-<p>ফেব্রুয়ারি ২০২৬</p>
+<p>সবুজ পাখি</p><p>বিলাল হোসাইন নূরী</p><p>ফেব্রুয়ারি ২০২৬</p>
+</div></a>
 </div>
-
-</a>
-</div>
-  <div class="category-card">
-<a href="#">
-<img src="gallary1.jpg">
-
+<div class="category-card">
+<a href="#"><img src="gallary1.jpg">
 <div class="card-info">
-<p>নতুন গল্প</p>
-<p>লেখক নাম</p>
-<p>মার্চ ২০২৬</p>
+<p>নতুন গল্প</p><p>লেখক নাম</p><p>মার্চ ২০২৬</p>
+</div></a>
 </div>
-
-</a>
-</div>          
-  <div class="category-card">
-<a href="#">
-<img src="gallary1.jpg">
-
+<div class="category-card">
+<a href="#"><img src="gallary1.jpg">
 <div class="card-info">
-<p>নতুন গল্প</p>
-<p>লেখক নাম</p>
-<p>মার্চ ২০২৬</p>
+<p>নতুন গল্প</p><p>লেখক নাম</p><p>মার্চ ২০২৬</p>
+</div></a>
 </div>
-
-</a>
-</div>       
-
-  <div class="category-card">
-<a href="#">
-<img src="gallary1.jpg">
-
+<div class="category-card">
+<a href="#"><img src="gallary1.jpg">
 <div class="card-info">
-<p>নতুন গল্প</p>
-<p>লেখক নাম</p>
-<p>মার্চ ২০২৬</p>
+<p>নতুন গল্প</p><p>লেখক নাম</p><p>মার্চ ২০২৬</p>
+</div></a>
 </div>
-
-</a>
-</div>       
-
 </div>
-
 
 <section class="events">
 <h2>আসন্ন সাংস্কৃতিক অনুষ্ঠান</h2>
-
 <div class="event-container">
-
 <div class="event-card">
 <span class="event-date">ongoing</span>
 <img src="galla.jpg">
 <h3>বৈশাখী সাংস্কৃতিক অনুষ্ঠান</h3>
-<p>তারিখ: ১৪ এপ্রিল ২০২6</p>
+<p>তারিখ: ১৪ এপ্রিল ২০২৬</p>
 <p>স্থান: সোনাগাজী মডেল স্কুল মাঠ</p>
- <a href="#" class="event-btn">Join Event</a></div>
-
+<a href="#" class="event-btn">Join Event</a>
+</div>
 <div class="event-card">
 <span class="event-date">Ended</span>
 <img src="gallary1.jpg">
 <h3>কবিতা ও আবৃত্তি সন্ধ্যা</h3>
-<p>তারিখ: ২০ মে ২০২6</p>
-<p>স্থান: সোনাগাজী মিলনায়তন</p>
- <a href="#" class="event-btn">Join Event</a>
+<p>তারিখ: ২০ মে ২০২৬</p>
+<p>স্থান: সোনাগাজী মিলনায়তন</p>
+<a href="#" class="event-btn">Join Event</a>
 </div>
-
-
 </div>
 </section>
-
 </div>
 
-<!-- Sidebar -->
+<!-- Sidebar Right -->
 <div class="sidebarright">
-
-<!-- Latest Posts -->
 <div class="widget">
   <h3 class="widget-title">সর্বশেষ পোস্ট</h3>
-
   <ul class="post-list">
-    <li class="post-item">
-      <a href="#" class="post-link">
-        <img src="galla.jpg" alt="সাংস্কৃতিক অনুষ্ঠান আয়োজন">
-        <p class="post-title">সাংস্কৃতিক অনুষ্ঠান আয়োজন</p>
-      </a>
-    </li>
-
-    <li class="post-item">
-      <a href="#" class="post-link">
-        <img src="gallary1.jpg" alt="যুব সমাজ ও সংস্কৃতি">
-        <p class="post-title">যুব সমাজ ও সংস্কৃতি</p>
-      </a>
-    </li>
-
-    <li class="post-item">
-      <a href="#" class="post-link">
-        <img src="gallary3.jpg" alt="পরিবেশ রক্ষা আন্দোলন">
-        <p class="post-title">পরিবেশ রক্ষা আন্দোলন</p>
-      </a>
-    </li>
+    <li class="post-item"><a href="#" class="post-link"><img src="galla.jpg" alt=""><p class="post-title">সাংস্কৃতিক অনুষ্ঠান আয়োজন</p></a></li>
+    <li class="post-item"><a href="#" class="post-link"><img src="gallary1.jpg" alt=""><p class="post-title">যুব সমাজ ও সংস্কৃতি</p></a></li>
+    <li class="post-item"><a href="#" class="post-link"><img src="gallary3.jpg" alt=""><p class="post-title">পরিবেশ রক্ষা আন্দোলন</p></a></li>
   </ul>
 </div>
-
-<!-- Popular Posts -->
 <div class="widget">
-<h3>জনপ্রিয় পোস্ট</h3>
+<h3>জনপ্রিয় পোস্ট</h3>
 <ul>
 <li><a href="#">বাংলাদেশের ইতিহাস</a></li>
 <li><a href="#">ইসলামী সংস্কৃতি</a></li>
@@ -354,31 +551,25 @@
 <li><a href="#">সাংস্কৃতিক আন্দোলন</a></li>
 </ul>
 </div>
-
-<!-- Facebook -->
 <div class="widget">
 <h3>Follow Us</h3>
- <a href="https://facebook.com" class="social-btn facebook" target="_blank" rel="noopener">
-      <i class="fa-brands fa-facebook-f"></i>
-      <span>Follow us Facebook</span>
-    </a><h3>Subscribe</h3>
- <a href="https://yourchannel.com" class="social-btn youtube" target="_blank" rel="noopener">
-      <i class="fa-brands fa-youtube"></i>
-      <span>Subscribe YouTube</span>
-    </a></div>
-
-<!-- Advertisement -->
+<a href="https://facebook.com" class="social-btn facebook" target="_blank" rel="noopener">
+  <i class="fa-brands fa-facebook-f"></i><span>Follow us Facebook</span>
+</a>
+<h3>Subscribe</h3>
+<a href="https://yourchannel.com" class="social-btn youtube" target="_blank" rel="noopener">
+  <i class="fa-brands fa-youtube"></i><span>Subscribe YouTube</span>
+</a>
+</div>
 <div class="widget">
   <ul class="sidebar_ad"><li><a href="#">
-<h3>50% off rate</h3>
-<img src="ads/ad.gif" style="width:100%">
-</a></li></ul>
+  <h3>50% off rate</h3>
+  <img src="ads/ad.gif" style="width:100%">
+  </a></li></ul>
+</div>
 </div>
 
 </div>
-
-</div>
-
 
 <div class="ad1">
 <img src="https://tpc.googlesyndication.com/simgad/7678168097535127094" border="0" width="970" height="90" alt="" class="img_ad">
@@ -386,149 +577,54 @@
 
 <div class="link-container">
 
-  <!-- তোমাদের-গল্প -->
   <div class="widget">
     <h3 class="widget-title">তোমাদের-গল্প</h3>
-
     <ul class="post-list">
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="galla.jpg" alt="গল্প ১">
-          <p class="post-title">আমার প্রথম গল্প -Istaq Maihmud Ahnaf</p>
-        </a>
-      </li>
-
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="image.png" alt="গল্প ২">
-          <p class="post-title">গ্রামের দিনগুলো</p>
-        </a>
-      </li>
-         <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="image.png" alt="গল্প ২">
-          <p class="post-title">গ্রামের দিনগুলো</p>
-        </a>
-      </li>
-
+      <li class="post-item"><a href="#" class="post-link"><img src="galla.jpg" alt=""><p class="post-title">আমার প্রথম গল্প -Istaq Maihmud Ahnaf</p></a></li>
+      <li class="post-item"><a href="#" class="post-link"><img src="image.png" alt=""><p class="post-title">গ্রামের দিনগুলো</p></a></li>
+      <li class="post-item"><a href="#" class="post-link"><img src="image.png" alt=""><p class="post-title">গ্রামের দিনগুলো</p></a></li>
     </ul>
   </div>
 
-  <!-- ছড়া-কবিতা -->
   <div class="widget">
-    <h3 class="widget-title">ছড়া-কবিতা</h3>
-
+    <h3 class="widget-title">ছড়া-কবিতা</h3>
     <ul class="post-list">
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="gallary1.jpg" alt="কবিতা ১">
-          <p class="post-title">স্বপ্নের কবিতা</p>
-        </a>
-      </li>
-
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="gallary1.jpg" alt="কবিতা ২">
-          <p class="post-title">বৃষ্টির ছড়া</p>
-        </a>
-      </li>
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="gallary1.jpg" alt="কবিতা ২">
-          <p class="post-title">বৃষ্টির ছড়া</p>
-        </a>
-      </li>
+      <li class="post-item"><a href="#" class="post-link"><img src="gallary1.jpg" alt=""><p class="post-title">স্বপ্নের কবিতা</p></a></li>
+      <li class="post-item"><a href="#" class="post-link"><img src="gallary1.jpg" alt=""><p class="post-title">বৃষ্টির ছড়া</p></a></li>
+      <li class="post-item"><a href="#" class="post-link"><img src="gallary1.jpg" alt=""><p class="post-title">বৃষ্টির ছড়া</p></a></li>
     </ul>
   </div>
 
-  <!-- সাইন্স-ফিকশন -->
   <div class="widget">
     <h3 class="widget-title">সাইন্স-ফিকশন</h3>
-
     <ul class="post-list">
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="galla.jpg" alt="সাইন্স ফিকশন ১">
-          <p class="post-title">মঙ্গল গ্রহের গল্প</p>
-        </a>
-      </li>
-
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="gallary3.jpg" alt="সাইন্স ফিকশন ২">
-          <p class="post-title">ভবিষ্যতের শহর</p>
-        </a>
-      </li>
-       <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="gallary3.jpg" alt="সাইন্স ফিকশন ২">
-          <p class="post-title">ভবিষ্যতের শহর</p>
-        </a>
-      </li>
+      <li class="post-item"><a href="#" class="post-link"><img src="galla.jpg" alt=""><p class="post-title">মঙ্গল গ্রহের গল্প</p></a></li>
+      <li class="post-item"><a href="#" class="post-link"><img src="gallary3.jpg" alt=""><p class="post-title">ভবিষ্যতের শহর</p></a></li>
+      <li class="post-item"><a href="#" class="post-link"><img src="gallary3.jpg" alt=""><p class="post-title">ভবিষ্যতের শহর</p></a></li>
     </ul>
   </div>
 
-
-  <!-- খেলার-চমক -->
   <div class="widget">
     <h3 class="widget-title">খেলার-চমক</h3>
-
     <ul class="post-list">
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="galla.jpg" alt="খেলা ১">
-          <p class="post-title">ক্রিকেটের দারুণ ম্যাচ</p>
-        </a>
-      </li>
-
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="gallary1.jpg" alt="খেলা ২">
-          <p class="post-title">ফুটবল বিশ্বকাপ গল্প</p>
-        </a>
-      </li>
+      <li class="post-item"><a href="#" class="post-link"><img src="galla.jpg" alt=""><p class="post-title">ক্রিকেটের দারুণ ম্যাচ</p></a></li>
+      <li class="post-item"><a href="#" class="post-link"><img src="gallary1.jpg" alt=""><p class="post-title">ফুটবল বিশ্বকাপ গল্প</p></a></li>
     </ul>
   </div>
 
-  <!-- দেশ-মহাদেশ -->
   <div class="widget">
     <h3 class="widget-title">দেশ-মহাদেশ</h3>
-
     <ul class="post-list">
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="gallary3.jpg" alt="দেশ ১">
-          <p class="post-title">বাংলাদেশের সৌন্দর্য</p>
-        </a>
-      </li>
-
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="gallary1.jpg" alt="দেশ ২">
-          <p class="post-title">বিশ্ব ভ্রমণের গল্প</p>
-        </a>
-      </li>
+      <li class="post-item"><a href="#" class="post-link"><img src="gallary3.jpg" alt=""><p class="post-title">বাংলাদেশের সৌন্দর্য</p></a></li>
+      <li class="post-item"><a href="#" class="post-link"><img src="gallary1.jpg" alt=""><p class="post-title">বিশ্ব ভ্রমণের গল্প</p></a></li>
     </ul>
   </div>
 
-  <!-- চলো প্রোগ্রামিং শিখি -->
   <div class="widget">
     <h3 class="widget-title">চলো প্রোগ্রামিং শিখি</h3>
-
     <ul class="post-list">
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="galla.jpg" alt="প্রোগ্রামিং ১">
-          <p class="post-title">HTML শেখা শুরু করি</p>
-        </a>
-      </li>
-
-      <li class="post-item">
-        <a href="#" class="post-link">
-          <img src="gallary3.jpg" alt="প্রোগ্রামিং ২">
-          <p class="post-title">CSS দিয়ে ডিজাইন</p>
-        </a>
-      </li>
+      <li class="post-item"><a href="#" class="post-link"><img src="galla.jpg" alt=""><p class="post-title">HTML শেখা শুরু করি</p></a></li>
+      <li class="post-item"><a href="#" class="post-link"><img src="gallary3.jpg" alt=""><p class="post-title">CSS দিয়ে ডিজাইন</p></a></li>
     </ul>
   </div>
 
@@ -536,170 +632,116 @@
 </div>
 
 <section class="main-section">
-
-  <!-- Left: Activities -->
   <div class="left">
     <h2 class="section-title">আমাদের কার্যক্রম</h2>
-
     <div class="activities">
-      <div class="card">
-        <h3>🎭 সাংস্কৃতিক অনুষ্ঠান</h3>
-        <p>নিয়মিত সাংস্কৃতিক অনুষ্ঠান আয়োজন করা হয়</p>
-      </div>
-
-      <div class="card">
-        <h3>🤝 সমাজসেবা</h3>
-        <p>গরিব ও অসহায় মানুষের পাশে দাঁড়ানো</p>
-      </div>
-
-      <div class="card">
-        <h3>🌱 পরিবেশ রক্ষা</h3>
-        <p>গাছ লাগানো ও সচেতনতা কার্যক্রম</p>
-      </div>
-<div class="card">
-  <h3>🕌 ইসলামী সংস্কৃতি</h3>
-  <p>ইসলামী মূল্যবোধ ও ইসলামী সংস্কৃতি প্রচার করা হয়</p>
-</div>
-
+      <div class="card"><h3>🎭 সাংস্কৃতিক অনুষ্ঠান</h3><p>নিয়মিত সাংস্কৃতিক অনুষ্ঠান আয়োজন করা হয়</p></div>
+      <div class="card"><h3>🤝 সমাজসেবা</h3><p>গরিব ও অসহায় মানুষের পাশে দাঁড়ানো</p></div>
+      <div class="card"><h3>🌱 পরিবেশ রক্ষা</h3><p>গাছ লাগানো ও সচেতনতা কার্যক্রম</p></div>
+      <div class="card"><h3>🕌 ইসলামী সংস্কৃতি</h3><p>ইসলামী মূল্যবোধ ও ইসলামী সংস্কৃতি প্রচার করা হয়</p></div>
     </div>
   </div>
-
-  <!-- Right: Members -->
   <div class="right">
     <h2 class="section-title">কমিটি সদস্য</h2>
-
     <div class="members">
-      <div class="member">
-        <img src="committe1.jpg" alt="">
-        <h3>সভাপতি</h3>
-        <p>Istaq Maihmud Ahnaf</p>
-      </div>
-
-      <div class="member">
-        <img src="committe2.jpg" alt="">
-        <h3>সাধারণ সম্পাদক</h3>
-        <p>নাম</p>
-      </div>
+      <div class="member"><img src="committe1.jpg" alt=""><h3>সভাপতি</h3><p>Istaq Maihmud Ahnaf</p></div>
+      <div class="member"><img src="committe2.jpg" alt=""><h3>সাধারণ সম্পাদক</h3><p>নাম</p></div>
     </div>
   </div>
-
 </section>
-
-
-
-<!-- Gallery -->
-
-
 
 <section class="gallery-section">
-
   <h2 class="section-title">গ্যালারি</h2>
-
   <div class="gallery">
+    <div class="gallery-item"><img src="galla.jpg" alt=""></div>
+    <div class="gallery-item"><img src="gallary1.jpg" alt=""></div>
+    <div class="gallery-item"><img src="gallary3.jpg" alt=""></div>
+    <div class="gallery-item"><img src="galla.jpg" alt=""></div>
+  </div>
+  <div class="view-all"><a href="#">সব ছবি দেখুন</a></div>
+</section>
 
-    <div class="gallery-item">
-      <img src="galla.jpg" alt="">
+
+<!-- ===== SOCIAL FOLLOW SECTION (before footer) ===== -->
+<section class="social-follow-section">
+  <h2><span>📱</span> আমাদের সোশ্যাল মিডিয়া ফেলো করুন</h2>
+  <p>আরও সুন্দর ছবি ও আকর্ষণীয় ভিডিওর জন্য আমাদের Facebook পেইজ ও YouTube চ্যানেল আজই সাবস্ক্রাইব করে যুক্ত থাকুন।</p>
+  <div class="social-follow-btns">
+    <a href="https://facebook.com" class="btn-facebook" target="_blank" rel="noopener">
+      <i class="fa-brands fa-facebook-f"></i> Facebook পেইজ
+    </a>
+    <a href="https://youtube.com" class="btn-youtube" target="_blank" rel="noopener">
+      <i class="fa-brands fa-youtube"></i> YouTube চ্যানেল
+    </a>
+  </div>
+</section>
+
+<!-- ===== NEW FOOTER ===== -->
+<footer class="footer-new">
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <div class="footer-brand-icon">
+        <i class="fa-solid fa-masks-theater"></i>
+      </div>
+      <div class="footer-brand-text">
+        <h3>সোনাগাজী কালচারাল ফোরাম</h3>
+        <p>ফেনী, বাংলাদেশ</p>
+      </div>
     </div>
 
-    <div class="gallery-item">
-      <img src="gallary1.jpg" alt="">
+    <p class="footer-desc">ফেনী জেলার সোনাগাজী উপজেলার একটি অগ্রগামী সামাজিক ও সাংস্কৃতিক সংগঠন। শিল্প, সাহিত্য ও সংস্কৃতির মাধ্যমে একটি সুন্দর সমাজ বিনির্মাণের লক্ষ্যে আমরা কাজ করে যাচ্ছি।</p>
+
+    <p class="footer-section-title">আমাদের কার্যক্রমের ক্ষেত্র</p>
+    <ul class="footer-list">
+      <li>সাংস্কৃতিক বিকাশ ও অনুষ্ঠান</li>
+      <li>মানবসেবা ও ত্রান বিতরণ</li>
+      <li>পরিবেশ রক্ষা ও বৃক্ষরোপণ</li>
+      <li>ইসলামী মূল্যবোধ ও সংস্কৃতি চর্চা</li>
+    </ul>
+
+    <p class="footer-section-title">যোগাযোগ</p>
+    <div class="footer-contact">
+      <div class="footer-contact-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>সোনাগাজী জিরো পয়েন্ট, ফেনী, বাংলাদেশ</span>
+      </div>
+      <div class="footer-contact-item">
+        <i class="fa-solid fa-envelope"></i>
+        <span>contact@scffeni.org</span>
+      </div>
     </div>
 
-    <div class="gallery-item">
-      <img src="gallary3.jpg" alt="">
-    </div>
-
-    <div class="gallery-item">
-      <img src="galla.jpg" alt="">
+    <div class="footer-bottom">
+      <p>© 2026 সোনাগাজী কালচারাল ফোরাম, ফেনী. All Rights Reserved.</p>
+      <p class="dev">Developed by <strong>Abdullah Al Maruf</strong> <span class="heart">❤</span></p>
     </div>
 
   </div>
-<div class="view-all">
-  <a href="#">সব ছবি দেখুন</a>
-</div>
-</section>
+</footer>
 
-</div>
-
-
-
-  <footer>
-    <p>© 2026 সোনাগাজী কালচারাল ফোরাম,ফেনী. All Rights Reserved.</p>
-
-    <div class="social-icons" >
-  <a href="https://facebook.com/yourpage" target="_blank">
-    <i class="fa-brands fa-facebook-f"></i>
-  </a>
-
-  <a href="https://youtube.com/yourchannel" target="_blank">
-    <i class="fa-brands fa-youtube"></i>
-  </a>
-</div>
-<p class="developer">Developed by Abdullah Al Maruf</p>
-
-
-<button id="goTopBtn">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-    <path d="M12 4l-8 8h5v8h6v-8h5z"/>
-  </svg>
-</button>
-
-  </footer>
-
-
-  
 </main>
-
 
 <script>
 const reels = document.querySelectorAll(".reel video");
-
 reels.forEach(video => {
-  // autoplay when visible
-  video.addEventListener("mouseenter", () => {
-    video.play();
-  });
-
-  video.addEventListener("mouseleave", () => {
-    video.pause();
-  });
-
-  // mobile tap play
-  video.addEventListener("click", () => {
-    if (video.paused) {
-      video.play();
-    } else {
-      video.pause();
-    }
-  });
+  video.addEventListener("mouseenter", () => { video.play(); });
+  video.addEventListener("mouseleave", () => { video.pause(); });
+  video.addEventListener("click", () => { if (video.paused) { video.play(); } else { video.pause(); } });
 });
 </script>
- <script src="script.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
 const swiper = new Swiper(".mySwiper", {
   loop: true,
   spaceBetween: 10,
-
-  autoplay: {
-    delay: 3000,
-    disableOnInteraction: false,
-  },
-
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: true,
-  },
-
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-
-  effect: "slide", // or "fade"
+  autoplay: { delay: 3000, disableOnInteraction: false },
+  pagination: { el: ".swiper-pagination", clickable: true },
+  navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+  effect: "slide",
 });
 </script>
-
 
 </body>
 </html>
