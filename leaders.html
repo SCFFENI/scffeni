@@ -7,10 +7,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep: #060d0b;
+      --bg-dark: #0b1a16;
+      --bg-card: #0f2219;
+      --bg-card2: #112820;
+      --accent: #2dbd72;
+      --accent2: #1a9957;
+      --accent-glow: rgba(45,189,114,0.18);
+      --text: #e8f5ee;
+      --text-muted: #7aaa90;
+      --text-dim: #4a7a60;
+      --border: rgba(45,189,114,0.15);
+      --border-subtle: rgba(255,255,255,0.06);
+    }
 
     body {
       font-family: 'Hind Siliguri', sans-serif;
@@ -18,52 +33,121 @@
       color: #1a1a2e;
     }
 
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(6,13,11,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo {
+      width: 38px; height: 38px;
+      background: var(--accent);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .nav-brand-text { display: flex; flex-direction: column; }
+    .nav-brand-text strong {
+      font-size: 0.92rem; font-weight: 700;
+      color: #fff; line-height: 1.2;
+    }
+    .nav-brand-text span { font-size: 0.72rem; color: var(--text-muted); }
+
+    .nav-links {
+      display: flex; gap: 4px; list-style: none;
+    }
+
+    .nav-links a {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 13px; border-radius: 8px;
+      font-size: 0.85rem; color: var(--text-muted);
+      text-decoration: none; transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      background: var(--accent-glow); color: var(--accent);
+    }
+    .nav-links a i { font-size: 0.8rem; }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    /* Mobile Nav */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(6,13,11,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      z-index: 999;
+      padding: 16px;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 16px; border-radius: 10px;
+      font-size: 0.92rem; color: var(--text-muted);
+      text-decoration: none; transition: all 0.2s;
+    }
+    .mobile-nav a:hover { background: var(--accent-glow); color: var(--accent); }
+    .mobile-nav a i { color: var(--accent); width: 18px; }
+
+    /* ===== PAGE CONTENT ===== */
     .executive-panel {
-      padding: 80px 20px;
+      padding: 100px 20px 80px;
       background: linear-gradient(160deg, #0b3535 0%, #0f4a47 50%, #0d3f3c 100%);
       min-height: 100vh;
     }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    .container { max-width: 1100px; margin: 0 auto; }
 
     /* HEADER */
-    .section-header {
-      text-align: center;
-      margin-bottom: 56px;
-    }
+    .section-header { text-align: center; margin-bottom: 56px; }
     .section-header .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 11.5px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #7ececa;
-      margin-bottom: 14px;
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11.5px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: #7ececa; margin-bottom: 14px;
     }
     .section-header .eyebrow::before,
     .section-header .eyebrow::after {
-      content: '';
-      width: 36px;
-      height: 1px;
-      background: #2a7a76;
+      content: ''; width: 36px; height: 1px; background: #2a7a76;
     }
     .section-header h2 {
-      font-size: 36px;
-      font-weight: 700;
-      color: #e8f8f7;
-      letter-spacing: -0.025em;
-      margin-bottom: 10px;
+      font-size: 36px; font-weight: 700; color: #e8f8f7;
+      letter-spacing: -0.025em; margin-bottom: 10px;
     }
-    .section-header p {
-      font-size: 15px;
-      color: #8ecece;
-    }
+    .section-header p { font-size: 15px; color: #8ecece; }
 
-    /* BIG CARDS GRID */
+    /* BIG CARDS */
     .team-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -71,16 +155,14 @@
     }
 
     .team-card {
-      background: #fff;
-      border-radius: 20px;
-      overflow: hidden;
+      background: #fff; border-radius: 20px; overflow: hidden;
       border: 1px solid rgba(255,255,255,0.12);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
       position: relative;
     }
     .team-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 24px 56px rgba(0,0,0,0.35);
     }
 
     .card-accent { height: 5px; width: 100%; }
@@ -88,122 +170,67 @@
     .card-accent.green { background: linear-gradient(90deg, #0F6E56, #1D9E75); }
     .card-accent.amber { background: linear-gradient(90deg, #854F0B, #EF9F27); }
 
-    .card-body {
-      padding: 28px 24px 20px;
-      text-align: center;
-    }
+    .card-body { padding: 28px 24px 20px; text-align: center; }
 
     .avatar-wrap {
-      width: 88px;
-      height: 88px;
-      border-radius: 50%;
-      margin: 0 auto 18px;
-      overflow: hidden;
-      border: 3px solid #e8ecf4;
-      background: #f0f4fa;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 88px; height: 88px; border-radius: 50%;
+      margin: 0 auto 18px; overflow: hidden;
+      border: 3px solid #e8ecf4; background: #f0f4fa;
+      display: flex; align-items: center; justify-content: center;
       position: relative;
     }
     .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .avatar-init { font-size: 28px; font-weight: 700; color: #aaa; display: none; }
 
     .ribbon {
-      position: absolute;
-      top: 14px;
-      left: -26px;
-      background: #185FA5;
-      color: #fff;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 4px 32px;
-      transform: rotate(-45deg);
-      white-space: nowrap;
+      position: absolute; top: 14px; left: -26px;
+      background: #185FA5; color: #fff;
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 32px; transform: rotate(-45deg); white-space: nowrap;
     }
 
     .role-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 5px 14px;
-      border-radius: 20px;
-      margin-bottom: 12px;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600;
+      padding: 5px 14px; border-radius: 20px; margin-bottom: 12px;
     }
     .role-badge.blue  { background: #E6F1FB; color: #185FA5; }
     .role-badge.green { background: #E1F5EE; color: #0F6E56; }
     .role-badge.amber { background: #FAEEDA; color: #854F0B; }
 
-    .card-name {
-      font-size: 19px;
-      font-weight: 700;
-      color: #0d1b4c;
-      margin-bottom: 8px;
-      line-height: 1.3;
-    }
-    .card-desc {
-      font-size: 13.5px;
-      color: #777;
-      line-height: 1.7;
-    }
+    .card-name { font-size: 19px; font-weight: 700; color: #0d1b4c; margin-bottom: 8px; line-height: 1.3; }
+    .card-desc { font-size: 13.5px; color: #777; line-height: 1.7; }
 
     .card-footer {
-      border-top: 1px solid #f0f3fa;
-      background: #fafbff;
-      padding: 14px 24px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
+      border-top: 1px solid #f0f3fa; background: #fafbff;
+      padding: 14px 24px; display: flex; justify-content: center; gap: 10px;
     }
     .social-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 9px;
-      border: 1px solid #e4e9f4;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #888;
-      font-size: 14px;
-      text-decoration: none;
+      width: 36px; height: 36px; border-radius: 9px;
+      border: 1px solid #e4e9f4; background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      color: #888; font-size: 14px; text-decoration: none;
       transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
     }
     .social-btn:hover {
-      background: #0b3535;
-      color: #fff;
-      border-color: #0b3535;
-      transform: translateY(-2px);
+      background: #0b3535; color: #fff;
+      border-color: #0b3535; transform: translateY(-2px);
     }
 
-    /* MEMBERS SECTION */
-    .members-section {
-      margin-top: 64px;
-    }
+    /* MEMBERS */
+    .members-section { margin-top: 64px; }
 
     .members-divider {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 28px;
+      display: flex; align-items: center; gap: 16px; margin-bottom: 28px;
     }
     .members-divider span {
-      font-size: 13px;
-      font-weight: 700;
-      color: #b0e8e4;
-      white-space: nowrap;
-      letter-spacing: 0.06em;
+      font-size: 13px; font-weight: 700; color: #b0e8e4;
+      white-space: nowrap; letter-spacing: 0.06em;
     }
     .members-divider::before,
     .members-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: #1e6460;
+      content: ''; flex: 1; height: 1px; background: #1e6460;
     }
 
     .members-grid {
@@ -215,11 +242,8 @@
     .member-card {
       background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 14px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
+      border-radius: 14px; padding: 14px 16px;
+      display: flex; align-items: center; gap: 14px;
       transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
       backdrop-filter: blur(6px);
     }
@@ -230,40 +254,133 @@
     }
 
     .member-avatar {
-      width: 44px;
-      height: 44px;
-      min-width: 44px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.1);
+      width: 44px; height: 44px; min-width: 44px;
+      border-radius: 50%; background: rgba(255,255,255,0.1);
       border: 1.5px solid rgba(255,255,255,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 700;
-      color: #a8e6e3;
-      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; color: #a8e6e3; overflow: hidden;
     }
     .member-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
     .member-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: #e8f8f7;
-      margin-bottom: 3px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 14px; font-weight: 700; color: #e8f8f7;
+      margin-bottom: 3px; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
     }
     .member-role {
-      font-size: 12px;
-      color: #7ecece;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 12px; color: #7ecece;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
+    /* ===== FOOTER ===== */
+    .social-follow-section {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 60px 24px;
+      text-align: center;
+    }
+    .social-follow-section h2 {
+      font-family: 'Tiro Bangla', serif;
+      font-size: 1.5rem; color: #fff; margin-bottom: 8px;
+    }
+    .social-follow-section p {
+      color: var(--text-muted); font-size: 0.9rem;
+      max-width: 380px; margin: 0 auto 28px; line-height: 1.7;
+    }
+    .social-btns {
+      display: flex; flex-direction: column;
+      gap: 12px; max-width: 320px; margin: 0 auto;
+    }
+    .btn-fb {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #1877f2; color: #fff; padding: 14px; border-radius: 12px;
+      font-size: 0.95rem; font-weight: 600;
+      font-family: 'Hind Siliguri', sans-serif; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-fb:hover { background: #1464d8; transform: translateY(-1px); }
+    .btn-yt {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #ff0000; color: #fff; padding: 14px; border-radius: 12px;
+      font-size: 0.95rem; font-weight: 600;
+      font-family: 'Hind Siliguri', sans-serif; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-yt:hover { background: #cc0000; transform: translateY(-1px); }
+
+    footer {
+      background: #050c09;
+      border-top: 1px solid var(--border-subtle);
+      padding: 44px 24px 28px;
+    }
+    .footer-inner { max-width: 700px; margin: 0 auto; }
+    .footer-top {
+      display: flex; align-items: flex-start;
+      gap: 14px; margin-bottom: 18px;
+    }
+    .footer-icon {
+      width: 46px; height: 46px; flex-shrink: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); font-size: 1.1rem;
+    }
+    .footer-brand-info h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .footer-brand-info p { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-desc {
+      font-size: 0.87rem; color: var(--text-muted);
+      line-height: 1.75; margin-bottom: 28px;
+      padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle);
+    }
+    .footer-cols {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; margin-bottom: 28px;
+    }
+    .footer-col-title {
+      font-size: 0.85rem; font-weight: 700; color: #fff;
+      padding-left: 10px; border-left: 2px solid var(--accent); margin-bottom: 14px;
+    }
+    .footer-list { list-style: none; }
+    .footer-list li {
+      font-size: 0.83rem; color: var(--text-muted);
+      padding: 5px 0; display: flex; align-items: flex-start; gap: 8px;
+    }
+    .footer-list li::before { content: '•'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+    .footer-contact-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.83rem; color: var(--text-muted); margin-bottom: 10px;
+    }
+    .footer-contact-item i { color: var(--accent); width: 16px; font-size: 0.8rem; }
+    .footer-bottom {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 20px; text-align: center;
+    }
+    .footer-bottom p { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 4px; }
+    .footer-bottom .dev strong { color: var(--text-muted); }
+    .footer-bottom .heart { color: #e74c3c; }
+
+    /* Go top */
+    #goTopBtn {
+      position: fixed; bottom: 24px; right: 20px;
+      width: 42px; height: 42px;
+      background: var(--accent); border: none;
+      border-radius: 10px; color: #fff; font-size: 1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(45,189,114,0.35);
+      opacity: 0; transform: translateY(10px);
+      transition: all 0.3s; z-index: 999;
+    }
+    #goTopBtn.show { opacity: 1; transform: translateY(0); }
+    #goTopBtn:hover { background: #25a862; transform: translateY(-2px); }
+
     /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; align-items: center; justify-content: center; }
+      .footer-cols { grid-template-columns: 1fr; }
+    }
     @media (max-width: 600px) {
       .section-header h2 { font-size: 26px; }
       .team-grid { grid-template-columns: 1fr; }
@@ -276,6 +393,41 @@
 </head>
 <body>
 
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-logo"><i class="fa-solid fa-masks-theater"></i></div>
+    <div class="nav-brand-text">
+      <strong>সোনাগাজী কালচারাল ফোরাম</strong>
+      <span>ফেনী, বাংলাদেশ</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="index.html"><i class="fa-solid fa-house"></i> হোম</a></li>
+    <li><a href="about.html"><i class="fa-solid fa-landmark"></i> আমাদের সম্পর্কে</a></li>
+    <li><a href="events.html"><i class="fa-solid fa-masks-theater"></i> অনুষ্ঠান</a></li>
+    <li><a href="leaders.html" class="active"><i class="fa-solid fa-users"></i> নেতৃত্ব</a></li>
+    <li><a href="gallery.html"><i class="fa-solid fa-image"></i> গ্যালারি</a></li>
+    <li><a href="contact.html"><i class="fa-solid fa-envelope"></i> যোগাযোগ</a></li>
+  </ul>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html"><i class="fa-solid fa-house"></i> হোম</a>
+  <a href="about.html"><i class="fa-solid fa-landmark"></i> আমাদের সম্পর্কে</a>
+  <a href="events.html"><i class="fa-solid fa-masks-theater"></i> সাংস্কৃতিক অনুষ্ঠান</a>
+  <a href="leaders.html"><i class="fa-solid fa-users"></i> নেতৃত্ব</a>
+  <a href="gallery.html"><i class="fa-solid fa-image"></i> গ্যালারি</a>
+  <a href="contact.html"><i class="fa-solid fa-envelope"></i> যোগাযোগ</a>
+</div>
+
+<!-- ===== PAGE CONTENT ===== -->
 <section class="executive-panel">
   <div class="container">
 
@@ -285,7 +437,6 @@
       <p>আমাদের নিবেদিতপ্রাণ নেতৃত্ব দলের সাথে পরিচিত হোন</p>
     </div>
 
-    <!-- বড় কার্ড -->
     <div class="team-grid">
 
       <div class="team-card">
@@ -352,129 +503,155 @@
         </div>
       </div>
 
-    </div><!-- /team-grid -->
+    </div>
 
     <!-- ছোট সদস্য কার্ড -->
     <div class="members-section">
       <div class="members-divider"><span>কমিটি সদস্যবৃন্দ</span></div>
       <div class="members-grid">
 
-        <!--
-          নতুন সদস্য যোগ করতে নিচের ব্লকটি copy করুন:
-
-          <div class="member-card">
-            <div class="member-avatar">আদ্যক্ষর</div>
-            <div>
-              <p class="member-name">নাম লিখুন</p>
-              <p class="member-role">দায়িত্ব লিখুন</p>
-            </div>
-          </div>
-
-          ছবি দিতে চাইলে member-avatar এর ভেতরে:
-          <img src="ছবির_লিংক" alt="নাম">
-        -->
-
         <div class="member-card">
           <div class="member-avatar">স</div>
-          <div>
-            <p class="member-name">সদস্যের নাম</p>
-            <p class="member-role">সহ-সভাপতি</p>
-          </div>
+          <div><p class="member-name">সদস্যের নাম</p><p class="member-role">সহ-সভাপতি</p></div>
         </div>
-
         <div class="member-card">
           <div class="member-avatar">য</div>
-          <div>
-            <p class="member-name">সদস্যের নাম</p>
-            <p class="member-role">যুগ্ম সম্পাদক</p>
-          </div>
+          <div><p class="member-name">সদস্যের নাম</p><p class="member-role">যুগ্ম সম্পাদক</p></div>
         </div>
-
         <div class="member-card">
           <div class="member-avatar">সা</div>
-          <div>
-            <p class="member-name">সদস্যের নাম</p>
-            <p class="member-role">সাংস্কৃতিক সম্পাদক</p>
-          </div>
+          <div><p class="member-name">সদস্যের নাম</p><p class="member-role">সাংস্কৃতিক সম্পাদক</p></div>
         </div>
-
         <div class="member-card">
           <div class="member-avatar">অ</div>
-          <div>
-            <p class="member-name">সদস্যের নাম</p>
-            <p class="member-role">অর্থ সম্পাদক</p>
-          </div>
+          <div><p class="member-name">সদস্যের নাম</p><p class="member-role">অর্থ সম্পাদক</p></div>
         </div>
-
         <div class="member-card">
           <div class="member-avatar">প</div>
-          <div>
-            <p class="member-name">সদস্যের নাম</p>
-            <p class="member-role">প্রচার সম্পাদক</p>
-          </div>
+          <div><p class="member-name">সদস্যের নাম</p><p class="member-role">প্রচার সম্পাদক</p></div>
         </div>
-
         <div class="member-card">
           <div class="member-avatar">ক</div>
-          <div>
-            <p class="member-name">সদস্যের নাম</p>
-            <p class="member-role">ক্রীড়া সম্পাদক</p>
-          </div>
+          <div><p class="member-name">সদস্যের নাম</p><p class="member-role">ক্রীড়া সম্পাদক</p></div>
         </div>
-
         <div class="member-card">
           <div class="member-avatar">সম</div>
-          <div>
-            <p class="member-name">সদস্যের নাম</p>
-            <p class="member-role">সমাজকল্যাণ সম্পাদক</p>
-          </div>
+          <div><p class="member-name">সদস্যের নাম</p><p class="member-role">সমাজকল্যাণ সম্পাদক</p></div>
         </div>
-
         <div class="member-card">
           <div class="member-avatar">ত</div>
-          <div>
-            <p class="member-name">সদস্যের নাম</p>
-            <p class="member-role">তথ্য ও গবেষণা সম্পাদক</p>
-          </div>
+          <div><p class="member-name">সদস্যের নাম</p><p class="member-role">তথ্য ও গবেষণা সম্পাদক</p></div>
         </div>
-
         <div class="member-card">
           <div class="member-avatar">শ</div>
-          <div>
-            <p class="member-name">সদস্যের নাম</p>
-            <p class="member-role">শিক্ষা ও প্রশিক্ষণ সম্পাদক</p>
-          </div>
+          <div><p class="member-name">সদস্যের নাম</p><p class="member-role">শিক্ষা ও প্রশিক্ষণ সম্পাদক</p></div>
         </div>
-
         <div class="member-card">
           <div class="member-avatar">স</div>
-          <div>
-            <p class="member-name">সদস্যের নাম</p>
-            <p class="member-role">সদস্য</p>
-          </div>
+          <div><p class="member-name">সদস্যের নাম</p><p class="member-role">সদস্য</p></div>
         </div>
-
         <div class="member-card">
           <div class="member-avatar">স</div>
-          <div>
-            <p class="member-name">সদস্যের নাম</p>
-            <p class="member-role">সদস্য</p>
-          </div>
+          <div><p class="member-name">সদস্যের নাম</p><p class="member-role">সদস্য</p></div>
         </div>
-
         <div class="member-card">
           <div class="member-avatar">স</div>
-          <div>
-            <p class="member-name">সদস্যের নাম</p>
-            <p class="member-role">সদস্য</p>
-          </div>
+          <div><p class="member-name">সদস্যের নাম</p><p class="member-role">সদস্য</p></div>
         </div>
 
-      </div><!-- /members-grid -->
-    </div><!-- /members-section -->
+      </div>
+    </div>
 
-  </div><!-- /container -->
+  </div>
 </section>
+
+<!-- ===== SOCIAL FOLLOW ===== -->
+<section class="social-follow-section">
+  <h2>📱 আমাদের সোশ্যাল মিডিয়া ফেলো করুন</h2>
+  <p>আরও সুন্দর ছবি ও আকর্ষণীয় ভিডিওর জন্য আমাদের Facebook পেইজ ও YouTube চ্যানেল আজই সাবস্ক্রাইব করুন।</p>
+  <div class="social-btns">
+    <a href="https://facebook.com" target="_blank" rel="noopener" class="btn-fb">
+      <i class="fa-brands fa-facebook-f"></i> Facebook পেইজ
+    </a>
+    <a href="https://youtube.com" target="_blank" rel="noopener" class="btn-yt">
+      <i class="fa-brands fa-youtube"></i> YouTube চ্যানেল
+    </a>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-icon"><i class="fa-solid fa-masks-theater"></i></div>
+      <div class="footer-brand-info">
+        <h3>সোনাগাজী কালচারাল ফোরাম</h3>
+        <p>ফেনী, বাংলাদেশ</p>
+      </div>
+    </div>
+
+    <p class="footer-desc">ফেনী জেলার সোনাগাজী উপজেলার একটি অগ্রগামী সামাজিক ও সাংস্কৃতিক সংগঠন। শিল্প, সাহিত্য ও সংস্কৃতির মাধ্যমে একটি সুন্দর সমাজ বিনির্মাণের লক্ষ্যে আমরা কাজ করে যাচ্ছি।</p>
+
+    <div class="footer-cols">
+      <div>
+        <p class="footer-col-title">কার্যক্রমের ক্ষেত্র</p>
+        <ul class="footer-list">
+          <li>সাংস্কৃতিক বিকাশ ও অনুষ্ঠান</li>
+          <li>মানবসেবা ও ত্রান বিতরণ</li>
+          <li>পরিবেশ রক্ষা ও বৃক্ষরোপণ</li>
+          <li>ইসলামী মূল্যবোধ ও সংস্কৃতি চর্চা</li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">যোগাযোগ</p>
+        <div class="footer-contact-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>সোনাগাজী জিরো পয়েন্ট, ফেনী</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fa-solid fa-envelope"></i>
+          <span>contact@scffeni.org</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fa-brands fa-facebook-f"></i>
+          <span>Facebook পেইজ</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fa-brands fa-youtube"></i>
+          <span>YouTube চ্যানেল</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 সোনাগাজী কালচারাল ফোরাম, ফেনী. All Rights Reserved.</p>
+      <p class="dev">Developed by <strong>Abdullah Al Maruf</strong> <span class="heart">❤</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- Go to Top -->
+<button id="goTopBtn" aria-label="Go to top">
+  <i class="fa-solid fa-chevron-up"></i>
+</button>
+
+<script>
+// Hamburger
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+document.addEventListener('click', (e) => {
+  if (!hamburger.contains(e.target) && !mobileNav.contains(e.target))
+    mobileNav.classList.remove('open');
+});
+
+// Go to top
+const goTopBtn = document.getElementById('goTopBtn');
+window.addEventListener('scroll', () => {
+  goTopBtn.classList.toggle('show', window.scrollY > 300);
+});
+goTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
 
 </body>
 </html>
