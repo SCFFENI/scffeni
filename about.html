@@ -1,908 +1,991 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আমাদের সম্পর্কে - সোনাগাজী কালচারাল ফোরাম</title>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --green: #0d7a5e;
-            --teal: #1a5c7a;
-            --light-green: #e8f7f2;
-            --mint: #d4f1e8;
-            --white: #ffffff;
-            --gray: #f4f6f9;
-            --text: #2c3e50;
-            --muted: #6b7c93;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Hind Siliguri', sans-serif;
-            color: var(--text);
-            background: var(--white);
-            overflow-x: hidden;
-        }
-
-        /* ─── NAVBAR ─── */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(255,255,255,0.97);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(13,122,94,0.12);
-            padding: 0 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 68px;
-            box-shadow: 0 2px 16px rgba(13,122,94,0.07);
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .nav-logo {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, var(--green), var(--teal));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2em;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .nav-title {
-            font-size: 0.95em;
-            font-weight: 700;
-            color: var(--green);
-            line-height: 1.3;
-        }
-
-        .nav-title span {
-            display: block;
-            font-size: 0.78em;
-            font-weight: 400;
-            color: var(--muted);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text);
-            font-size: 0.92em;
-            font-weight: 500;
-            padding: 6px 14px;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            background: var(--light-green);
-            color: var(--green);
-        }
-
-        .nav-links a.active {
-            font-weight: 700;
-        }
-
-        .nav-cta {
-            background: linear-gradient(135deg, var(--green), var(--teal)) !important;
-            color: white !important;
-            padding: 8px 20px !important;
-            border-radius: 8px !important;
-            font-weight: 600 !important;
-        }
-
-        .nav-cta:hover {
-            opacity: 0.88;
-            background: linear-gradient(135deg, var(--green), var(--teal)) !important;
-        }
-
-        /* ─── HERO ─── */
-        .hero {
-            position: relative;
-            background: linear-gradient(135deg, #0d7a5e 0%, #1a5c7a 60%, #0f4a62 100%);
-            color: white;
-            padding: 90px 40px 80px;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.25);
-            color: #a7f3d0;
-            font-size: 0.82em;
-            font-weight: 600;
-            padding: 5px 14px;
-            border-radius: 20px;
-            margin-bottom: 22px;
-            letter-spacing: 0.5px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2em, 4vw, 3em);
-            font-weight: 700;
-            margin-bottom: 16px;
-            line-height: 1.3;
-        }
-
-        .hero p {
-            font-size: 1.1em;
-            opacity: 0.88;
-            max-width: 580px;
-            margin: 0 auto 40px;
-            line-height: 1.8;
-        }
-
-        /* ─── STAT CARDS ─── */
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            position: relative;
-        }
-
-        .stat-card {
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(8px);
-            border-radius: 14px;
-            padding: 22px 32px;
-            text-align: center;
-            min-width: 160px;
-            transition: transform 0.25s, background 0.25s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            background: rgba(255,255,255,0.18);
-        }
-
-        .stat-value {
-            font-size: 2em;
-            font-weight: 700;
-            color: #a7f3d0;
-            line-height: 1.2;
-        }
-
-        .stat-label {
-            font-size: 0.8em;
-            opacity: 0.8;
-            margin-top: 4px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* ─── MAIN CONTENT ─── */
-        .page-body {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 60px 24px 80px;
-        }
-
-        /* ─── SECTION HEADER ─── */
-        .section-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--mint);
-            color: var(--green);
-            font-size: 0.78em;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-            letter-spacing: 0.4px;
-        }
-
-        .section-title {
-            font-size: 1.7em;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 8px;
-            line-height: 1.3;
-        }
-
-        .section-divider {
-            width: 48px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--green), var(--teal));
-            border-radius: 2px;
-            margin-bottom: 28px;
-        }
-
-        /* ─── STORY SECTION ─── */
-        .story-section {
-            background: var(--white);
-            border: 1px solid #e2ebe7;
-            border-radius: 18px;
-            padding: 44px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 24px rgba(13,122,94,0.06);
-        }
-
-        .story-body p {
-            font-size: 1.04em;
-            line-height: 1.9;
-            color: #4a5568;
-            margin-bottom: 18px;
-        }
-
-        .story-body p:last-child { margin-bottom: 0; }
-
-        .mission-quote {
-            background: linear-gradient(135deg, var(--mint), #c6f0e2);
-            border-left: 5px solid var(--green);
-            border-radius: 10px;
-            padding: 22px 28px;
-            margin: 28px 0;
-            font-size: 1.08em;
-            font-weight: 600;
-            color: var(--teal);
-            font-style: italic;
-            line-height: 1.7;
-        }
-
-        /* ─── GOALS GRID ─── */
-        .goals-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .goal-card {
-            background: var(--white);
-            border: 1px solid #e2ebe7;
-            border-radius: 16px;
-            padding: 28px 24px;
-            transition: all 0.25s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .goal-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--green), var(--teal));
-        }
-
-        .goal-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 32px rgba(13,122,94,0.12);
-        }
-
-        .goal-icon {
-            width: 46px;
-            height: 46px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4em;
-            margin-bottom: 16px;
-        }
-
-        .goal-icon.green { background: var(--mint); }
-        .goal-icon.teal  { background: #dce9f5; }
-        .goal-icon.indigo { background: #e8e8fa; }
-
-        .goal-card h3 {
-            font-size: 1em;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 10px;
-        }
-
-        .goal-card p {
-            font-size: 0.9em;
-            color: var(--muted);
-            line-height: 1.75;
-        }
-
-        /* ─── ACTIVITIES ─── */
-        .activities-section {
-            background: var(--gray);
-            border-radius: 18px;
-            padding: 44px;
-            margin-bottom: 40px;
-        }
-
-        .activities-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-top: 24px;
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            background: white;
-            border-radius: 12px;
-            padding: 16px 18px;
-            border: 1px solid #e2ebe7;
-            transition: all 0.2s;
-        }
-
-        .activity-item:hover {
-            border-color: var(--green);
-            box-shadow: 0 4px 14px rgba(13,122,94,0.08);
-        }
-
-        .activity-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--green);
-            border-radius: 50%;
-            flex-shrink: 0;
-            margin-top: 7px;
-        }
-
-        .activity-item span {
-            font-size: 0.92em;
-            color: var(--text);
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        /* ─── OBJECTIVES ─── */
-        .objectives-section {
-            margin-bottom: 40px;
-        }
-
-        .obj-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-top: 24px;
-        }
-
-        .obj-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            padding: 20px 24px;
-            background: var(--white);
-            border-radius: 14px;
-            border: 1px solid #e2ebe7;
-            transition: all 0.2s;
-        }
-
-        .obj-item:hover {
-            border-color: rgba(13,122,94,0.3);
-            box-shadow: 0 4px 16px rgba(13,122,94,0.07);
-        }
-
-        .obj-num {
-            width: 34px;
-            height: 34px;
-            background: linear-gradient(135deg, var(--green), var(--teal));
-            color: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.82em;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .obj-item h4 {
-            font-size: 0.96em;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 4px;
-        }
-
-        .obj-item p {
-            font-size: 0.88em;
-            color: var(--muted);
-            line-height: 1.65;
-        }
-
-        /* ─── VALUES ─── */
-        .values-section {
-            background: linear-gradient(135deg, var(--green) 0%, var(--teal) 100%);
-            border-radius: 20px;
-            padding: 50px 44px;
-            color: white;
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .values-section::before {
-            content: '❝';
-            position: absolute;
-            top: -10px;
-            left: 36px;
-            font-size: 8em;
-            opacity: 0.08;
-            line-height: 1;
-        }
-
-        .values-section .section-tag {
-            background: rgba(255,255,255,0.15);
-            color: #a7f3d0;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .values-section .section-title { color: white; }
-
-        .values-quote {
-            font-size: 1.3em;
-            font-weight: 600;
-            line-height: 1.7;
-            max-width: 560px;
-            margin: 0 auto 20px;
-        }
-
-        .values-sub {
-            font-size: 0.94em;
-            opacity: 0.8;
-            max-width: 520px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        /* ─── CONTACT ─── */
-        .contact-section {
-            background: var(--white);
-            border: 1px solid #e2ebe7;
-            border-radius: 18px;
-            padding: 44px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 24px rgba(13,122,94,0.06);
-        }
-
-        .contact-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-top: 24px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-        }
-
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--mint);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1em;
-            flex-shrink: 0;
-        }
-
-        .contact-item strong {
-            display: block;
-            font-size: 0.82em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--muted);
-            margin-bottom: 3px;
-        }
-
-        .contact-item span, .contact-item a {
-            font-size: 0.96em;
-            color: var(--text);
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .contact-item a:hover { color: var(--green); }
-
-        .contact-note {
-            margin-top: 24px;
-            padding: 18px 22px;
-            background: var(--mint);
-            border-radius: 10px;
-            font-size: 0.9em;
-            color: var(--teal);
-            line-height: 1.7;
-        }
-
-        /* ─── FOOTER ─── */
-        footer {
-            background: linear-gradient(135deg, #0a5e48 0%, #133d52 100%);
-            color: white;
-            padding: 40px 24px;
-            text-align: center;
-        }
-
-        .footer-inner {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .footer-brand {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .footer-logo {
-            width: 38px;
-            height: 38px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1em;
-            font-weight: 700;
-        }
-
-        .footer-name {
-            font-size: 1em;
-            font-weight: 700;
-            opacity: 0.95;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            list-style: none;
-            margin-bottom: 18px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            font-size: 0.87em;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover { color: #a7f3d0; }
-
-        .footer-divider {
-            width: 60px;
-            height: 1px;
-            background: rgba(255,255,255,0.15);
-            margin: 18px auto;
-        }
-
-        .footer-copy {
-            font-size: 0.82em;
-            opacity: 0.55;
-        }
-
-        .footer-slogan {
-            font-size: 0.88em;
-            opacity: 0.7;
-            margin-top: 6px;
-            font-style: italic;
-        }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 768px) {
-            nav { padding: 0 18px; }
-            .nav-links { display: none; }
-            .hero { padding: 60px 20px 50px; }
-            .page-body { padding: 36px 16px 60px; }
-            .story-section,
-            .activities-section,
-            .contact-section { padding: 28px 22px; }
-            .values-section { padding: 36px 22px; }
-            .goals-grid { grid-template-columns: 1fr; }
-            .activities-grid { grid-template-columns: 1fr; }
-            .contact-row { grid-template-columns: 1fr; }
-            .stats-row { gap: 10px; }
-            .stat-card { padding: 18px 20px; min-width: 130px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>আমাদের সম্পর্কে - সোনাগাজী কালচারাল ফোরাম, ফেনী</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+  --bg-deep: #060d0b;
+  --bg-dark: #0b1a16;
+  --bg-card: #0f2219;
+  --bg-card2: #112820;
+  --accent: #2dbd72;
+  --accent2: #1a9957;
+  --accent-glow: rgba(45,189,114,0.18);
+  --text: #e8f5ee;
+  --text-muted: #7aaa90;
+  --text-dim: #4a7a60;
+  --border: rgba(45,189,114,0.15);
+  --border-subtle: rgba(255,255,255,0.06);
+  --gold: #e8c96a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: 'Hind Siliguri', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 10px; }
+
+/* ===== NAVBAR (same as homepage) ===== */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(6,13,11,0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-logo {
+  width: 38px; height: 38px;
+  background: var(--accent);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.nav-brand-text { display: flex; flex-direction: column; }
+.nav-brand-text strong { font-size: 0.92rem; font-weight: 700; color: #fff; line-height: 1.2; }
+.nav-brand-text span { font-size: 0.72rem; color: var(--text-muted); }
+
+.nav-links { display: flex; gap: 4px; list-style: none; }
+
+.nav-links a {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 13px; border-radius: 8px;
+  font-size: 0.85rem; color: var(--text-muted);
+  transition: all 0.2s;
+}
+.nav-links a:hover, .nav-links a.active {
+  background: var(--accent-glow); color: var(--accent);
+}
+.nav-links a i { font-size: 0.8rem; }
+
+.hamburger {
+  display: none; background: none;
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 10px; color: var(--text);
+  cursor: pointer; font-size: 1.1rem;
+}
+
+/* Mobile Nav */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: rgba(6,13,11,0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  z-index: 999;
+  padding: 16px;
+  flex-direction: column;
+  gap: 4px;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 16px; border-radius: 10px;
+  font-size: 0.92rem; color: var(--text-muted); transition: all 0.2s;
+}
+.mobile-nav a:hover { background: var(--accent-glow); color: var(--accent); }
+.mobile-nav a i { color: var(--accent); width: 18px; }
+
+/* ===== PAGE HERO ===== */
+.page-hero {
+  padding: 120px 24px 64px;
+  background: var(--bg-dark);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(45,189,114,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.page-hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(45,189,114,0.1);
+  border: 1px solid var(--border); border-radius: 50px;
+  padding: 7px 18px; font-size: 0.82rem;
+  color: var(--accent); margin-bottom: 22px;
+  letter-spacing: 0.3px;
+}
+
+.page-hero h1 {
+  font-family: 'Tiro Bangla', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400; color: #fff;
+  line-height: 1.35; margin-bottom: 14px;
+}
+
+.page-hero p {
+  font-size: 1rem; color: var(--text-muted);
+  max-width: 520px; margin: 0 auto 44px; line-height: 1.8;
+}
+
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 18px;
+  overflow: hidden; width: 100%; max-width: 600px;
+  margin: 0 auto;
+}
+
+.stat {
+  background: var(--bg-card); padding: 22px 16px;
+  text-align: center; transition: background 0.2s;
+}
+.stat:hover { background: var(--bg-card2); }
+
+.stat-num {
+  font-family: 'Tiro Bangla', serif;
+  font-size: 1.5rem; color: var(--accent);
+  line-height: 1; margin-bottom: 6px;
+}
+.stat-label { font-size: 0.72rem; color: var(--text-muted); }
+
+/* ===== MAIN CONTENT ===== */
+.page-body { max-width: 900px; margin: 0 auto; padding: 60px 24px 80px; }
+
+/* Section header */
+.section-tag {
+  display: inline-block;
+  background: var(--accent-glow); color: var(--accent);
+  border: 1px solid var(--border); border-radius: 50px;
+  padding: 5px 16px; font-size: 0.78rem;
+  letter-spacing: 0.5px; margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Tiro Bangla', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 400; color: #fff;
+  margin-bottom: 6px;
+}
+
+.section-divider {
+  width: 44px; height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 2px; margin-bottom: 28px;
+}
+
+/* ===== STORY SECTION (no card) ===== */
+.story-section-bare {
+  margin-bottom: 32px;
+}
+
+.story-body p {
+  font-size: 0.97rem; line-height: 1.95;
+  color: var(--text-muted); margin-bottom: 18px;
+}
+.story-body p:last-child { margin-bottom: 0; }
+.story-body strong { color: var(--text); }
+
+/* ===== FOUNDER HIGHLIGHT ===== */
+.founder-highlight {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: linear-gradient(135deg, rgba(45,189,114,0.13) 0%, rgba(45,189,114,0.05) 100%);
+  border: 1px solid var(--accent);
+  border-radius: 16px;
+  padding: 22px 28px;
+  margin: 28px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.founder-highlight::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--accent);
+  border-radius: 4px 0 0 4px;
+}
+
+.founder-icon {
+  width: 52px; height: 52px; flex-shrink: 0;
+  background: var(--accent);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: #fff;
+  box-shadow: 0 4px 16px rgba(45,189,114,0.35);
+}
+
+.founder-info {
+  flex: 1;
+}
+
+.founder-label {
+  font-size: 0.75rem; font-weight: 700;
+  color: var(--accent); letter-spacing: 0.8px;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+
+.founder-name {
+  font-family: 'Tiro Bangla', serif;
+  font-size: 1.25rem; color: #fff;
+  font-weight: 400; line-height: 1.3;
+}
+
+.founder-sub {
+  font-size: 0.82rem; color: var(--text-muted); margin-top: 3px;
+}
+
+/* ===== CONTACT BARE (no card wrapper) ===== */
+.contact-bare {
+  margin-bottom: 32px;
+}
+
+/* ===== VALUES BANNER VARIANTS ===== */
+.values-banner-2 {
+  background: linear-gradient(135deg, rgba(26,153,87,0.12) 0%, rgba(45,189,114,0.06) 100%);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 44px;
+  text-align: center; margin-bottom: 32px;
+  position: relative; overflow: hidden;
+}
+
+.values-banner-2::after {
+  content: '✦';
+  position: absolute; bottom: -20px; right: 30px;
+  font-size: 7em; opacity: 0.04; color: var(--accent); line-height: 1;
+}
+
+.values-banner-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.value-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px; padding: 28px 24px;
+  display: flex; align-items: flex-start; gap: 16px;
+  transition: all 0.25s; position: relative; overflow: hidden;
+}
+.value-pill::before {
+  content: ''; position: absolute;
+  bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0; transition: opacity 0.25s;
+}
+.value-pill:hover { border-color: var(--border); transform: translateY(-3px); }
+.value-pill:hover::before { opacity: 1; }
+
+.value-pill-icon {
+  font-size: 1.6rem; flex-shrink: 0;
+  width: 46px; height: 46px;
+  background: var(--accent-glow);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.value-pill h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.value-pill p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.7; }
+
+
+  background: rgba(45,189,114,0.08);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  padding: 20px 26px; margin: 28px 0;
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--accent); line-height: 1.7;
+  font-style: italic;
+}
+
+/* ===== GOALS GRID ===== */
+.goals-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 18px; margin-bottom: 32px;
+}
+
+.goal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px; padding: 28px 22px;
+  position: relative; overflow: hidden;
+  transition: all 0.25s;
+}
+.goal-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0; transition: opacity 0.25s;
+}
+.goal-card:hover { transform: translateY(-4px); border-color: var(--border); }
+.goal-card:hover::before { opacity: 1; }
+
+.goal-icon {
+  font-size: 1.8rem; margin-bottom: 14px;
+}
+
+.goal-card h3 {
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--text); margin-bottom: 10px;
+}
+.goal-card p { font-size: 0.87rem; color: var(--text-muted); line-height: 1.75; }
+
+/* ===== OBJECTIVES ===== */
+.obj-list { display: flex; flex-direction: column; gap: 12px; }
+
+.obj-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 20px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px; transition: all 0.2s;
+}
+.obj-item:hover { border-color: var(--border); transform: translateX(4px); }
+
+.obj-num {
+  width: 34px; height: 34px; flex-shrink: 0;
+  background: var(--accent-glow);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700; color: var(--accent);
+}
+
+.obj-item h4 { font-size: 0.96rem; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.obj-item p { font-size: 0.87rem; color: var(--text-muted); line-height: 1.65; }
+
+/* ===== ACTIVITIES ===== */
+.activities-bg {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px; padding: 40px;
+  margin-bottom: 32px;
+}
+
+.activities-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin-top: 24px;
+}
+
+.activity-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px; padding: 14px 16px;
+  transition: all 0.2s;
+}
+.activity-item:hover { border-color: var(--border); }
+
+.activity-dot {
+  width: 7px; height: 7px;
+  background: var(--accent); border-radius: 50%;
+  flex-shrink: 0; margin-top: 7px;
+}
+.activity-item span { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+/* ===== VALUES BANNER ===== */
+.values-banner {
+  background: linear-gradient(135deg, rgba(45,189,114,0.15) 0%, rgba(26,153,87,0.08) 100%);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 50px 44px;
+  text-align: center; margin-bottom: 32px;
+  position: relative; overflow: hidden;
+}
+.values-banner::before {
+  content: '❝';
+  position: absolute; top: -10px; left: 30px;
+  font-size: 7em; opacity: 0.06; line-height: 1;
+  color: var(--accent);
+}
+
+.values-quote {
+  font-family: 'Tiro Bangla', serif;
+  font-size: 1.3rem; color: var(--text);
+  line-height: 1.7; max-width: 520px; margin: 20px auto 18px;
+}
+
+.values-sub {
+  font-size: 0.93rem; color: var(--text-muted);
+  max-width: 520px; margin: 0 auto; line-height: 1.85;
+}
+
+/* ===== CONTACT CARD ===== */
+.contact-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 20px; margin-top: 24px;
+}
+
+.contact-item {
+  display: flex; align-items: flex-start; gap: 14px;
+}
+
+.contact-icon {
+  width: 40px; height: 40px;
+  background: var(--accent-glow);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+
+.contact-item strong {
+  display: block; font-size: 0.78rem;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--text-dim); margin-bottom: 3px;
+}
+.contact-item span, .contact-item a {
+  font-size: 0.93rem; color: var(--text); font-weight: 600;
+}
+.contact-item a:hover { color: var(--accent); }
+
+.contact-note {
+  margin-top: 24px; padding: 18px 22px;
+  background: var(--accent-glow);
+  border: 1px solid var(--border);
+  border-radius: 12px; font-size: 0.9rem;
+  color: var(--text-muted); line-height: 1.75;
+}
+
+/* ===== FOOTER (same as homepage) ===== */
+footer {
+  background: #050c09;
+  border-top: 1px solid var(--border-subtle);
+  padding: 44px 24px 28px;
+}
+
+.footer-inner { max-width: 700px; margin: 0 auto; }
+
+.footer-top {
+  display: flex; align-items: flex-start;
+  gap: 14px; margin-bottom: 18px;
+}
+
+.footer-icon {
+  width: 46px; height: 46px; flex-shrink: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent); font-size: 1.1rem;
+}
+
+.footer-brand-info h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 3px; }
+.footer-brand-info p { font-size: 0.78rem; color: var(--text-muted); }
+
+.footer-desc {
+  font-size: 0.87rem; color: var(--text-muted);
+  line-height: 1.75; margin-bottom: 28px; padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.footer-cols {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 24px; margin-bottom: 28px;
+}
+
+.footer-col-title {
+  font-size: 0.85rem; font-weight: 700; color: #fff;
+  padding-left: 10px; border-left: 2px solid var(--accent);
+  margin-bottom: 14px;
+}
+
+.footer-list { list-style: none; }
+.footer-list li {
+  font-size: 0.83rem; color: var(--text-muted);
+  padding: 5px 0; display: flex; align-items: flex-start; gap: 8px;
+}
+.footer-list li::before { content: '•'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+
+.footer-contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.83rem; color: var(--text-muted); margin-bottom: 10px;
+}
+.footer-contact-item i { color: var(--accent); width: 16px; font-size: 0.8rem; }
+
+.footer-bottom {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 20px; text-align: center;
+}
+.footer-bottom p { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 4px; }
+.footer-bottom .dev strong { color: var(--text-muted); }
+.footer-bottom .heart { color: #e74c3c; }
+
+/* ===== GO TOP ===== */
+#goTopBtn {
+  position: fixed; bottom: 24px; right: 20px;
+  width: 42px; height: 42px;
+  background: var(--accent); border: none; border-radius: 10px;
+  color: #fff; font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(45,189,114,0.35);
+  opacity: 0; transform: translateY(10px);
+  transition: all 0.3s; z-index: 999;
+}
+#goTopBtn.show { opacity: 1; transform: translateY(0); }
+#goTopBtn:hover { background: #25a862; transform: translateY(-2px); }
+
+/* ===== CONTACT NOTE STRIP ===== */
+.contact-note-strip {
+  background: linear-gradient(135deg, rgba(45,189,114,0.14) 0%, rgba(26,153,87,0.08) 100%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 24px;
+}
+
+.contact-note-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.contact-note-icon {
+  width: 52px; height: 52px; flex-shrink: 0;
+  background: var(--accent);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: #fff;
+  box-shadow: 0 4px 16px rgba(45,189,114,0.35);
+}
+
+.contact-note-text {
+  flex: 1;
+  font-size: 0.97rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  min-width: 200px;
+}
+
+.contact-note-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent);
+  color: #fff;
+  padding: 11px 22px;
+  border-radius: 10px;
+  font-size: 0.9rem; font-weight: 600;
+  font-family: 'Hind Siliguri', sans-serif;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 4px 14px rgba(45,189,114,0.3);
+}
+.contact-note-btn:hover { background: #25a862; transform: translateY(-2px); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; align-items: center; justify-content: center; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .goals-grid { grid-template-columns: 1fr; }
+  .activities-grid { grid-template-columns: 1fr; }
+  .contact-row { grid-template-columns: 1fr; }
+  .values-banner-3 { grid-template-columns: 1fr; }
+  .footer-cols { grid-template-columns: 1fr; }
+  .content-card, .activities-bg, .values-banner { padding: 26px 20px; }
+  .page-body { padding: 40px 16px 60px; }
+}
+
+@media (max-width: 480px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .stat-num { font-size: 1.2rem; }
+}
+</style>
 </head>
 <body>
 
-<!-- ═══ NAVBAR ═══ -->
-<nav>
-    <a href="#" class="nav-brand">
-        <div class="nav-logo">স</div>
-        <div class="nav-title">
-            সোনাগাজী কালচারাল ফোরাম
-            <span>ফেনী, বাংলাদেশ</span>
-        </div>
-    </a>
-    <ul class="nav-links">
-        <li><a href="#">হোম</a></li>
-        <li><a href="#" class="active">আমাদের সম্পর্কে</a></li>
-        <li><a href="#">কার্যক্রম</a></li>
-        <li><a href="#">গ্যালারি</a></li>
-        <li><a href="#">সংবাদ</a></li>
-        <li><a href="#" class="nav-cta">যোগ দিন</a></li>
-    </ul>
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo"><i class="fa-solid fa-masks-theater"></i></div>
+    <div class="nav-brand-text">
+      <strong>সোনাগাজী কালচারাল ফোরাম</strong>
+      <span>ফেনী, বাংলাদেশ</span>
+    </div>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="index.html"><i class="fa-solid fa-house"></i> হোম</a></li>
+    <li><a href="about.html" class="active"><i class="fa-solid fa-landmark"></i> আমাদের সম্পর্কে</a></li>
+    <li><a href="events.html"><i class="fa-solid fa-masks-theater"></i> অনুষ্ঠান</a></li>
+    <li><a href="leaders.html"><i class="fa-solid fa-users"></i> নেতৃত্ব</a></li>
+    <li><a href="gallery.html"><i class="fa-solid fa-image"></i> গ্যালারি</a></li>
+    <li><a href="contact.html"><i class="fa-solid fa-envelope"></i> যোগাযোগ</a></li>
+  </ul>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <i class="fa-solid fa-bars"></i>
+  </button>
 </nav>
 
-<!-- ═══ HERO ═══ -->
-<section class="hero">
-    <div class="hero-badge">
-        🛡️ আমাদের পরিচিতি
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html"><i class="fa-solid fa-house"></i> হোম</a>
+  <a href="about.html"><i class="fa-solid fa-landmark"></i> আমাদের সম্পর্কে</a>
+  <a href="events.html"><i class="fa-solid fa-masks-theater"></i> সাংস্কৃতিক অনুষ্ঠান</a>
+  <a href="leaders.html"><i class="fa-solid fa-users"></i> নেতৃত্ব</a>
+  <a href="gallery.html"><i class="fa-solid fa-image"></i> গ্যালারি</a>
+  <a href="contact.html"><i class="fa-solid fa-envelope"></i> যোগাযোগ</a>
+</div>
+
+<main>
+
+<!-- ===== PAGE HERO ===== -->
+<section class="page-hero">
+  <div class="page-hero-tag">
+    <i class="fa-solid fa-landmark"></i> আমাদের পরিচিতি
+  </div>
+  <h1>সোনাগাজী কালচারাল ফোরাম</h1>
+  <p>ফেনী জেলার একটি অগ্রগামী সাংস্কৃতিক প্ল্যাটফর্ম — তরুণ সমাজকে সুস্থ সংস্কৃতি ও মানবসেবায় সমৃদ্ধ করতে নিরলস কাজ করে যাচ্ছে।</p>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">২০২০</div>
+      <div class="stat-label">প্রতিষ্ঠার বছর</div>
     </div>
-    <h1>সোনাগাজী কালচারাল ফোরাম</h1>
-    <p>ফেনী জেলার একটি অগ্রগামী সাংস্কৃতিক প্ল্যাটফর্ম — তরুণ সমাজকে সুস্থ সংস্কৃতি ও মানবসেবায় সমৃদ্ধ করতে নিরলস কাজ করে যাচ্ছে।</p>
-    <div class="stats-row">
-        <div class="stat-card">
-            <div class="stat-value">২০২০</div>
-            <div class="stat-label">প্রতিষ্ঠার বছর</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value">৫+</div>
-            <div class="stat-label">বছরের অভিজ্ঞতা</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value">সোনাগাজী</div>
-            <div class="stat-label">কার্যক্ষেত্র, ফেনী</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value">সংস্কৃতি</div>
-            <div class="stat-label">প্রধান লক্ষ্য</div>
-        </div>
+    <div class="stat">
+      <div class="stat-num">৫+</div>
+      <div class="stat-label">বছরের অভিজ্ঞতা</div>
     </div>
+    <div class="stat">
+      <div class="stat-num">২৫০+</div>
+      <div class="stat-label">সক্রিয় সদস্য</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">২০+</div>
+      <div class="stat-label">সম্পন্ন ইভেন্ট</div>
+    </div>
+  </div>
 </section>
 
-<!-- ═══ MAIN BODY ═══ -->
-<main class="page-body">
+<!-- ===== MAIN BODY ===== -->
+<div class="page-body">
 
-    <!-- Story -->
-    <section class="story-section">
-        <div class="section-tag">✦ আমাদের যাত্রা</div>
-        <h2 class="section-title">গড়ে ওঠার গল্প</h2>
-        <div class="section-divider"></div>
-        <div class="story-body">
-            <p>
-                <strong>সোনাগাজী কালচারাল ফোরাম</strong> হল ফেনী জেলার একটি স্বনিয়ন্ত্রিত সাংস্কৃতিক ও সামাজিক সংস্থা — বাংলাদেশের ঐতিহ্যবাহী শিল্প, সাহিত্য এবং সংস্কৃতির প্রচার ও সংরক্ষণে নিবেদিত। আমরা বিশ্বাস করি যে সংস্কৃতি হল একটি জাতির আত্মা, এবং এর সংরক্ষণ আমাদের সকলের দায়িত্ব।
-            </p>
-            <p>
-                সোনাগাজী উপজেলার তরুণ প্রজন্মের মাঝে মেধার বিকাশ ঘটানো ও সুন্দর মননশীলতা গড়ে তোলার বাসনা নিয়ে আবদুল্লাহ আল মারুফ এবং সমমনা তরুণরা সোনাগাজী জিরো পয়েন্টে এক ঘরোয়া আড্ডায় এ ফোরামের ভিত্তিপ্রস্তর স্থাপন করেন। পরবর্তীতে তরুণ সংগঠক মারুফ মনগাজী এবং অন্যান্যদের ঐকান্তিক প্রচেষ্টায় এর পরিধি ফেনীর সোনাগাজী জুড়ে বিস্তৃত হয়।
-            </p>
-            <p>
-                আমরা মনে করি, সাহিত্য ও মানবহিতকর সেবা যুব সমাজকে মাদকমুক্ত ও ইতিবাচক জীবনধারণে সবচেয়ে ভালো অবদান রাখে। প্রতিবছর আমরা বাংলা নববর্ষের সাংস্কৃতিক র‌্যালি, কবিতা ও আবৃত্তি সন্ধ্যা, সাধারণ জ্ঞান প্রতিযোগিতা এবং শীতার্ত দুর্গতদের মাঝে শীতবস্ত্র বিতরণ কর্মসূচিসহ বেশ কিছু বড় কার্যক্রম আয়োজন করে থাকি।
-            </p>
+  <!-- Story -->
+  <div class="content-card">
+    <div class="section-tag">আমাদের যাত্রা</div>
+    <h2 class="section-title">গড়ে ওঠার গল্প</h2>
+    <div class="section-divider"></div>
+    <div class="story-body">
+      <p>
+        <strong>সোনাগাজী কালচারাল ফোরাম</strong> হল ফেনী জেলার একটি স্বনিয়ন্ত্রিত সাংস্কৃতিক ও সামাজিক সংস্থা — বাংলাদেশের ঐতিহ্যবাহী শিল্প, সাহিত্য এবং সংস্কৃতির প্রচার ও সংরক্ষণে নিবেদিত। আমরা বিশ্বাস করি যে সংস্কৃতি হল একটি জাতির আত্মা, এবং এর সংরক্ষণ আমাদের সকলের দায়িত্ব।
+      </p>
+      <p>
+        সোনাগাজী উপজেলার তরুণ প্রজন্মের মাঝে মেধার বিকাশ ঘটানো ও সুন্দর মননশীলতা গড়ে তোলার বাসনা নিয়ে আবদুল্লাহ আল মারুফ এবং সমমনা তরুণরা সোনাগাজী জিরো পয়েন্টে এক ঘরোয়া আড্ডায় এ ফোরামের ভিত্তিপ্রস্তর স্থাপন করেন। পরবর্তীতে তরুণ সংগঠক মারুফ মনগাজী এবং অন্যান্যদের ঐকান্তিক প্রচেষ্টায় এর পরিধি ফেনীর সোনাগাজী জুড়ে বিস্তৃত হয়।
+      </p>
+      <p>
+        আমরা মনে করি, সাহিত্য ও মানবহিতকর সেবা যুব সমাজকে মাদকমুক্ত ও ইতিবাচক জীবনধারণে সবচেয়ে ভালো অবদান রাখে। প্রতিবছর আমরা বাংলা নববর্ষের সাংস্কৃতিক র‌্যালি, কবিতা ও আবৃত্তি সন্ধ্যা, সাধারণ জ্ঞান প্রতিযোগিতা এবং শীতার্ত দুর্গতদের মাঝে শীতবস্ত্র বিতরণ কর্মসূচিসহ বেশ কিছু বড় কার্যক্রম আয়োজন করে থাকি।
+      </p>
+      <div class="mission-quote">
+        "সুস্থ সংস্কৃতি লালন করে যুক্তিপ্রবণ, সৃজনশীল এবং আধুনিক মানুষ গড়ে তোলা"
+      </div>
 
-            <div class="mission-quote">
-                "সুস্থ সংস্কৃতি লালন করে যুক্তিপ্রবণ, সৃজনশীল এবং আধুনিক মানুষ গড়ে তোলা"
-            </div>
+      <!-- Founder Highlight -->
+      <div class="founder-highlight">
+        <div class="founder-icon"><i class="fa-solid fa-user-tie"></i></div>
+        <div class="founder-info">
+          <div class="founder-label">প্রতিষ্ঠাতা</div>
+          <div class="founder-name">প্রকৌশলী আজগর হোসাইন</div>
+          <div class="founder-sub">সোনাগাজী কালচারাল ফোরাম, ফেনী</div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
 
-    <!-- Goals Grid -->
-    <section style="margin-bottom: 40px;">
-        <div class="section-tag">✦ আমাদের কাজ</div>
-        <h2 class="section-title">মূল লক্ষ্যসমূহ</h2>
-        <div class="section-divider"></div>
-        <div class="goals-grid">
-            <div class="goal-card">
-                <div class="goal-icon green">🎯</div>
-                <h3>আমাদের মূল লক্ষ্য</h3>
-                <p>সোনাগাজী উপজেলায় সাংস্কৃতিক কর্মকাণ্ড জোরদার করা, তরুণ মেধাবীদের প্ল্যাটফর্ম দেওয়া এবং সুস্থ মূল্যবোধ চর্চা বজায় রাখা।</p>
-            </div>
-            <div class="goal-card">
-                <div class="goal-icon teal">🛡️</div>
-                <h3>স্বেচ্ছাসেবা ও সামাজিক কাজ</h3>
-                <p>দুর্যোগের সময়ে মানুষের পাশে দাঁড়ানো। রক্তদান কর্মসূচি, বস্ত্র ও আহার সাহায্য পরিচালনা আমাদের অন্যতম মূল ভিত্তি।</p>
-            </div>
-            <div class="goal-card">
-                <div class="goal-icon indigo">🧭</div>
-                <h3>তরুণ উন্নয়ন ও যুব ক্ষমতায়ন</h3>
-                <p>শিক্ষা, আইটি ও আইসিটি সচেতনতামূলক প্রশিক্ষণ কর্মশালার মাধ্যমে তরুণদের সমৃদ্ধ আগামী গঠনে অনুপ্রাণিত করা।</p>
-            </div>
-        </div>
-    </section>
+  <!-- Goals -->
+  <div style="margin-bottom: 32px;">
+    <div class="section-tag">আমাদের কাজ</div>
+    <h2 class="section-title">মূল লক্ষ্যসমূহ</h2>
+    <div class="section-divider"></div>
+    <div class="goals-grid">
+      <div class="goal-card">
+        <div class="goal-icon">🎯</div>
+        <h3>আমাদের মূল লক্ষ্য</h3>
+        <p>সোনাগাজী উপজেলায় সাংস্কৃতিক কর্মকাণ্ড জোরদার করা, তরুণ মেধাবীদের প্ল্যাটফর্ম দেওয়া এবং সুস্থ মূল্যবোধ চর্চা বজায় রাখা।</p>
+      </div>
+      <div class="goal-card">
+        <div class="goal-icon">🤝</div>
+        <h3>স্বেচ্ছাসেবা ও সামাজিক কাজ</h3>
+        <p>দুর্যোগের সময়ে মানুষের পাশে দাঁড়ানো। রক্তদান কর্মসূচি, বস্ত্র ও আহার সাহায্য পরিচালনা আমাদের অন্যতম মূল ভিত্তি।</p>
+      </div>
+      <div class="goal-card">
+        <div class="goal-icon">🌱</div>
+        <h3>তরুণ উন্নয়ন ও যুব ক্ষমতায়ন</h3>
+        <p>শিক্ষা, আইটি ও আইসিটি সচেতনতামূলক প্রশিক্ষণ কর্মশালার মাধ্যমে তরুণদের সমৃদ্ধ আগামী গঠনে অনুপ্রাণিত করা।</p>
+      </div>
+    </div>
+  </div>
 
-    <!-- Objectives -->
-    <section class="objectives-section">
-        <div class="section-tag">✦ উদ্দেশ্য</div>
-        <h2 class="section-title">আমাদের উদ্দেশ্যসমূহ</h2>
-        <div class="section-divider"></div>
-        <div class="obj-list">
-            <div class="obj-item">
-                <div class="obj-num">০১</div>
-                <div>
-                    <h4>সাংস্কৃতিক সচেতনতা</h4>
-                    <p>বাংলাদেশের ঐতিহ্যবাহী সংস্কৃতি ও শিল্পকে তরুণ প্রজন্মের কাছে তুলে ধরা এবং সঠিক ইতিহাস সংরক্ষণ করা।</p>
-                </div>
-            </div>
-            <div class="obj-item">
-                <div class="obj-num">০২</div>
-                <div>
-                    <h4>সাহিত্য ও শিল্পের প্রচার</h4>
-                    <p>লোকশিল্প, ঐতিহ্যবাহী সঙ্গীত, নৃত্য এবং হস্তশিল্পের উন্নয়ন ও প্রসার ঘটানো।</p>
-                </div>
-            </div>
-            <div class="obj-item">
-                <div class="obj-num">০৩</div>
-                <div>
-                    <h4>সামাজিক উন্নয়ন</h4>
-                    <p>স্থানীয় সম্প্রদায়ের সাংস্কৃতিক ও সামাজিক উন্নয়নে সক্রিয় ভূমিকা রাখা এবং সহযোগিতামূলক পরিবেশ তৈরি করা।</p>
-                </div>
-            </div>
-            <div class="obj-item">
-                <div class="obj-num">০৪</div>
-                <div>
-                    <h4>যুব সংগঠন ও নেতৃত্ব</h4>
-                    <p>তরুণদের সৃজনশীল প্রতিভা বিকাশ এবং তাদের নেতৃত্ব প্রশিক্ষণ ও সামাজিক দায়বদ্ধতা তৈরি করা।</p>
-                </div>
-            </div>
-            <div class="obj-item">
-                <div class="obj-num">০৫</div>
-                <div>
-                    <h4>সম্প্রদায় নির্মাণ</h4>
-                    <p>সমাজের বিভিন্ন স্তরের মানুষকে একত্রিত করে সাংস্কৃতিক মূল্যবোধ শক্তিশালী করা এবং পারস্পরিক সম্প্রীতি বজায় রাখা।</p>
-                </div>
-            </div>
+  <!-- Objectives -->
+  <div style="margin-bottom: 32px;">
+    <div class="section-tag">উদ্দেশ্য</div>
+    <h2 class="section-title">আমাদের উদ্দেশ্যসমূহ</h2>
+    <div class="section-divider"></div>
+    <div class="obj-list">
+      <div class="obj-item">
+        <div class="obj-num">০১</div>
+        <div>
+          <h4>সাংস্কৃতিক সচেতনতা</h4>
+          <p>বাংলাদেশের ঐতিহ্যবাহী সংস্কৃতি ও শিল্পকে তরুণ প্রজন্মের কাছে তুলে ধরা এবং সঠিক ইতিহাস সংরক্ষণ করা।</p>
         </div>
-    </section>
+      </div>
+      <div class="obj-item">
+        <div class="obj-num">০২</div>
+        <div>
+          <h4>সাহিত্য ও শিল্পের প্রচার</h4>
+          <p>লোকশিল্প, ঐতিহ্যবাহী সঙ্গীত, নৃত্য এবং হস্তশিল্পের উন্নয়ন ও প্রসার ঘটানো।</p>
+        </div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-num">০৩</div>
+        <div>
+          <h4>সামাজিক উন্নয়ন</h4>
+          <p>স্থানীয় সম্প্রদায়ের সাংস্কৃতিক ও সামাজিক উন্নয়নে সক্রিয় ভূমিকা রাখা এবং সহযোগিতামূলক পরিবেশ তৈরি করা।</p>
+        </div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-num">০৪</div>
+        <div>
+          <h4>যুব সংগঠন ও নেতৃত্ব</h4>
+          <p>তরুণদের সৃজনশীল প্রতিভা বিকাশ এবং তাদের নেতৃত্ব প্রশিক্ষণ ও সামাজিক দায়বদ্ধতা তৈরি করা।</p>
+        </div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-num">০৫</div>
+        <div>
+          <h4>সম্প্রদায় নির্মাণ</h4>
+          <p>সমাজের বিভিন্ন স্তরের মানুষকে একত্রিত করে সাংস্কৃতিক মূল্যবোধ শক্তিশালী করা এবং পারস্পরিক সম্প্রীতি বজায় রাখা।</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Activities -->
-    <section class="activities-section">
-        <div class="section-tag">✦ কার্যক্রম</div>
-        <h2 class="section-title">আমাদের কার্যক্রম</h2>
-        <div class="section-divider"></div>
-        <div class="activities-grid">
-            <div class="activity-item">
-                <div class="activity-dot"></div>
-                <span>বৈশাখী সাংস্কৃতিক র‌্যালি ও মেলার আয়োজন</span>
-            </div>
-            <div class="activity-item">
-                <div class="activity-dot"></div>
-                <span>কবিতা ও আবৃত্তি সন্ধ্যা</span>
-            </div>
-            <div class="activity-item">
-                <div class="activity-dot"></div>
-                <span>ঐতিহ্যবাহী সঙ্গীত ও নৃত্য প্রশিক্ষণ</span>
-            </div>
-            <div class="activity-item">
-                <div class="activity-dot"></div>
-                <span>সাহিত্য সেমিনার এবং আলোচনা সভা</span>
-            </div>
-            <div class="activity-item">
-                <div class="activity-dot"></div>
-                <span>হস্তশিল্প ও ঐতিহ্যবাহী কারুশিল্প কর্মশালা</span>
-            </div>
-            <div class="activity-item">
-                <div class="activity-dot"></div>
-                <span>সামাজিক উন্নয়ন ও সচেতনতা কর্মসূচি</span>
-            </div>
-            <div class="activity-item">
-                <div class="activity-dot"></div>
-                <span>শীতবস্ত্র বিতরণ ও রক্তদান কর্মসূচি</span>
-            </div>
-            <div class="activity-item">
-                <div class="activity-dot"></div>
-                <span>তরুণ প্রতিভা উদ্ঘাটন ও উৎসাহ প্রদান</span>
-            </div>
-            <div class="activity-item">
-                <div class="activity-dot"></div>
-                <span>আইটি ও আইসিটি সচেতনতামূলক প্রশিক্ষণ</span>
-            </div>
-            <div class="activity-item">
-                <div class="activity-dot"></div>
-                <span>সাধারণ জ্ঞান প্রতিযোগিতার আয়োজন</span>
-            </div>
-        </div>
-    </section>
+  <!-- Activities -->
+  <div class="activities-bg">
+    <div class="section-tag">কার্যক্রম</div>
+    <h2 class="section-title">আমাদের কার্যক্রম</h2>
+    <div class="section-divider"></div>
+    <div class="activities-grid">
+      <div class="activity-item"><div class="activity-dot"></div><span>বৈশাখী সাংস্কৃতিক র‌্যালি ও মেলার আয়োজন</span></div>
+      <div class="activity-item"><div class="activity-dot"></div><span>কবিতা ও আবৃত্তি সন্ধ্যা</span></div>
+      <div class="activity-item"><div class="activity-dot"></div><span>ঐতিহ্যবাহী সঙ্গীত ও নৃত্য প্রশিক্ষণ</span></div>
+      <div class="activity-item"><div class="activity-dot"></div><span>সাহিত্য সেমিনার এবং আলোচনা সভা</span></div>
+      <div class="activity-item"><div class="activity-dot"></div><span>হস্তশিল্প ও ঐতিহ্যবাহী কারুশিল্প কর্মশালা</span></div>
+      <div class="activity-item"><div class="activity-dot"></div><span>সামাজিক উন্নয়ন ও সচেতনতা কর্মসূচি</span></div>
+      <div class="activity-item"><div class="activity-dot"></div><span>শীতবস্ত্র বিতরণ ও রক্তদান কর্মসূচি</span></div>
+      <div class="activity-item"><div class="activity-dot"></div><span>তরুণ প্রতিভা উদ্ঘাটন ও উৎসাহ প্রদান</span></div>
+      <div class="activity-item"><div class="activity-dot"></div><span>আইটি ও আইসিটি সচেতনতামূলক প্রশিক্ষণ</span></div>
+      <div class="activity-item"><div class="activity-dot"></div><span>সাধারণ জ্ঞান প্রতিযোগিতার আয়োজন</span></div>
+    </div>
+  </div>
 
-    <!-- Values -->
-    <section class="values-section">
-        <div class="section-tag">✦ আমাদের মূল্যবোধ</div>
-        <h2 class="section-title" style="margin-bottom: 20px;">আমাদের বিশ্বাস</h2>
-        <div class="values-quote">
-            "সংস্কৃতি হউক আমাদের জীবনের অন্যতম অংশ"
-        </div>
-        <p class="values-sub">
-            মানুষের মানবিক মায়া ও ভালোবাসার মেলবন্ধনে আমরা গড়ে তুলতে চাই এক উন্নত দেশ ও সমৃদ্ধ সমাজব্যবস্থা। সত্যতা, স্বচ্ছতা এবং অন্তর্ভুক্তির নীতিতে আমরা সকল কার্যক্রম পরিচালনা করি — যেখানে বৈচিত্র্য ও সমানতাকে সর্বোচ্চ মূল্য দেওয়া হয়।
-        </p>
-    </section>
+  <!-- Values Banner 1 -->
+  <div class="values-banner">
+    <div class="section-tag">আমাদের মূল্যবোধ</div>
+    <h2 class="section-title" style="margin-bottom: 4px;">আমাদের বিশ্বাস</h2>
+    <div class="values-quote">
+      "সংস্কৃতি হউক আমাদের জীবনের অন্যতম অংশ"
+    </div>
+    <p class="values-sub">
+      মানুষের মানবিক মায়া ও ভালোবাসার মেলবন্ধনে আমরা গড়ে তুলতে চাই এক উন্নত দেশ ও সমৃদ্ধ সমাজব্যবস্থা। সত্যতা, স্বচ্ছতা এবং অন্তর্ভুক্তির নীতিতে আমরা সকল কার্যক্রম পরিচালনা করি।
+    </p>
+  </div>
 
-    <!-- Contact -->
-    <section class="contact-section">
-        <div class="section-tag">✦ যোগাযোগ</div>
-        <h2 class="section-title">আমাদের সাথে যোগাযোগ করুন</h2>
-        <div class="section-divider"></div>
-        <div class="contact-row">
-            <div class="contact-item">
-                <div class="contact-icon">🏛️</div>
-                <div>
-                    <strong>সংস্থার নাম</strong>
-                    <span>সোনাগাজী কালচারাল ফোরাম, ফেনী</span>
-                </div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-icon">🌐</div>
-                <div>
-                    <strong>ওয়েবসাইট</strong>
-                    <a href="https://scffeni.com">scffeni.com</a>
-                </div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-icon">📍</div>
-                <div>
-                    <strong>অবস্থান</strong>
-                    <span>সোনাগাজী, ফেনী, বাংলাদেশ</span>
-                </div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-icon">📱</div>
-                <div>
-                    <strong>সোশ্যাল মিডিয়া</strong>
-                    <span>Facebook · Instagram</span>
-                </div>
-            </div>
+  <!-- Values Banner 2 -->
+  <div class="values-banner-2">
+    <div class="section-tag">আমাদের দৃষ্টিভঙ্গি</div>
+    <h2 class="section-title" style="margin-bottom: 4px;">আমাদের স্বপ্ন</h2>
+    <div class="values-quote">
+      "তরুণ প্রজন্মের হাত ধরে গড়বো একটি আলোকিত সমাজ"
+    </div>
+    <p class="values-sub">
+      আমরা স্বপ্ন দেখি এমন একটি সমাজের, যেখানে প্রতিটি তরুণ তার সৃজনশীলতাকে কাজে লাগাতে পারবে — যেখানে শিল্প, সাহিত্য ও মানবিক মূল্যবোধ হবে জীবনের পথপ্রদর্শক।
+    </p>
+  </div>
+
+  <!-- Values Banner 3 — pill grid -->
+  <div style="margin-bottom: 32px;">
+    <div class="section-tag">আমাদের মূলনীতি</div>
+    <h2 class="section-title">যে মূল্যবোধে আমরা চলি</h2>
+    <div class="section-divider"></div>
+    <div class="values-banner-3">
+      <div class="value-pill">
+        <div class="value-pill-icon">🕊️</div>
+        <div>
+          <h4>সততা ও স্বচ্ছতা</h4>
+          <p>সকল কার্যক্রমে সততা ও স্বচ্ছতা বজায় রাখা আমাদের প্রথম অঙ্গীকার।</p>
         </div>
-        <div class="contact-note">
-            💬 আপনার সাংস্কৃতিক উদ্যোগ ও পরামর্শ আমাদের কাছে সর্বদা স্বাগত। আমাদের সাথে যোগ দিন এবং একটি সমৃদ্ধ সাংস্কৃতিক ঐতিহ্য গড়তে অবদান রাখুন।
+      </div>
+      <div class="value-pill">
+        <div class="value-pill-icon">🤲</div>
+        <div>
+          <h4>মানবিক সেবা</h4>
+          <p>মানুষের কল্যাণে কাজ করা আমাদের সংগঠনের মূল চালিকাশক্তি।</p>
         </div>
-    </section>
+      </div>
+      <div class="value-pill">
+        <div class="value-pill-icon">🎨</div>
+        <div>
+          <h4>সৃজনশীলতা</h4>
+          <p>নতুন ধারণা ও উদ্ভাবনী চিন্তাকে আমরা সর্বদা উৎসাহিত করি।</p>
+        </div>
+      </div>
+      <div class="value-pill">
+        <div class="value-pill-icon">🌿</div>
+        <div>
+          <h4>ঐক্য ও সম্প্রীতি</h4>
+          <p>বৈচিত্র্যের মধ্যে ঐক্য গড়ে পারস্পরিক সম্প্রীতি বজায় রাখা আমাদের লক্ষ্য।</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div><!-- end page-body -->
 
 </main>
 
-<!-- ═══ FOOTER ═══ -->
-<footer>
-    <div class="footer-inner">
-        <div class="footer-brand">
-            <div class="footer-logo">স</div>
-            <div class="footer-name">সোনাগাজী কালচারাল ফোরাম, ফেনী</div>
-        </div>
-        <ul class="footer-links">
-            <li><a href="#">হোম</a></li>
-            <li><a href="#">আমাদের সম্পর্কে</a></li>
-            <li><a href="#">কার্যক্রম</a></li>
-            <li><a href="#">গ্যালারি</a></li>
-            <li><a href="#">সংবাদ</a></li>
-            <li><a href="#">যোগাযোগ</a></li>
-        </ul>
-        <div class="footer-divider"></div>
-        <p class="footer-copy">&copy; ২০২৬ সোনাগাজী কালচারাল ফোরাম, ফেনী — সর্বস্বত্ব সংরক্ষিত</p>
-        <p class="footer-slogan">সুস্থ সংস্কৃতি লালন করে যুক্তিপ্রবণ, সৃজনশীল এবং আধুনিক মানুষ গড়ে তোলা</p>
+<!-- ===== CONTACT NOTE HIGHLIGHT ===== -->
+<div class="contact-note-strip">
+  <div class="contact-note-inner">
+    <div class="contact-note-icon"><i class="fa-solid fa-comments"></i></div>
+    <div class="contact-note-text">
+      আপনার সাংস্কৃতিক উদ্যোগ ও পরামর্শ আমাদের কাছে সর্বদা স্বাগত। আমাদের সাথে যোগ দিন এবং একটি সমৃদ্ধ সাংস্কৃতিক ঐতিহ্য গড়তে অবদান রাখুন।
     </div>
+    <a href="contact.html" class="contact-note-btn">
+      <i class="fa-solid fa-arrow-right"></i> যোগাযোগ করুন
+    </a>
+  </div>
+</div>
+
+<!-- ===== FOOTER (same as homepage) ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-icon">
+        <i class="fa-solid fa-masks-theater"></i>
+      </div>
+      <div class="footer-brand-info">
+        <h3>সোনাগাজী কালচারাল ফোরাম</h3>
+        <p>ফেনী, বাংলাদেশ</p>
+      </div>
+    </div>
+
+    <p class="footer-desc">ফেনী জেলার সোনাগাজী উপজেলার একটি অগ্রগামী সামাজিক ও সাংস্কৃতিক সংগঠন। শিল্প, সাহিত্য ও সংস্কৃতির মাধ্যমে একটি সুন্দর সমাজ বিনির্মাণের লক্ষ্যে আমরা কাজ করে যাচ্ছি।</p>
+
+    <div class="footer-cols">
+      <div>
+        <p class="footer-col-title">কার্যক্রমের ক্ষেত্র</p>
+        <ul class="footer-list">
+          <li>সাংস্কৃতিক বিকাশ ও অনুষ্ঠান</li>
+          <li>মানবসেবা ও ত্রান বিতরণ</li>
+          <li>পরিবেশ রক্ষা ও বৃক্ষরোপণ</li>
+          <li>ইসলামী মূল্যবোধ ও সংস্কৃতি চর্চা</li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">যোগাযোগ</p>
+        <div class="footer-contact-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>সোনাগাজী জিরো পয়েন্ট, ফেনী</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fa-solid fa-envelope"></i>
+          <span>contact@scffeni.org</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fa-brands fa-facebook-f"></i>
+          <span>Facebook পেইজ</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fa-brands fa-youtube"></i>
+          <span>YouTube চ্যানেল</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 সোনাগাজী কালচারাল ফোরাম, ফেনী. All Rights Reserved.</p>
+      <p class="dev">Developed by <strong>Abdullah Al Maruf</strong> <span class="heart">❤</span></p>
+    </div>
+  </div>
 </footer>
+
+<!-- Go to Top -->
+<button id="goTopBtn" aria-label="Go to top">
+  <i class="fa-solid fa-chevron-up"></i>
+</button>
+
+<script>
+// Hamburger menu
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+document.addEventListener('click', (e) => {
+  if (!hamburger.contains(e.target) && !mobileNav.contains(e.target))
+    mobileNav.classList.remove('open');
+});
+
+// Go to top
+const goTopBtn = document.getElementById('goTopBtn');
+window.addEventListener('scroll', () => {
+  goTopBtn.classList.toggle('show', window.scrollY > 300);
+});
+goTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.goal-card, .obj-item, .activity-item, .activities-bg, .values-banner, .values-banner-2, .value-pill, .founder-highlight').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
 
 </body>
 </html>
