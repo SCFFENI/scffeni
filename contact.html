@@ -1,602 +1,669 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>যোগাযোগ - সোনাগাজী কালচারাল ফোরাম, ফেনী</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #1e3a8a 0%, #10b981 100%);
-            min-height: 100vh;
-        }
-        
-        /* নেভিগেশন বার */
-        nav {
-            background-color: #2c3e50;
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        nav a:hover {
-            color: #3498db;
-        }
-        
-        /* হেডার */
-        .header {
-            background-color: #fff;
-            padding: 2rem;
-            text-align: center;
-            border-bottom: 3px solid #3498db;
-            margin-bottom: 2rem;
-        }
-        
-        .header img {
-            max-width: 120px;
-            margin-bottom: 1rem;
-            border-radius: 10px;
-        }
-        
-        .header h1 {
-            color: #2c3e50;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .header p {
-            color: #7f8c8d;
-            font-size: 1.1rem;
-        }
-        
-        /* মূল কন্টেন্ট */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        .contact-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-        
-        /* যোগাযোগ তথ্য */
-        .contact-info {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .contact-info h2 {
-            color: #2c3e50;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 0.5rem;
-        }
-        
-        .info-item {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #ecf0f1;
-        }
-        
-        .info-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .info-label {
-            font-weight: 600;
-            color: #3498db;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .info-content {
-            color: #555;
-            font-size: 1rem;
-        }
-        
-        .info-content a {
-            color: #3498db;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .info-content a:hover {
-            color: #2980b9;
-            text-decoration: underline;
-        }
-        
-        /* যোগাযোগ ফর্ম */
-        .contact-form {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .contact-form h2 {
-            color: #2c3e50;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 0.5rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #2c3e50;
-            font-weight: 500;
-        }
-        
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #bdc3c7;
-            border-radius: 5px;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
-        }
-        
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-        
-        .submit-btn {
-            background-color: #3498db;
-            color: white;
-            padding: 0.75rem 2rem;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            width: 100%;
-        }
-        
-        .submit-btn:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-        }
-        
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-        
-        /* সোশ্যাল মিডিয়া লিংক */
-        .social-links {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            grid-column: 1 / -1;
-            margin-bottom: 3rem;
-        }
-        
-        .social-links h2 {
-            color: #2c3e50;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-        }
-        
-        .social-icons {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .social-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            background-color: #3498db;
-            border-radius: 50%;
-            color: white;
-            text-decoration: none;
-            font-size: 1.5rem;
-            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-            font-weight: bold;
-        }
-        
-        .social-icon:hover {
-            transform: scale(1.15);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        /* ফেসবুক */
-        .social-icon.facebook {
-            background-color: #1877F2;
-        }
-        
-        .social-icon.facebook:hover {
-            background-color: #0A66C2;
-        }
-        
-        /* ইউটিউব */
-        .social-icon.youtube {
-            background-color: #FF0000;
-        }
-        
-        .social-icon.youtube:hover {
-            background-color: #CC0000;
-        }
-        
-        /* ইনস্টাগ্রাম */
-        .social-icon.instagram {
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-        }
-        
-        .social-icon.instagram:hover {
-            filter: brightness(0.9);
-        }
-        
-        /* টুইটার/এক্স */
-        .social-icon.twitter {
-            background-color: #000000;
-        }
-        
-        .social-icon.twitter:hover {
-            background-color: #333333;
-        }
-        
-        /* লিংকডইন */
-        .social-icon.linkedin {
-            background-color: #0A66C2;
-        }
-        
-        .social-icon.linkedin:hover {
-            background-color: #08519b;
-        }
-        
-        /* হোয়াটসঅ্যাপ */
-        .social-icon.whatsapp {
-            background-color: #25D366;
-        }
-        
-        .social-icon.whatsapp:hover {
-            background-color: #20BA5D;
-        }
-        
-        /* টেলিগ্রাম */
-        .social-icon.telegram {
-            background-color: #0088cc;
-        }
-        
-        .social-icon.telegram:hover {
-            background-color: #006699;
-        }
-        
-        /* গিটহাব */
-        .social-icon.github {
-            background-color: #333333;
-        }
-        
-        .social-icon.github:hover {
-            background-color: #000000;
-        }
-        
-        /* টিকটক */
-        .social-icon.tiktok {
-            background: linear-gradient(45deg, #25F4EE, #FF0050);
-        }
-        
-        .social-icon.tiktok:hover {
-            filter: brightness(0.9);
-        }
-        
-        /* ফুটার */
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            margin-top: 3rem;
-        }
-        
-        footer a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        
-        footer a:hover {
-            text-decoration: underline;
-        }
-        
-        /* মোবাইল রেসপন্সিভ */
-        @media (max-width: 768px) {
-            .contact-section {
-                grid-template-columns: 1fr;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            nav ul {
-                gap: 1rem;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-        }
-        
-        /* সফল বার্তা */
-        .alert {
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 5px;
-            display: none;
-        }
-        
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>যোগাযোগ - সোনাগাজী কালচারাল ফোরাম, ফেনী</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+  --bg-deep: #060d0b;
+  --bg-dark: #0b1a16;
+  --bg-card: #0f2219;
+  --bg-card2: #112820;
+  --accent: #2dbd72;
+  --accent2: #1a9957;
+  --accent-glow: rgba(45,189,114,0.18);
+  --text: #e8f5ee;
+  --text-muted: #7aaa90;
+  --text-dim: #4a7a60;
+  --border: rgba(45,189,114,0.15);
+  --border-subtle: rgba(255,255,255,0.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: 'Hind Siliguri', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 10px; }
+
+/* ===== NAVBAR ===== */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(6,13,11,0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; }
+.nav-logo {
+  width: 38px; height: 38px; background: var(--accent);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: #fff; flex-shrink: 0;
+}
+.nav-brand-text { display: flex; flex-direction: column; }
+.nav-brand-text strong { font-size: 0.92rem; font-weight: 700; color: #fff; line-height: 1.2; }
+.nav-brand-text span { font-size: 0.72rem; color: var(--text-muted); }
+.nav-links { display: flex; gap: 4px; list-style: none; }
+.nav-links a {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 13px; border-radius: 8px;
+  font-size: 0.85rem; color: var(--text-muted); transition: all 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { background: var(--accent-glow); color: var(--accent); }
+.nav-links a i { font-size: 0.8rem; }
+.hamburger {
+  display: none; background: none;
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 10px; color: var(--text); cursor: pointer; font-size: 1.1rem;
+}
+.mobile-nav {
+  display: none; position: fixed; top: 64px; left: 0; right: 0;
+  background: rgba(6,13,11,0.97); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); z-index: 999;
+  padding: 16px; flex-direction: column; gap: 4px;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 16px; border-radius: 10px;
+  font-size: 0.92rem; color: var(--text-muted); transition: all 0.2s;
+}
+.mobile-nav a:hover { background: var(--accent-glow); color: var(--accent); }
+.mobile-nav a i { color: var(--accent); width: 18px; }
+
+/* ===== PAGE HERO ===== */
+.page-hero {
+  padding: 110px 24px 56px;
+  background: var(--bg-dark); text-align: center;
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: '';
+  position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(45,189,114,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.page-hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(45,189,114,0.1); border: 1px solid var(--border);
+  border-radius: 50px; padding: 7px 18px; font-size: 0.82rem;
+  color: var(--accent); margin-bottom: 18px;
+}
+.page-hero h1 {
+  font-family: 'Tiro Bangla', serif;
+  font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+  font-weight: 400; color: #fff; line-height: 1.35; margin-bottom: 12px;
+}
+.page-hero p {
+  font-size: 0.97rem; color: var(--text-muted);
+  max-width: 480px; margin: 0 auto; line-height: 1.8;
+}
+
+/* ===== MAIN BODY ===== */
+.page-body {
+  max-width: 1000px; margin: 0 auto; padding: 56px 24px 72px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+}
+
+/* Section header */
+.section-tag {
+  display: inline-block; background: var(--accent-glow); color: var(--accent);
+  border: 1px solid var(--border); border-radius: 50px;
+  padding: 4px 14px; font-size: 0.76rem; letter-spacing: 0.5px; margin-bottom: 10px;
+}
+.section-title {
+  font-family: 'Tiro Bangla', serif;
+  font-size: 1.5rem; font-weight: 400; color: #fff; margin-bottom: 6px;
+}
+.section-divider {
+  width: 40px; height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 2px; margin-bottom: 24px;
+}
+
+/* ===== CONTACT INFO CARD ===== */
+.contact-info-card {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: 20px; padding: 36px 30px;
+  display: flex; flex-direction: column; gap: 0;
+  transition: border-color 0.3s;
+}
+.contact-info-card:hover { border-color: var(--border); }
+
+.info-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.info-item:last-child { border-bottom: none; padding-bottom: 0; }
+.info-item:first-of-type { padding-top: 0; }
+
+.info-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  background: var(--accent-glow); border: 1px solid var(--border);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  color: var(--accent); font-size: 0.9rem;
+}
+.info-label {
+  font-size: 0.74rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.6px; color: var(--text-dim); margin-bottom: 4px;
+}
+.info-content {
+  font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;
+}
+.info-content a { color: var(--accent); transition: color 0.2s; }
+.info-content a:hover { color: #fff; }
+.info-content strong { color: var(--text); }
+
+/* Map embed */
+.map-wrap {
+  margin-top: 8px; border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+.map-wrap iframe { display: block; width: 100%; height: 190px; border: none; filter: grayscale(0.3) invert(0.85) hue-rotate(130deg); }
+
+/* ===== FORM CARD ===== */
+.contact-form-card {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: 20px; padding: 36px 30px;
+  transition: border-color 0.3s;
+}
+.contact-form-card:hover { border-color: var(--border); }
+
+.form-group { margin-bottom: 18px; }
+.form-group label {
+  display: block; margin-bottom: 7px;
+  font-size: 0.85rem; font-weight: 600; color: var(--text-muted);
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%; padding: 11px 14px;
+  background: var(--bg-dark); color: var(--text);
+  border: 1px solid var(--border-subtle); border-radius: 10px;
+  font-family: 'Hind Siliguri', sans-serif; font-size: 0.92rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: var(--text-dim); }
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,189,114,0.12);
+}
+.form-group textarea { resize: vertical; min-height: 130px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.submit-btn {
+  width: 100%; padding: 13px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 10px;
+  font-family: 'Hind Siliguri', sans-serif;
+  font-size: 0.97rem; font-weight: 700;
+  cursor: pointer; transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 18px rgba(45,189,114,0.3);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.submit-btn:hover { background: #25a862; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(45,189,114,0.4); }
+.submit-btn:active { transform: translateY(0); }
+
+.alert {
+  padding: 12px 16px; margin-bottom: 16px;
+  border-radius: 10px; font-size: 0.88rem; display: none;
+}
+.alert-success {
+  background: rgba(45,189,114,0.12); color: var(--accent);
+  border: 1px solid var(--border);
+}
+.alert-error {
+  background: rgba(239,68,68,0.1); color: #f87171;
+  border: 1px solid rgba(239,68,68,0.2);
+}
+
+/* ===== SOCIAL SECTION (full width) ===== */
+.social-section {
+  grid-column: 1 / -1;
+  background: var(--bg-dark); border: 1px solid var(--border-subtle);
+  border-radius: 20px; padding: 40px 36px; text-align: center;
+}
+
+.social-grid {
+  display: flex; gap: 14px; justify-content: center;
+  flex-wrap: wrap; margin-top: 28px;
+}
+
+.social-btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 11px 20px; border-radius: 12px;
+  font-family: 'Hind Siliguri', sans-serif;
+  font-size: 0.87rem; font-weight: 600; color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+  white-space: nowrap;
+}
+.social-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.35); filter: brightness(1.1); }
+.social-btn i { font-size: 0.95rem; }
+
+.btn-fb   { background: #1877f2; }
+.btn-yt   { background: #ff0000; }
+.btn-ig   { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+.btn-wa   { background: #25d366; }
+.btn-tg   { background: #0088cc; }
+.btn-tw   { background: #000; border: 1px solid rgba(255,255,255,0.15); }
+.btn-li   { background: #0a66c2; }
+.btn-tt   { background: linear-gradient(45deg, #010101, #69c9d0); }
+
+/* ===== CONTACT NOTE STRIP ===== */
+.contact-note-strip {
+  background: linear-gradient(135deg, rgba(45,189,114,0.14) 0%, rgba(26,153,87,0.08) 100%);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 32px 24px;
+}
+.contact-note-inner {
+  max-width: 900px; margin: 0 auto;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.contact-note-icon {
+  width: 52px; height: 52px; flex-shrink: 0;
+  background: var(--accent); border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: #fff;
+  box-shadow: 0 4px 16px rgba(45,189,114,0.35);
+}
+.contact-note-text {
+  flex: 1; font-size: 0.97rem; color: var(--text-muted); line-height: 1.75; min-width: 200px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: #050c09; border-top: 1px solid var(--border-subtle);
+  padding: 44px 24px 28px;
+}
+.footer-inner { max-width: 700px; margin: 0 auto; }
+.footer-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+.footer-icon {
+  width: 46px; height: 46px; flex-shrink: 0;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent); font-size: 1.1rem;
+}
+.footer-brand-info h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 3px; }
+.footer-brand-info p { font-size: 0.78rem; color: var(--text-muted); }
+.footer-desc {
+  font-size: 0.87rem; color: var(--text-muted); line-height: 1.75;
+  margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle);
+}
+.footer-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+.footer-col-title {
+  font-size: 0.85rem; font-weight: 700; color: #fff;
+  padding-left: 10px; border-left: 2px solid var(--accent); margin-bottom: 14px;
+}
+.footer-list { list-style: none; }
+.footer-list li {
+  font-size: 0.83rem; color: var(--text-muted); padding: 5px 0;
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.footer-list li::before { content: '•'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+.footer-contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.83rem; color: var(--text-muted); margin-bottom: 10px;
+}
+.footer-contact-item i { color: var(--accent); width: 16px; font-size: 0.8rem; }
+.footer-bottom { border-top: 1px solid var(--border-subtle); padding-top: 20px; text-align: center; }
+.footer-bottom p { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 4px; }
+.footer-bottom .dev strong { color: var(--text-muted); }
+.footer-bottom .heart { color: #e74c3c; }
+
+/* ===== GO TOP ===== */
+#goTopBtn {
+  position: fixed; bottom: 24px; right: 20px;
+  width: 42px; height: 42px; background: var(--accent);
+  border: none; border-radius: 10px; color: #fff; font-size: 1rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(45,189,114,0.35);
+  opacity: 0; transform: translateY(10px); transition: all 0.3s; z-index: 999;
+}
+#goTopBtn.show { opacity: 1; transform: translateY(0); }
+#goTopBtn:hover { background: #25a862; transform: translateY(-2px); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; align-items: center; justify-content: center; }
+  .page-body { grid-template-columns: 1fr; gap: 20px; padding: 36px 16px 60px; }
+  .social-section { grid-column: 1; }
+  .footer-cols { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .contact-info-card, .contact-form-card { padding: 26px 20px; }
+}
+</style>
 </head>
 <body>
-    <!-- নেভিগেশন বার -->
-    <nav>
-        <ul>
-            <li><a href="https://scffeni.github.io/scffeni/index.html">হোম</a></li>
-            <li><a href="https://scffeni.github.io/scffeni/about.html">আমাদের সম্পর্কে</a></li>
-            <li><a href="https://scffeni.github.io/scffeni/events.html">সাংস্কৃতিক অনুষ্ঠান</a></li>
-            <li><a href="https://scffeni.github.io/scffeni/leaders.html">নেতৃত্ব</a></li>
-            <li><a href="https://scffeni.github.io/scffeni/gallery.html">গ্যালারি</a></li>
-            <li><a href="https://scffeni.github.io/scffeni/contact.html">যোগাযোগ</a></li>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo"><i class="fa-solid fa-masks-theater"></i></div>
+    <div class="nav-brand-text">
+      <strong>সোনাগাজী কালচারাল ফোরাম</strong>
+      <span>ফেনী, বাংলাদেশ</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html"><i class="fa-solid fa-house"></i> হোম</a></li>
+    <li><a href="about.html"><i class="fa-solid fa-landmark"></i> আমাদের সম্পর্কে</a></li>
+    <li><a href="events.html"><i class="fa-solid fa-masks-theater"></i> অনুষ্ঠান</a></li>
+    <li><a href="leaders.html"><i class="fa-solid fa-users"></i> নেতৃত্ব</a></li>
+    <li><a href="gallery.html"><i class="fa-solid fa-image"></i> গ্যালারি</a></li>
+    <li><a href="contact.html" class="active"><i class="fa-solid fa-envelope"></i> যোগাযোগ</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html"><i class="fa-solid fa-house"></i> হোম</a>
+  <a href="about.html"><i class="fa-solid fa-landmark"></i> আমাদের সম্পর্কে</a>
+  <a href="events.html"><i class="fa-solid fa-masks-theater"></i> সাংস্কৃতিক অনুষ্ঠান</a>
+  <a href="leaders.html"><i class="fa-solid fa-users"></i> নেতৃত্ব</a>
+  <a href="gallery.html"><i class="fa-solid fa-image"></i> গ্যালারি</a>
+  <a href="contact.html"><i class="fa-solid fa-envelope"></i> যোগাযোগ</a>
+</div>
+
+<main>
+
+<!-- ===== PAGE HERO ===== -->
+<section class="page-hero">
+  <div class="page-hero-tag">
+    <i class="fa-solid fa-envelope"></i> যোগাযোগ
+  </div>
+  <h1>আমাদের সাথে কথা বলুন</h1>
+  <p>আপনার যেকোনো প্রশ্ন, পরামর্শ বা সহযোগিতার আগ্রহ নিয়ে আমাদের সাথে যোগাযোগ করুন। আমরা সর্বদা আপনাকে স্বাগত জানাই।</p>
+</section>
+
+<!-- ===== MAIN BODY ===== -->
+<div class="page-body">
+
+  <!-- Contact Info -->
+  <div class="contact-info-card">
+    <div class="section-tag">তথ্য</div>
+    <h2 class="section-title">যোগাযোগ তথ্য</h2>
+    <div class="section-divider"></div>
+
+    <div class="info-item">
+      <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+      <div>
+        <div class="info-label">ইমেইল</div>
+        <div class="info-content">
+          <a href="mailto:scffeni@gmail.com">scffeni@gmail.com</a><br>
+          <a href="mailto:marufmongazi@gmail.com">marufmongazi@gmail.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+      <div>
+        <div class="info-label">মোবাইল</div>
+        <div class="info-content">
+          <a href="tel:+8801700000000">+880 1700 000000</a><br>
+          <a href="tel:+8801800000000">+880 1800 000000</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+      <div>
+        <div class="info-label">অফিস ঠিকানা</div>
+        <div class="info-content">
+          সোনাগাজী জিরো পয়েন্ট, ফেনী সদর<br>
+          ফেনী, বাংলাদেশ — ৩৯০০<br><br>
+          <strong>কর্মসময়:</strong><br>
+          শনি–বৃহস্পতি: সকাল ৯:০০ – রাত ৫:০০<br>
+          শুক্রবার: সকাল ১০:০০ – দুপুর ২:০০
+        </div>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-icon"><i class="fa-solid fa-globe"></i></div>
+      <div>
+        <div class="info-label">ওয়েবসাইট</div>
+        <div class="info-content">
+          <a href="https://scffeni.github.io/scffeni/">scffeni.github.io</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-icon"><i class="fa-solid fa-map"></i></div>
+      <div style="width:100%">
+        <div class="info-label">অবস্থান</div>
+        <div class="map-wrap">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3630.2463847823997!2d91.3975!3d23.0033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x375266a8b0000001%3A0x123456789!2sFeni%2C%20Bangladesh!5e0!3m2!1sen!2sbd!4v1234567890" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Contact Form -->
+  <div class="contact-form-card">
+    <div class="section-tag">বার্তা</div>
+    <h2 class="section-title">বার্তা পাঠান</h2>
+    <div class="section-divider"></div>
+
+    <div id="successAlert" class="alert alert-success">
+      <i class="fa-solid fa-circle-check"></i> আপনার বার্তা সফলভাবে পাঠানো হয়েছে। শীঘ্রই যোগাযোগ করা হবে।
+    </div>
+    <div id="errorAlert" class="alert alert-error">
+      <i class="fa-solid fa-circle-xmark"></i> বার্তা পাঠাতে সমস্যা হয়েছে। অনুগ্রহ করে পুনরায় চেষ্টা করুন।
+    </div>
+
+    <form id="contactForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">আপনার নাম <span style="color:var(--accent)">*</span></label>
+          <input type="text" id="name" name="name" placeholder="আপনার পুরো নাম" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">ফোন নম্বর</label>
+          <input type="tel" id="phone" name="phone" placeholder="+880 1X00 000000">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">ইমেইল ঠিকানা <span style="color:var(--accent)">*</span></label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="subject">বিষয় <span style="color:var(--accent)">*</span></label>
+        <input type="text" id="subject" name="subject" placeholder="বার্তার বিষয় লিখুন" required>
+      </div>
+
+      <div class="form-group">
+        <label for="message">আপনার বার্তা <span style="color:var(--accent)">*</span></label>
+        <textarea id="message" name="message" placeholder="আপনার বিস্তারিত বার্তা এখানে লিখুন..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        <i class="fa-solid fa-paper-plane"></i> বার্তা পাঠান
+      </button>
+    </form>
+  </div>
+
+  <!-- Social Media -->
+  <div class="social-section">
+    <div class="section-tag">সোশ্যাল মিডিয়া</div>
+    <h2 class="section-title">আমাদের সাথে সংযুক্ত থাকুন</h2>
+    <div class="social-grid">
+      <a href="https://facebook.com/scffeni" class="social-btn btn-fb" target="_blank" rel="noopener">
+        <i class="fa-brands fa-facebook-f"></i> Facebook
+      </a>
+      <a href="https://youtube.com/@scffeni" class="social-btn btn-yt" target="_blank" rel="noopener">
+        <i class="fa-brands fa-youtube"></i> YouTube
+      </a>
+      <a href="https://instagram.com/scffeni" class="social-btn btn-ig" target="_blank" rel="noopener">
+        <i class="fa-brands fa-instagram"></i> Instagram
+      </a>
+      <a href="https://wa.me/8801700000000" class="social-btn btn-wa" target="_blank" rel="noopener">
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+      </a>
+      <a href="https://t.me/scffeni" class="social-btn btn-tg" target="_blank" rel="noopener">
+        <i class="fa-brands fa-telegram"></i> Telegram
+      </a>
+      <a href="https://twitter.com/scffeni" class="social-btn btn-tw" target="_blank" rel="noopener">
+        <i class="fa-brands fa-x-twitter"></i> Twitter / X
+      </a>
+      <a href="https://linkedin.com/company/scffeni" class="social-btn btn-li" target="_blank" rel="noopener">
+        <i class="fa-brands fa-linkedin-in"></i> LinkedIn
+      </a>
+      <a href="https://tiktok.com/@scffeni" class="social-btn btn-tt" target="_blank" rel="noopener">
+        <i class="fa-brands fa-tiktok"></i> TikTok
+      </a>
+    </div>
+  </div>
+
+</div><!-- end page-body -->
+
+</main>
+
+<!-- ===== CONTACT NOTE STRIP ===== -->
+<div class="contact-note-strip">
+  <div class="contact-note-inner">
+    <div class="contact-note-icon"><i class="fa-solid fa-comments"></i></div>
+    <div class="contact-note-text">
+      আপনার সাংস্কৃতিক উদ্যোগ ও পরামর্শ আমাদের কাছে সর্বদা স্বাগত। আমাদের সাথে যোগ দিন এবং একটি সমৃদ্ধ সাংস্কৃতিক ঐতিহ্য গড়তে অবদান রাখুন।
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-icon"><i class="fa-solid fa-masks-theater"></i></div>
+      <div class="footer-brand-info">
+        <h3>সোনাগাজী কালচারাল ফোরাম</h3>
+        <p>ফেনী, বাংলাদেশ</p>
+      </div>
+    </div>
+    <p class="footer-desc">ফেনী জেলার সোনাগাজী উপজেলার একটি অগ্রগামী সামাজিক ও সাংস্কৃতিক সংগঠন। শিল্প, সাহিত্য ও সংস্কৃতির মাধ্যমে একটি সুন্দর সমাজ বিনির্মাণের লক্ষ্যে আমরা কাজ করে যাচ্ছি।</p>
+    <div class="footer-cols">
+      <div>
+        <p class="footer-col-title">কার্যক্রমের ক্ষেত্র</p>
+        <ul class="footer-list">
+          <li>সাংস্কৃতিক বিকাশ ও অনুষ্ঠান</li>
+          <li>মানবসেবা ও ত্রান বিতরণ</li>
+          <li>পরিবেশ রক্ষা ও বৃক্ষরোপণ</li>
+          <li>ইসলামী মূল্যবোধ ও সংস্কৃতি চর্চা</li>
         </ul>
-    </nav>
-    
-    <!-- হেডার -->
-    <div class="header">
-        <img src="https://scffeni.github.io/scffeni/logo.jpg" alt="লোগো">
-        <h1>যোগাযোগ করুন</h1>
-        <p>সোনাগাজী কালচারাল ফোরাম, ফেনী</p>
-    </div>
-    
-    <!-- মূল কন্টেন্ট -->
-    <div class="container">
-        <!-- যোগাযোগ তথ্য এবং ফর্ম -->
-        <div class="contact-section">
-            <!-- বাম পক্ষ - যোগাযোগ তথ্য -->
-            <div class="contact-info">
-                <h2>📍 যোগাযোগ তথ্য</h2>
-                
-                <div class="info-item">
-                    <div class="info-label">📧 ইমেইল:</div>
-                    <div class="info-content">
-                        <a href="mailto:contact@scffeni@gmail.com">scffeni@gmail.com</a><br>
-                        <a href="mailto:marufmongazi@gmail.com">marufmongazi@gmail.com</a>
-                    </div>
-                </div>
-                
-                <div class="info-item">
-                    <div class="info-label">📱 মোবাইল:</div>
-                    <div class="info-content">
-                        <a href="tel:+8801700000000">+880 1700 000000</a><br>
-                        <a href="tel:+8801800000000">+880 1800 000000</a>
-                    </div>
-                </div>
-                
-                <div class="info-item">
-                    <div class="info-label">🏢 অফিস ঠিকানা:</div>
-                    <div class="info-content">
-                        সোনাগাজী, ফেনী সদর<br>
-                        ফেনী, বাংলাদেশ - ৩৯০০<br>
-                        <br>
-                        <strong>কর্মসময়:</strong><br>
-                        সোমবার - শুক্রবার: সকাল ৯:০০ - রাত ৫:০০<br>
-                        শনিবার: সকাল ১০:০০ - দুপুর ২:০০<br>
-                        রবিবার: বন্ধ
-                    </div>
-                </div>
-                
-                <div class="info-item">
-                    <div class="info-label">🌐 ওয়েবসাইট:</div>
-                    <div class="info-content">
-                        <a href="https://scffeni.github.io/scffeni/">scffeni.github.io</a>
-                    </div>
-                </div>
-                
-                <div class="info-item">
-                    <div class="info-label">📍 অবস্থান:</div>
-                    <div class="info-content">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3630.2463847823997!2d91.3975!3d23.0033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x375266a8b0000001%3A0x123456789!2sFeni%2C%20Bangladesh!5e0!3m2!1sen!2sbd!4v1234567890" width="100%" height="250" style="border:0; border-radius: 5px;" allowfullscreen="" loading="lazy"></iframe>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ডান পক্ষ - যোগাযোগ ফর্ম -->
-            <div class="contact-form">
-                <h2>💬 বার্তা পাঠান</h2>
-                <div id="successAlert" class="alert alert-success">আপনার বার্তা সফলভাবে পাঠানো হয়েছে। আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব।</div>
-                <div id="errorAlert" class="alert alert-error">দুঃখিত, বার্তা পাঠানোর সময় একটি ত্রুটি ঘটেছে। অনুগ্রহ করে পুনরায় চেষ্টা করুন।</div>
-                
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">আপনার নাম *</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">ইমেইল ঠিকানা *</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">ফোন নম্বর</label>
-                        <input type="tel" id="phone" name="phone">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">বিষয় *</label>
-                        <input type="text" id="subject" name="subject" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">বার্তা *</label>
-                        <textarea id="message" name="message" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">বার্তা পাঠান</button>
-                </form>
-            </div>
+      </div>
+      <div>
+        <p class="footer-col-title">যোগাযোগ</p>
+        <div class="footer-contact-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>সোনাগাজী জিরো পয়েন্ট, ফেনী</span>
         </div>
-        
-        <!-- সোশ্যাল মিডিয়া -->
-        <div class="social-links">
-            <h2>আমাদের সাথে সংযুক্ত থাকুন</h2>
-            <div class="social-icons">
-                <a href="https://facebook.com/scffeni" class="social-icon facebook" title="Facebook">f</a>
-                <a href="https://youtube.com/@scffeni" class="social-icon youtube" title="YouTube">▶</a>
-                <a href="https://instagram.com/scffeni" class="social-icon instagram" title="Instagram">📷</a>
-                <a href="https://twitter.com/scffeni" class="social-icon twitter" title="Twitter (X)">𝕏</a>
-                <a href="https://www.linkedin.com/company/scffeni/" class="social-icon linkedin" title="LinkedIn">in</a>
-                <a href="https://wa.me/8801700000000" class="social-icon whatsapp" title="WhatsApp">💬</a>
-                <a href="https://t.me/scffeni" class="social-icon telegram" title="Telegram">✈</a>
-                <a href="https://github.com/scffeni" class="social-icon github" title="GitHub">⚙</a>
-                <a href="https://www.tiktok.com/@scffeni" class="social-icon tiktok" title="TikTok">♪</a>
-            </div>
+        <div class="footer-contact-item">
+          <i class="fa-solid fa-envelope"></i>
+          <span>scffeni@gmail.com</span>
         </div>
+        <div class="footer-contact-item">
+          <i class="fa-brands fa-facebook-f"></i>
+          <span>Facebook পেইজ</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fa-brands fa-youtube"></i>
+          <span>YouTube চ্যানেল</span>
+        </div>
+      </div>
     </div>
-    
-    <!-- ফুটার -->
-    <footer>
-        <p>&copy; 2026 সোনাগাজী কালচারাল ফোরাম, ফেনী। সর্বাধিকার সংরক্ষিত।</p>
-        <p>ডেভেলপড বাই: Abdullah Al Maruf</p>
-    </footer>
-    
-    <script>
-        // ফর্ম সাবমিশন হ্যান্ডেল করা
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            
-            // ইমেইল ভ্যালিডেশন
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showError('অনুগ্রহ করে সঠিক ইমেইল ঠিকানা প্রবেश করুন');
-                return;
-            }
-            
-            // ডেটা প্রস্তুত করা
-            const formData = {
-                name: name,
-                email: email,
-                phone: phone,
-                subject: subject,
-                message: message,
-                timestamp: new Date().toLocaleString('bn-BD')
-            };
-            
-            // FormSubmit.co সেবা ব্যবহার করে ইমেইল পাঠানো
-            fetch('https://formsubmit.co/contact@scffeni@gmail.com', {
-                method: 'POST',
-                body: new FormData(this),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    showSuccess();
-                    document.getElementById('contactForm').reset();
-                } else {
-                    showError();
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // স্থানীয় সংরক্ষণ - যদি ইমেইল পাঠানো ব্যর্থ হয়
-                localStorage.setItem('contactForm_' + Date.now(), JSON.stringify(formData));
-                showSuccess('আপনার বার্তা সংরক্ষিত হয়েছে এবং শীঘ্রই প্রক্রিয়া করা হবে।');
-                document.getElementById('contactForm').reset();
-            });
-        });
-        
-        // সফল বার্তা দেখানো
-        function showSuccess(message = 'আপনার বার্তা সফলভাবে পাঠানো হয়েছে। আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব।') {
-            const alert = document.getElementById('successAlert');
-            alert.textContent = message;
-            alert.style.display = 'block';
-            document.getElementById('errorAlert').style.display = 'none';
-            
-            setTimeout(() => {
-                alert.style.display = 'none';
-            }, 5000);
-        }
-        
-        // ত্রুটি বার্তা দেখানো
-        function showError(message = 'দুঃখিত, বার্তা পাঠানোর সময় একটি ত্রুটি ঘটেছে। অনুগ্রহ করে পুনরায় চেষ্টা করুন।') {
-            const alert = document.getElementById('errorAlert');
-            alert.textContent = message;
-            alert.style.display = 'block';
-            document.getElementById('successAlert').style.display = 'none';
-        }
-    </script>
+    <div class="footer-bottom">
+      <p>© 2026 সোনাগাজী কালচারাল ফোরাম, ফেনী. All Rights Reserved.</p>
+      <p class="dev">Developed by <strong>Abdullah Al Maruf</strong> <span class="heart">❤</span></p>
+    </div>
+  </div>
+</footer>
+
+<button id="goTopBtn" aria-label="Go to top"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script>
+// Hamburger
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+document.addEventListener('click', (e) => {
+  if (!hamburger.contains(e.target) && !mobileNav.contains(e.target))
+    mobileNav.classList.remove('open');
+});
+
+// Go to top
+const goTopBtn = document.getElementById('goTopBtn');
+window.addEventListener('scroll', () => goTopBtn.classList.toggle('show', window.scrollY > 300));
+goTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Form submit
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showAlert('error', 'অনুগ্রহ করে সঠিক ইমেইল ঠিকানা দিন।'); return;
+  }
+  fetch('https://formsubmit.co/scffeni@gmail.com', {
+    method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' }
+  })
+  .then(r => {
+    if (r.ok) { showAlert('success'); this.reset(); }
+    else showAlert('error');
+  })
+  .catch(() => { showAlert('success'); this.reset(); });
+});
+
+function showAlert(type, msg) {
+  const s = document.getElementById('successAlert');
+  const er = document.getElementById('errorAlert');
+  s.style.display = 'none'; er.style.display = 'none';
+  const el = type === 'success' ? s : er;
+  if (msg) el.innerHTML = (type === 'success' ? '<i class="fa-solid fa-circle-check"></i> ' : '<i class="fa-solid fa-circle-xmark"></i> ') + msg;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 5000);
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.contact-info-card, .contact-form-card, .social-section, .social-btn').forEach(el => {
+  el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
 </body>
- </html>
+</html>
