@@ -668,60 +668,98 @@ img { max-width: 100%; display: block; }
 }
 
 /* ===== MEMBERS ===== */
-.members-section { background: var(--bg-dark); }
+.leadership-section { background: var(--bg-dark); }
 
-.members-grid {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
+.leadership-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  max-width: 680px;
+  margin: 0 auto;
 }
 
-.member-card {
+.leader-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  border-radius: 18px;
-  padding: 28px 24px;
-  text-align: center;
-  width: 200px;
-  transition: all 0.25s;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.leader-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border);
 }
 
-.member-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(45,189,114,0.15);
-}
-
-.member-avatar {
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  margin: 0 auto 14px;
-  object-fit: cover;
-  border: 3px solid var(--border);
-  background: var(--bg-deep);
+.leader-card-inner {
+  padding: 18px 18px 14px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  color: var(--accent);
+  gap: 14px;
+}
+
+.leader-avatar {
+  width: 56px; height: 56px; min-width: 56px;
+  border-radius: 50%;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
   overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.leader-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-fallback {
+  display: none;
+  width: 100%; height: 100%;
+  align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 600;
+  color: var(--text-muted);
 }
 
-.member-role {
-  font-size: 0.72rem;
-  color: var(--accent);
-  background: var(--accent-glow);
-  border-radius: 6px;
-  padding: 3px 10px;
-  margin-bottom: 8px;
-  display: inline-block;
+.leader-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 600;
+  padding: 3px 10px; border-radius: 20px;
+  margin-bottom: 6px; letter-spacing: 0.3px;
 }
+.leader-badge i { font-size: 10px; }
+.badge-blue  { background: rgba(24, 95, 165, 0.15); color: #7ab8f0; }
+.badge-teal  { background: rgba(45, 189, 114, 0.12); color: var(--accent); }
 
-.member-name {
-  font-size: 0.9rem;
-  font-weight: 600;
+.leader-name {
+  font-size: 15px; font-weight: 700;
   color: var(--text);
+  margin: 0 0 4px; line-height: 1.3;
+}
+.leader-desc {
+  font-size: 12px; color: var(--text-muted);
+  line-height: 1.55; margin: 0;
+}
+
+.leader-footer {
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-card2);
+  padding: 9px 16px;
+  display: flex; gap: 7px;
+}
+
+.leader-social {
+  width: 30px; height: 30px; border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); font-size: 12px;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.leader-social:hover {
+  background: var(--accent-glow);
+  color: var(--accent);
+  border-color: var(--border);
+}
+
+.leadership-see-all {
+  text-align: center;
+  margin-top: 20px;
 }
 
 /* ===== GALLERY ===== */
@@ -1264,27 +1302,68 @@ footer {
   </div>
 </section>
 
-<!-- ===== MEMBERS ===== -->
-<section class="section members-section">
+
+<!-- ===== LEADERSHIP SECTION ===== -->
+<section class="section leadership-section">
   <div class="section-header">
-    <div class="section-tag">কমিটি</div>
-    <h2 class="section-title">কমিটি সদস্য</h2>
+    <div class="section-tag">নেতৃত্ব</div>
+    <h2 class="section-title">মূল নেতৃত্ব</h2>
   </div>
-  <div class="members-grid">
-    <div class="member-card">
-      <div class="member-avatar">
-        <img src="committe1.jpg" alt="" onerror="this.style.display='none'; this.parentElement.innerHTML='👤'">
+ 
+  <div class="leadership-grid">
+ 
+    <!-- সভাপতি -->
+    <div class="leader-card">
+      <div class="leader-card-inner">
+        <div class="leader-avatar">
+          <img src="https://scffeni.github.io/scffeni/images/president.jpg" alt="আব্দুল্লাহ আল মারুফ"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <span class="avatar-fallback">আ</span>
+        </div>
+        <div class="leader-info">
+          <span class="leader-badge badge-blue">
+            <i class="fa-solid fa-crown"></i> প্রতিষ্ঠাতা সভাপতি
+          </span>
+          <p class="leader-name">আব্দুল্লাহ আল মারুফ</p>
+          <p class="leader-desc">সৃজনশীলতা ও নেতৃত্বের মাধ্যমে যুব ক্ষমতায়নে নিবেদিত।</p>
+        </div>
       </div>
-      <span class="member-role">সভাপতি</span>
-      <p class="member-name">Istaq Maihmud Ahnaf</p>
-    </div>
-    <div class="member-card">
-      <div class="member-avatar">
-        <img src="committe2.jpg" alt="" onerror="this.style.display='none'; this.parentElement.innerHTML='👤'">
+      <div class="leader-footer">
+        <a class="leader-social" href="#" aria-label="ফেসবুক"><i class="fa-brands fa-facebook-f"></i></a>
+        <a class="leader-social" href="#" aria-label="ইউটিউব"><i class="fa-brands fa-youtube"></i></a>
+        <a class="leader-social" href="#" aria-label="লিংকডইন"><i class="fa-brands fa-linkedin-in"></i></a>
       </div>
-      <span class="member-role">সাধারণ সম্পাদক</span>
-      <p class="member-name">নাম</p>
     </div>
+ 
+    <!-- সাধারণ সম্পাদক -->
+    <div class="leader-card">
+      <div class="leader-card-inner">
+        <div class="leader-avatar">
+          <img src="https://scffeni.github.io/scffeni/images/secretary.jpg" alt="সাধারণ সম্পাদক"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <span class="avatar-fallback">স</span>
+        </div>
+        <div class="leader-info">
+          <span class="leader-badge badge-teal">
+            <i class="fa-solid fa-clipboard-list"></i> সাধারণ সম্পাদক
+          </span>
+          <p class="leader-name">সদস্যের নাম</p>
+          <p class="leader-desc">সাংগঠনিক কার্যক্রম পরিচালনা ও সমন্বয়ে দায়িত্বশীল।</p>
+        </div>
+      </div>
+      <div class="leader-footer">
+        <a class="leader-social" href="#" aria-label="ফেসবুক"><i class="fa-brands fa-facebook-f"></i></a>
+        <a class="leader-social" href="#" aria-label="ইউটিউব"><i class="fa-brands fa-youtube"></i></a>
+        <a class="leader-social" href="#" aria-label="লিংকডইন"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+    </div>
+ 
+  </div>
+ 
+  <div class="leadership-see-all">
+    <a href="leaders.html" class="btn-ghost">
+      <i class="fa-solid fa-users"></i> পূর্ণ কমিটি দেখুন
+    </a>
   </div>
 </section>
 
