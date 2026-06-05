@@ -464,7 +464,132 @@
     </div>
   </div>
 </div>
+  
+/* ===== VIDEO SECTION ===== */
+.video-section { background: var(--bg-dark); }
 
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 900px;
+  margin: 0 auto 28px;
+}
+
+.vcard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.vcard:hover {
+  transform: translateY(-4px);
+  border-color: var(--border);
+}
+
+.vthumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #071510;
+}
+
+.vthumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.72);
+  transition: filter 0.3s, transform 0.3s;
+  display: block;
+}
+
+.vcard:hover .vthumb img {
+  filter: brightness(0.55);
+  transform: scale(1.05);
+}
+
+.vplay-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vplay-circle {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.vplay-circle.yt { background: #ff0000; }
+.vplay-circle.fb { background: #1877f2; }
+.vcard:hover .vplay-circle { transform: scale(1.12); }
+
+.vplay-circle i {
+  color: #fff;
+  font-size: 1rem;
+  margin-left: 3px;
+}
+
+.vduration {
+  position: absolute;
+  bottom: 8px; right: 8px;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.vbody { padding: 14px; }
+
+.vplatform {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.vplatform.yt { background: rgba(255,0,0,0.12); color: #ff4444; }
+.vplatform.fb { background: rgba(24,119,242,0.12); color: #5b9cf6; }
+
+.vtitle {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.45;
+  margin-bottom: 6px;
+}
+
+.vmeta {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.vmeta span { color: var(--text-muted); }
+
+@media (max-width: 680px) {
+  .video-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 420px) {
+  .video-grid { grid-template-columns: 1fr; }
+  .video-footer { flex-direction: column; align-items: center; }
+}
 <!-- SOCIAL FOLLOW -->
 <section class="social-follow-section">
   <h2>📱 আমাদের সোশ্যাল মিডিয়া ফেলো করুন</h2>
