@@ -1809,6 +1809,63 @@ document.querySelectorAll('.post-card, .event-card, .activity-card, .member-card
   observer.observe(el);
 });
 </script>
+<!-- Floating Share Button -->
+<div id="share-fab-container" style="position:fixed; bottom:24px; right:24px; display:flex; flex-direction:column; align-items:flex-end; gap:10px; z-index:999;">
 
+  <div id="share-options" style="display:flex; flex-direction:column; gap:8px; align-items:flex-end; opacity:0; transform:translateY(10px); transition:opacity 0.22s, transform 0.22s; pointer-events:none;">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span style="background:#fff; border:1px solid #ddd; border-radius:20px; padding:4px 12px; font-size:13px; color:#555; white-space:nowrap; font-family:sans-serif;">Facebook</span>
+      <button onclick="shareToFacebook()" style="width:42px;height:42px;border-radius:50%;background:#1877F2;border:none;color:white;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;">f</button>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span style="background:#fff; border:1px solid #ddd; border-radius:20px; padding:4px 12px; font-size:13px; color:#555; white-space:nowrap; font-family:sans-serif;">WhatsApp</span>
+      <button onclick="shareToWhatsApp()" style="width:42px;height:42px;border-radius:50%;background:#25D366;border:none;color:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">W</button>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span style="background:#fff; border:1px solid #ddd; border-radius:20px; padding:4px 12px; font-size:13px; color:#555; white-space:nowrap; font-family:sans-serif;">লিংক কপি</span>
+      <button onclick="copyLink()" style="width:42px;height:42px;border-radius:50%;background:#fff;border:1px solid #ccc;color:#333;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">🔗</button>
+    </div>
+  </div>
+
+  <button id="main-share-fab" onclick="toggleShareFab()" style="width:52px;height:52px;border-radius:50%;background:#1a6b3c;border:none;color:white;font-size:22px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,0.2);transition:background 0.2s;" title="শেয়ার করুন">&#x1F4E4;</button>
+</div>
+
+<div id="share-toast" style="position:fixed;bottom:90px;right:24px;background:#333;color:#fff;padding:8px 16px;border-radius:20px;font-size:13px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:1000; font-family:sans-serif;"></div>
+
+<script>
+var shareFabOpen = false;
+function toggleShareFab() {
+  shareFabOpen = !shareFabOpen;
+  var opts = document.getElementById('share-options');
+  var fab = document.getElementById('main-share-fab');
+  if (shareFabOpen) {
+    if (navigator.share) {
+      navigator.share({ title: document.title, url: window.location.href });
+      shareFabOpen = false; return;
+    }
+    opts.style.opacity='1'; opts.style.transform='translateY(0)'; opts.style.pointerEvents='auto';
+    fab.style.background='#0f4a28';
+  } else {
+    opts.style.opacity='0'; opts.style.transform='translateY(10px)'; opts.style.pointerEvents='none';
+    fab.style.background='#1a6b3c';
+  }
+}
+function shareToFacebook() {
+  window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href),'_blank');
+  toggleShareFab();
+}
+function shareToWhatsApp() {
+  window.open('https://wa.me/?text='+encodeURIComponent(document.title+' - '+window.location.href),'_blank');
+  toggleShareFab();
+}
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(function(){
+    var t=document.getElementById('share-toast');
+    t.textContent='লিংক কপি হয়েছে ✓'; t.style.opacity='1';
+    setTimeout(function(){t.style.opacity='0';},2000);
+  });
+  toggleShareFab();
+}
+</script>
 </body>
 </html>
