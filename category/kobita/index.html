@@ -296,6 +296,35 @@ footer{background:#050c09;border-top:1px solid var(--border-subtle);padding:44px
             <p class="recent-title">স্বপ্নের দেশ</p>
             <p class="recent-meta">আরিফুল ইসলাম · এপ্রিল ২০২৬</p>
           </div>
+          <div class="category-posts-grid" id="kobita-posts-grid"></div>
+
+<script src="../../posts.js"></script>
+<script>
+(function() {
+  const grid = document.getElementById('kobita-posts-grid');
+  if (!grid || !window.SCF_POSTS) return;
+
+  const posts = SCF_POSTS.filter(p => p.categorySlug === 'kobita');
+
+  grid.innerHTML = posts.map(post => `
+    <article class="category-post-card">
+      <div class="post-card-header">
+        <span class="post-icon">${post.icon}</span>
+        <div class="post-meta-top">
+          <span class="post-cat-badge">${post.category}</span>
+          <span class="post-date">${post.date}</span>
+        </div>
+      </div>
+      <h3 class="post-card-title"><a href="${post.link}">${post.title}</a></h3>
+      <p class="post-card-excerpt">${post.excerpt}</p>
+      <div class="post-card-footer">
+        <span class="post-author">✍ ${post.author}</span>
+        <a href="${post.link}" class="post-read-btn">পড়ুন →</a>
+      </div>
+    </article>
+  `).join('');
+})();
+</script>
         </div>
     </div>
     <div class="write-cta">
