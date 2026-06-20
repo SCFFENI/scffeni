@@ -47,7 +47,7 @@ const SCF_POSTS = [
     date: "মে ২০২৬",
     dateSort: "2026-05",
     link: "#"
-  }
+  },
 
   {
   id: 5,
@@ -60,5 +60,5 @@ const SCF_POSTS = [
   date: "জুন ২০২৬",
   dateSort: "2026-06",
   link: "#"
-}
+},
 ];
