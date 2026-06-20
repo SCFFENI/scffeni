@@ -1,5 +1,5 @@
 // posts.js — সব পোস্টের কেন্দ্রীয় ডেটা
-const SCF_POSTS = [
+window.SCF_POSTS = [
   {
     id: 1,
     category: "ছড়া-কবিতা",
