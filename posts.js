@@ -49,16 +49,5 @@ window.SCF_POSTS = [
     link: "#"
   },
 
-  {
-  id: 5,
-  category: "ছড়া-কবিতা",
-  categorySlug: "kobita",
-  icon: "🪶",
-  title: "নতুন পোস্টের শিরোনাম",
-  excerpt: "পোস্টের সংক্ষিপ্ত বিবরণ...",
-  author: "লেখকের নাম",
-  date: "জুন ২০২৬",
-  dateSort: "2026-06",
-  link: "#"
-},
+
 ];
