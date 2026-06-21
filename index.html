@@ -1420,18 +1420,17 @@ footer {
 </section>
 
 <!-- ===== RECENT POSTS ===== -->
-<!-- সাম্প্রতিক পোস্ট সেকশন -->
-<section class="posts-section" id="posts">
-  <div class="container">
-    <div class="section-label">সর্বশেষ</div>
+<section class="section posts-section" id="posts">
+  <div class="section-header">
+    <div class="section-tag">সর্বশেষ</div>
     <h2 class="section-title">সাম্প্রতিক পোস্ট</h2>
-    <p class="section-subtitle">সংগঠনের সর্বশেষ লেখা ও কার্যক্রম</p>
-    <div class="category-posts-grid" id="home-posts-grid">
-      <!-- পোস্ট কার্ড JS দিয়ে লোড হবে -->
-    </div>
-    <div style="text-align:center; margin-top: 2rem;">
-      <a href="category/kobita/index.html" class="btn btn-outline">সব পোস্ট দেখুন</a>
-    </div>
+    <p class="section-sub">সংগঠনের সর্বশেষ লেখা ও কার্যক্রম</p>
+  </div>
+  <div class="category-posts-grid" id="home-posts-grid"></div>
+  <div style="text-align:center; margin-top: 2rem;">
+    <a href="category/kobita/index.html" class="btn-outline" style="display:inline-flex; align-items:center; gap:8px;">
+      <i class="fa-solid fa-layer-group"></i> সব বিভাগ দেখুন
+    </a>
   </div>
 </section>
 
@@ -1441,7 +1440,6 @@ footer {
   const grid = document.getElementById('home-posts-grid');
   if (!grid || !window.SCF_POSTS) return;
 
-  // তারিখ অনুযায়ী সর্বশেষ ৪টি পোস্ট
   const latest = [...SCF_POSTS]
     .sort((a, b) => b.dateSort.localeCompare(a.dateSort))
     .slice(0, 4);
