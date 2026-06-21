@@ -164,6 +164,7 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
 }
 
+/* Animated dots bg */
 .hero-dots {
   position: absolute;
   inset: 0;
@@ -468,90 +469,87 @@ img { max-width: 100%; display: block; }
 
 .cat-item i { color: var(--accent); font-size: 0.9rem; width: 16px; }
 
-/* ===== POSTS GRID (বিভাগ-স্টাইল কার্ড) ===== */
-.posts-section { background: var(--bg-deep); }
-
-.posts-grid {
+/* সাম্প্রতিক পোস্ট — বিভাগ স্টাইল কার্ড */
+.category-posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
-  max-width: 1100px;
-  margin: 0 auto 32px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
-/* বিভাগ-স্টাইল পোস্ট কার্ড */
-.post-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  padding: 22px 20px 18px;
+.category-post-card {
+  background: var(--card-bg, #1a2e1a);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
-  cursor: pointer;
+  gap: 0.75rem;
+  transition: transform 0.2s, border-color 0.2s;
 }
 
-.post-card:hover {
+.category-post-card:hover {
   transform: translateY(-4px);
-  border-color: var(--border);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  border-color: var(--primary, #2d7a2d);
 }
 
 .post-card-header {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .post-icon {
-  font-size: 2rem;
+  font-size: 1.8rem;
   flex-shrink: 0;
-  line-height: 1;
 }
 
 .post-meta-top {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
 }
 
-.post-cat {
+.post-cat-badge {
   display: inline-block;
+  background: rgba(45, 122, 45, 0.2);
+  color: var(--primary-light, #6abf6a);
   font-size: 0.72rem;
-  color: var(--accent);
-  background: var(--accent-glow);
-  border: 1px solid var(--border);
+  padding: 0.2rem 0.6rem;
   border-radius: 20px;
-  padding: 3px 10px;
-  letter-spacing: 0.3px;
-  font-weight: 600;
   text-decoration: none;
-  transition: background 0.2s;
-  width: fit-content;
+  font-weight: 600;
 }
 
-.post-cat:hover { background: rgba(45,189,114,0.25); }
+.post-cat-badge:hover {
+  background: rgba(45, 122, 45, 0.4);
+}
 
 .post-date {
   font-size: 0.75rem;
-  color: var(--text-dim);
+  color: var(--text-muted, #888);
 }
 
-.post-title {
-  font-size: 1rem;
+.post-card-title {
+  font-size: 1.1rem;
   font-weight: 700;
-  color: var(--text);
-  line-height: 1.45;
+  line-height: 1.4;
   margin: 0;
 }
 
-.post-excerpt {
-  font-size: 0.84rem;
-  color: var(--text-muted);
-  line-height: 1.65;
+.post-card-title a {
+  color: var(--text, #f0f0f0);
+  text-decoration: none;
+}
+
+.post-card-title a:hover {
+  color: var(--primary-light, #6abf6a);
+}
+
+.post-card-excerpt {
+  font-size: 0.85rem;
+  color: var(--text-muted, #aaa);
+  line-height: 1.6;
   flex-grow: 1;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -559,32 +557,36 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
 }
 
-.post-footer {
+.post-card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 12px;
-  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
   margin-top: auto;
 }
 
 .post-author {
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: var(--text-muted, #999);
 }
 
 .post-read-btn {
   font-size: 0.82rem;
-  color: var(--accent);
+  color: var(--primary-light, #6abf6a);
+  text-decoration: none;
   font-weight: 600;
   transition: color 0.2s;
 }
 
-.post-card:hover .post-read-btn { color: #fff; }
+.post-read-btn:hover {
+  color: #fff;
+}
 
-.posts-see-all {
-  text-align: center;
-  margin-top: 8px;
+@media (max-width: 600px) {
+  .category-posts-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ===== EVENTS ===== */
@@ -720,7 +722,7 @@ img { max-width: 100%; display: block; }
   line-height: 1.65;
 }
 
-/* ===== LEADERSHIP ===== */
+/* ===== MEMBERS ===== */
 .leadership-section { background: var(--bg-dark); }
 
 .leadership-grid {
@@ -903,6 +905,7 @@ img { max-width: 100%; display: block; }
 
 .gallery-count-text span { color: var(--text-muted); font-weight: 600; }
 
+/* Mobile responsive */
 @media (max-width: 640px) {
   .bento-grid {
     grid-template-columns: 1fr 1fr;
@@ -1262,8 +1265,11 @@ footer {
   .hamburger { display: flex; align-items: center; justify-content: center; }
 
   .hero h1 { font-size: 2rem; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
 
   .swiper-slide { height: 260px; }
+
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
 
   .footer-cols { grid-template-columns: 1fr; }
 
@@ -1275,7 +1281,9 @@ footer {
 }
 
 @media (max-width: 480px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
   .activities-grid { grid-template-columns: 1fr; }
+  .stat-num { font-size: 1.5rem; }
 }
 </style>
 </head>
@@ -1335,30 +1343,32 @@ footer {
     <a href="gallery.html" class="btn-outline">গ্যালারি ভিজিট করুন</a>
   </div>
 
-  <div class="forum-overview-card" style="animation: fadeInUp 0.8s 0.4s ease both;">
-    <div class="forum-overview-header">
-      <span class="sparkle-icon">✦</span>
-      <span>এক নজরে আমাদের ফোরাম</span>
+<!-- পুরানো hero-stats div সরিয়ে এটা দিন -->
+<div class="forum-overview-card" style="animation: fadeInUp 0.8s 0.4s ease both;">
+  <div class="forum-overview-header">
+    <span class="sparkle-icon">✦</span>
+    <span>এক নজরে আমাদের ফোরাম</span>
+  </div>
+  <hr class="overview-divider">
+  <div class="overview-grid">
+    <div class="overview-stat">
+      <div class="overview-num">২৫০ +</div>
+      <div class="overview-label">সক্রিয় সদস্য</div>
     </div>
-    <hr class="overview-divider">
-    <div class="overview-grid">
-      <div class="overview-stat">
-        <div class="overview-num">২৫০ +</div>
-        <div class="overview-label">সক্রিয় সদস্য</div>
-      </div>
-      <div class="overview-stat">
-        <div class="overview-num">২০ +</div>
-        <div class="overview-label">সম্পন্ন ইভেন্ট</div>
-      </div>
-      <div class="overview-stat">
-        <div class="overview-num">৪ টি</div>
-        <div class="overview-label">প্রধান বিভাগ</div>
-      </div>
-      <div class="overview-stat">
-        <div class="overview-num">০৫ বছর+</div>
-        <div class="overview-label">সেবার গৌরব</div>
-      </div>
+    <div class="overview-stat">
+      <div class="overview-num">২০ +</div>
+      <div class="overview-label">সম্পন্ন ইভেন্ট</div>
     </div>
+    <div class="overview-stat">
+      <div class="overview-num">৪ টি</div>
+      <div class="overview-label">প্রধান বিভাগ</div>
+    </div>
+    <div class="overview-stat">
+      <div class="overview-num">০৫ বছর+</div>
+      <div class="overview-label">সেবার গৌরব</div>
+    </div>
+  </div>
+</div>
   </div>
 </section>
 
@@ -1385,7 +1395,7 @@ footer {
   </div>
 </section>
 
-<!-- ===== CATEGORIES ===== -->
+<! ক্যাটাগরি সেকশন -->
 <section class="section categories-section">
   <div class="section-header">
     <div class="section-tag">বিভাগসমূহ</div>
@@ -1408,27 +1418,53 @@ footer {
 </section>
 
 <!-- ===== RECENT POSTS ===== -->
-<section class="section posts-section">
-  <div class="section-header">
-    <div class="section-tag">সর্বশেষ</div>
+<!-- সাম্প্রতিক পোস্ট সেকশন -->
+<section class="posts-section" id="posts">
+  <div class="container">
+    <div class="section-label">সর্বশেষ</div>
     <h2 class="section-title">সাম্প্রতিক পোস্ট</h2>
-    <p class="section-sub">সংগঠনের সর্বশেষ লেখা ও কার্যক্রম</p>
-  </div>
-
-  <!-- পোস্ট কার্ড posts.js থেকে JS দিয়ে লোড হয় -->
-  <div class="posts-grid" id="home-posts-grid">
-    <div style="grid-column:1/-1; text-align:center; padding:48px 24px; color:var(--text-muted);">
-      <i class="fa-solid fa-circle-notch fa-spin" style="color:var(--accent); font-size:1.5rem; display:block; margin-bottom:12px;"></i>
-      পোস্ট লোড হচ্ছে...
+    <p class="section-subtitle">সংগঠনের সর্বশেষ লেখা ও কার্যক্রম</p>
+    <div class="category-posts-grid" id="home-posts-grid">
+      <!-- পোস্ট কার্ড JS দিয়ে লোড হবে -->
+    </div>
+    <div style="text-align:center; margin-top: 2rem;">
+      <a href="category/kobita/index.html" class="btn btn-outline">সব পোস্ট দেখুন</a>
     </div>
   </div>
-
-  <div class="posts-see-all">
-    <a href="category/kobita/index.html" class="btn-outline" style="display:inline-flex; align-items:center; gap:8px; margin-top:4px;">
-      <i class="fa-solid fa-layer-group"></i> সব বিভাগ দেখুন
-    </a>
-  </div>
 </section>
+
+<script src="posts.js"></script>
+<script>
+(function() {
+  const grid = document.getElementById('home-posts-grid');
+  if (!grid || !window.SCF_POSTS) return;
+
+  // তারিখ অনুযায়ী সর্বশেষ ৪টি পোস্ট
+  const latest = [...SCF_POSTS]
+    .sort((a, b) => b.dateSort.localeCompare(a.dateSort))
+    .slice(0, 4);
+
+  grid.innerHTML = latest.map(post => `
+    <article class="category-post-card">
+      <div class="post-card-header">
+        <span class="post-icon">${post.icon}</span>
+        <div class="post-meta-top">
+          <a href="category/${post.categorySlug}/index.html" class="post-cat-badge">${post.category}</a>
+          <span class="post-date">${post.date}</span>
+        </div>
+      </div>
+      <h3 class="post-card-title">
+        <a href="${post.link}">${post.title}</a>
+      </h3>
+      <p class="post-card-excerpt">${post.excerpt}</p>
+      <div class="post-card-footer">
+        <span class="post-author">✍ ${post.author}</span>
+        <a href="${post.link}" class="post-read-btn">পড়ুন →</a>
+      </div>
+    </article>
+  `).join('');
+})();
+</script>
 
 <!-- ===== EVENTS ===== -->
 <section class="section events-section">
@@ -1490,14 +1526,17 @@ footer {
   </div>
 </section>
 
-<!-- ===== LEADERSHIP ===== -->
+
+<!-- ===== LEADERSHIP SECTION ===== -->
 <section class="section leadership-section">
   <div class="section-header">
     <div class="section-tag">নেতৃত্ব</div>
     <h2 class="section-title">মূল নেতৃত্ব</h2>
   </div>
-
+ 
   <div class="leadership-grid">
+ 
+    <!-- সভাপতি -->
     <div class="leader-card">
       <div class="leader-card-inner">
         <div class="leader-avatar">
@@ -1519,7 +1558,8 @@ footer {
         <a class="leader-social" href="#" aria-label="লিংকডইন"><i class="fa-brands fa-linkedin-in"></i></a>
       </div>
     </div>
-
+ 
+    <!-- সাধারণ সম্পাদক -->
     <div class="leader-card">
       <div class="leader-card-inner">
         <div class="leader-avatar">
@@ -1541,8 +1581,9 @@ footer {
         <a class="leader-social" href="#" aria-label="লিংকডইন"><i class="fa-brands fa-linkedin-in"></i></a>
       </div>
     </div>
+ 
   </div>
-
+ 
   <div class="leadership-see-all">
     <a href="leaders.html" class="btn-ghost">
       <i class="fa-solid fa-users"></i> পূর্ণ কমিটি দেখুন
@@ -1559,6 +1600,8 @@ footer {
   </div>
 
   <div class="bento-grid">
+
+    <!-- বড় ফিচার ছবি -->
     <div class="bento-item b1">
       <img src="galla.jpg" alt="সাংস্কৃতিক অনুষ্ঠান">
       <div class="bento-overlay">
@@ -1568,6 +1611,8 @@ footer {
         </div>
       </div>
     </div>
+
+    <!-- ছোট ছবি ২ -->
     <div class="bento-item b2">
       <img src="gallary1.jpg" alt="পুরস্কার বিতরণ">
       <div class="bento-overlay">
@@ -1577,6 +1622,8 @@ footer {
         </div>
       </div>
     </div>
+
+    <!-- ছোট ছবি ৩ -->
     <div class="bento-item b3">
       <img src="gallary3.jpg" alt="দলীয় কার্যক্রম">
       <div class="bento-overlay">
@@ -1586,6 +1633,8 @@ footer {
         </div>
       </div>
     </div>
+
+    <!-- ছোট ছবি ৪ -->
     <div class="bento-item b4">
       <img src="galla.jpg" alt="ইসলামী অনুষ্ঠান">
       <div class="bento-overlay">
@@ -1595,6 +1644,8 @@ footer {
         </div>
       </div>
     </div>
+
+    <!-- ছোট ছবি ৫ -->
     <div class="bento-item b5">
       <img src="gallary1.jpg" alt="পরিবেশ কার্যক্রম">
       <div class="bento-overlay">
@@ -1604,14 +1655,17 @@ footer {
         </div>
       </div>
     </div>
+
   </div>
 
+  <!-- ছবির সংখ্যা ও বাটন -->
   <div class="gallery-count-bar">
     <p class="gallery-count-text">মোট <span>৪৮+</span> ছবি সংগ্রহে আছে</p>
     <a href="gallery.html" class="btn-ghost">
       <i class="fa-solid fa-images"></i> সব ছবি দেখুন
     </a>
   </div>
+
 </section>
 
 <!-- ===== VIDEO & REELS ===== -->
@@ -1623,10 +1677,16 @@ footer {
   </div>
 
   <div class="video-grid">
+
+    <!-- ভিডিও ১ — YouTube -->
     <a class="vcard" href="https://youtu.be/আপনার-ভিডিও-ID" target="_blank" rel="noopener">
       <div class="vthumb">
         <img src="https://img.youtube.com/vi/আপনার-ভিডিও-ID/mqdefault.jpg" alt="বৈশাখী অনুষ্ঠান">
-        <div class="vplay-btn"><div class="vplay-circle yt"><i class="fa-solid fa-play"></i></div></div>
+        <div class="vplay-btn">
+          <div class="vplay-circle yt">
+            <i class="fa-solid fa-play"></i>
+          </div>
+        </div>
         <span class="vduration">৫:৩২</span>
       </div>
       <div class="vbody">
@@ -1635,10 +1695,16 @@ footer {
         <div class="vmeta"><span>১.২ হাজার</span> ভিউ · এপ্রিল ২০২৬</div>
       </div>
     </a>
+
+    <!-- ভিডিও ২ — Facebook Reels -->
     <a class="vcard" href="https://facebook.com/আপনার-রিলস-লিংক" target="_blank" rel="noopener">
       <div class="vthumb">
         <img src="galla.jpg" alt="কবিতা আবৃত্তি">
-        <div class="vplay-btn"><div class="vplay-circle fb"><i class="fa-solid fa-play"></i></div></div>
+        <div class="vplay-btn">
+          <div class="vplay-circle fb">
+            <i class="fa-solid fa-play"></i>
+          </div>
+        </div>
         <span class="vduration">০:৪৫</span>
       </div>
       <div class="vbody">
@@ -1647,10 +1713,16 @@ footer {
         <div class="vmeta"><span>৮৫০</span> ভিউ · মে ২০২৬</div>
       </div>
     </a>
+
+    <!-- ভিডিও ৩ — YouTube -->
     <a class="vcard" href="https://youtu.be/আপনার-ভিডিও-ID" target="_blank" rel="noopener">
       <div class="vthumb">
         <img src="gallary3.jpg" alt="বৃক্ষরোপণ">
-        <div class="vplay-btn"><div class="vplay-circle yt"><i class="fa-solid fa-play"></i></div></div>
+        <div class="vplay-btn">
+          <div class="vplay-circle yt">
+            <i class="fa-solid fa-play"></i>
+          </div>
+        </div>
         <span class="vduration">৩:১৫</span>
       </div>
       <div class="vbody">
@@ -1680,13 +1752,17 @@ footer {
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
-      <div class="footer-icon"><i class="fa-solid fa-masks-theater"></i></div>
+      <div class="footer-icon">
+        <i class="fa-solid fa-masks-theater"></i>
+      </div>
       <div class="footer-brand-info">
         <h3>সোনাগাজী কালচারাল ফোরাম</h3>
         <p>ফেনী, বাংলাদেশ</p>
       </div>
     </div>
+
     <p class="footer-desc">ফেনী জেলার সোনাগাজী উপজেলার একটি অগ্রগামী সামাজিক ও সাংস্কৃতিক সংগঠন। শিল্প, সাহিত্য ও সংস্কৃতির মাধ্যমে একটি সুন্দর সমাজ বিনির্মাণের লক্ষ্যে আমরা কাজ করে যাচ্ছি।</p>
+
     <div class="footer-cols">
       <div>
         <p class="footer-col-title">কার্যক্রমের ক্ষেত্র</p>
@@ -1699,12 +1775,25 @@ footer {
       </div>
       <div>
         <p class="footer-col-title">যোগাযোগ</p>
-        <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i><span>সোনাগাজী জিরো পয়েন্ট, ফেনী</span></div>
-        <div class="footer-contact-item"><i class="fa-solid fa-envelope"></i><span>contact@scffeni.org</span></div>
-        <div class="footer-contact-item"><i class="fa-brands fa-facebook-f"></i><span>Facebook পেইজ</span></div>
-        <div class="footer-contact-item"><i class="fa-brands fa-youtube"></i><span>YouTube চ্যানেল</span></div>
+        <div class="footer-contact-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>সোনাগাজী জিরো পয়েন্ট, ফেনী</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fa-solid fa-envelope"></i>
+          <span>contact@scffeni.org</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fa-brands fa-facebook-f"></i>
+          <span>Facebook পেইজ</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fa-brands fa-youtube"></i>
+          <span>YouTube চ্যানেল</span>
+        </div>
       </div>
     </div>
+
     <div class="footer-bottom">
       <p>© 2026 সোনাগাজী কালচারাল ফোরাম, ফেনী. All Rights Reserved.</p>
       <p class="dev">Developed by <strong>Abdullah Al Maruf</strong> <span class="heart">❤</span></p>
@@ -1719,8 +1808,6 @@ footer {
   <i class="fa-solid fa-chevron-up"></i>
 </button>
 
-<!-- posts.js আগে লোড করতে হবে -->
-<script src="posts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
 // Swiper
@@ -1735,7 +1822,10 @@ const swiper = new Swiper(".mySwiper", {
 // Hamburger menu
 const hamburger = document.getElementById('hamburger');
 const mobileNav = document.getElementById('mobileNav');
-hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+hamburger.addEventListener('click', () => {
+  mobileNav.classList.toggle('open');
+});
+
 document.addEventListener('click', (e) => {
   if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
     mobileNav.classList.remove('open');
@@ -1745,7 +1835,8 @@ document.addEventListener('click', (e) => {
 // Go to top
 const goTopBtn = document.getElementById('goTopBtn');
 window.addEventListener('scroll', () => {
-  goTopBtn.classList.toggle('show', window.scrollY > 300);
+  if (window.scrollY > 300) goTopBtn.classList.add('show');
+  else goTopBtn.classList.remove('show');
 });
 goTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
@@ -1753,12 +1844,17 @@ goTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'sm
 const dotsContainer = document.getElementById('heroDots');
 for (let i = 0; i < 30; i++) {
   const dot = document.createElement('span');
-  dot.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*4}s;animation-duration:${3+Math.random()*3}s;`;
+  dot.style.cssText = `
+    left: ${Math.random() * 100}%;
+    top: ${Math.random() * 100}%;
+    animation-delay: ${Math.random() * 4}s;
+    animation-duration: ${3 + Math.random() * 3}s;
+  `;
   dotsContainer.appendChild(dot);
 }
 
-// ===== Scroll Reveal Observer =====
-const revealObserver = new IntersectionObserver((entries) => {
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.style.opacity = '1';
@@ -1767,52 +1863,12 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-function addReveal(el) {
+document.querySelectorAll('.post-card, .event-card, .activity-card, .member-card, .cat-item, .gallery-item').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(24px)';
   el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-  revealObserver.observe(el);
-}
-
-// ===== পোস্ট রেন্ডার (posts.js থেকে) =====
-(function renderHomePosts() {
-  const grid = document.getElementById('home-posts-grid');
-  if (!grid) return;
-
-  if (typeof SCF_POSTS === 'undefined' || !SCF_POSTS.length) {
-    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:40px;">কোনো পোস্ট পাওয়া যায়নি।</p>';
-    return;
-  }
-
-  // dateSort অনুযায়ী সর্বশেষ ৪টি পোস্ট
-  const latest = [...SCF_POSTS]
-    .sort((a, b) => b.dateSort.localeCompare(a.dateSort))
-    .slice(0, 4);
-
-  grid.innerHTML = latest.map(post => `
-    <a href="${post.link}" class="post-card">
-      <div class="post-card-header">
-        <span class="post-icon">${post.icon}</span>
-        <div class="post-meta-top">
-          <a href="category/${post.categorySlug}/index.html" class="post-cat" onclick="event.stopPropagation()">${post.category}</a>
-          <span class="post-date">${post.date}</span>
-        </div>
-      </div>
-      <p class="post-title">${post.title}</p>
-      <p class="post-excerpt">${post.excerpt}</p>
-      <div class="post-footer">
-        <span class="post-author">✍ ${post.author}</span>
-        <span class="post-read-btn">পড়ুন →</span>
-      </div>
-    </a>
-  `).join('');
-
-  // নতুন পোস্ট কার্ডে scroll reveal যোগ করুন
-  grid.querySelectorAll('.post-card').forEach(addReveal);
-})();
-
-// অন্যান্য কার্ডে scroll reveal
-document.querySelectorAll('.event-card, .activity-card, .cat-item').forEach(addReveal);
+  observer.observe(el);
+});
 </script>
 
 </body>
