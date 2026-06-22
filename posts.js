@@ -6,9 +6,9 @@ window.SCF_POSTS = [
     categorySlug: "kobita",
     image: "gallary1.jpg",
     icon: "🪶",
-    title: "সবুজ পাখি",
+    title: "হলুদ পাখি",
     excerpt: "পোস্টের সংক্ষিপ্ত বিবরণ...",
-    author: "বিলাল হোসাইন নূরী",
+    author: "আব্দুল্লাহ আল মারুফ",
     date: "ফেব্রুয়ারি ২০২৬",
     dateSort: "2026-02",
     link: "#"
