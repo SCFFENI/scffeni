@@ -38,7 +38,7 @@
         <div class="post-card-header">
           <span class="post-icon">${icons[p.category] || '📝'}</span>
           <div class="post-meta-top">
-            <a href="category/${esc(p.category)}/index.html" class="post-cat-badge">${esc(catName)}</a>
+            <a href="category.html?c=${encodeURIComponent(p.category)}" class="post-cat-badge">${esc(catName)}</a>
             <span class="post-date">${fmt(p.created_at)}</span>
           </div>
         </div>
@@ -74,6 +74,15 @@
       </div>`).join('');
   }
 
+  // পুরনো category/xxx/index.html লিংকগুলো নতুন ডাইনামিক পেজে পাঠিয়ে দেয়
+  function fixCategoryLinks() {
+    document.querySelectorAll('a[href]').forEach(a => {
+      const m = a.getAttribute('href').match(/^category\/([^\/]+)\/index\.html$/);
+      if (m) a.setAttribute('href', 'category.html?c=' + m[1]);
+    });
+  }
+
+  fixCategoryLinks();
   loadPosts();
   loadEvents();
 })();
