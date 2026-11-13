@@ -48,7 +48,7 @@ h1 { font-family: 'Tiro Bangla', serif; font-weight: 400; font-size: clamp(1.7re
   box.innerHTML = '';
   if (data.categories) {
     const a = document.createElement('a'); a.className = 'cat';
-    a.href = 'category/' + encodeURIComponent(data.category) + '/index.html';
+    a.href = 'category.html?c=' + encodeURIComponent(data.category);
     a.textContent = data.categories.name; box.appendChild(a);
   }
   const h = document.createElement('h1'); h.textContent = data.title; box.appendChild(h);
