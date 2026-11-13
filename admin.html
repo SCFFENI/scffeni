@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>অ্যাডমিন প্যানেল | সোনাগাজী কালচারাল ফোরাম</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f7f5; --card: #ffffff; --ink: #1d2a24; --muted: #64746c;
+    --brand: #0f6b4f; --brand-dark: #0a4d38; --line: #d9e3de; --danger: #b3261e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111815; --card: #1a2420; --ink: #e6efea; --muted: #93a79d; --brand: #3fb98f; --brand-dark: #2e9a75; --line: #2a3832; --danger: #f2706a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hind Siliguri', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+  header { background: var(--brand-dark); color: #fff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  header h1 { font-size: 1.1rem; margin: 0; font-weight: 600; }
+  main { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px; margin-bottom: 18px; }
+  h2 { font-size: 1.1rem; margin: 0 0 14px; }
+  label { display: block; font-weight: 500; margin: 12px 0 4px; font-size: .95rem; }
+  input, select, textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; font: inherit; background: var(--bg); color: var(--ink); }
+  textarea { min-height: 160px; resize: vertical; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
+  button { font: inherit; cursor: pointer; border: 0; border-radius: 8px; padding: 10px 18px; background: var(--brand); color: #fff; font-weight: 600; }
+  button:hover { background: var(--brand-dark); }
+  button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  button.ghost:hover { background: var(--bg); }
+  button.danger { background: var(--danger); }
+  button:disabled { opacity: .6; cursor: wait; }
+  header button { background: rgba(255,255,255,.15); padding: 6px 14px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .tabs button { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+  .tabs button.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .item { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+  .item:first-child { border-top: 0; }
+  .item img { width: 64px; height: 48px; object-fit: cover; border-radius: 6px; background: var(--line); flex: none; }
+  .item .meta { flex: 1; min-width: 0; }
+  .item .meta strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .item .meta small { color: var(--muted); }
+  .item button { padding: 6px 12px; font-size: .9rem; }
+  .msg { padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; display: none; }
+  .msg.ok { display: block; background: #d9f2e6; color: #0a4d38; }
+  .msg.err { display: block; background: #fbe0de; color: #8c1d18; }
+  .preview { max-width: 200px; max-height: 140px; margin-top: 8px; border-radius: 8px; display: none; }
+  .hidden { display: none !important; }
+  .hint { color: var(--muted); font-size: .85rem; }
+  #login { max-width: 420px; margin: 60px auto; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>সোনাগাজী কালচারাল ফোরাম — অ্যাডমিন</h1>
+  <button id="logoutBtn" class="hidden">লগআউট</button>
+</header>
+
+<main>
+  <div id="msg" class="msg" role="status"></div>
+
+  <!-- লগইন -->
+  <section id="login" class="card">
+    <h2>অ্যাডমিন লগইন</h2>
+    <label for="email">ইমেইল</label>
+    <input id="email" type="email" autocomplete="username">
+    <label for="password">পাসওয়ার্ড</label>
+    <input id="password" type="password" autocomplete="current-password">
+    <div class="actions"><button id="loginBtn">লগইন করুন</button></div>
+  </section>
+
+  <!-- ড্যাশবোর্ড -->
+  <section id="dash" class="hidden">
+    <div class="tabs">
+      <button data-tab="posts" class="active">পোস্ট</button>
+      <button data-tab="events">ইভেন্ট</button>
+      <button data-tab="cats">ক্যাটাগরি</button>
+    </div>
+
+    <!-- পোস্ট -->
+    <div id="tab-posts">
+      <div class="card">
+        <h2 id="postFormTitle">নতুন পোস্ট আপলোড</h2>
+        <input type="hidden" id="postId">
+        <label for="postTitle">শিরোনাম</label>
+        <input id="postTitle">
+        <label for="postCat">ক্যাটাগরি</label>
+        <select id="postCat"></select>
+        <label for="postContent">লেখা</label>
+        <textarea id="postContent"></textarea>
+        <label for="postImage">ছবি (ঐচ্ছিক)</label>
+        <input id="postImage" type="file" accept="image/*">
+        <img id="postPreview" class="preview" alt="">
+        <div class="actions">
+          <button id="savePost">প্রকাশ করুন</button>
+          <button id="cancelPost" class="ghost hidden">বাতিল</button>
+        </div>
+      </div>
+      <div class="card"><h2>সব পোস্ট</h2><div id="postList"></div></div>
+    </div>
+
+    <!-- ইভেন্ট -->
+    <div id="tab-events" class="hidden">
+      <div class="card">
+        <h2 id="eventFormTitle">নতুন ইভেন্ট আপলোড</h2>
+        <input type="hidden" id="eventId">
+        <label for="eventTitle">ইভেন্টের নাম</label>
+        <input id="eventTitle">
+        <div class="row">
+          <div><label for="eventDate">তারিখ</label><input id="eventDate" type="date"></div>
+          <div><label for="eventStatus">অবস্থা</label>
+            <select id="eventStatus">
+              <option value="upcoming">আসন্ন</option>
+              <option value="ongoing">চলমান</option>
+              <option value="done">সম্পন্ন</option>
+            </select>
+          </div>
+        </div>
+        <label for="eventVenue">স্থান</label>
+        <input id="eventVenue">
+        <label for="eventDesc">বিবরণ (ঐচ্ছিক)</label>
+        <textarea id="eventDesc" style="min-height:100px"></textarea>
+        <label for="eventImage">ছবি (ঐচ্ছিক)</label>
+        <input id="eventImage" type="file" accept="image/*">
+        <img id="eventPreview" class="preview" alt="">
+        <div class="actions">
+          <button id="saveEvent">প্রকাশ করুন</button>
+          <button id="cancelEvent" class="ghost hidden">বাতিল</button>
+        </div>
+      </div>
+      <div class="card"><h2>সব ইভেন্ট</h2><div id="eventList"></div></div>
+    </div>
+
+    <!-- ক্যাটাগরি -->
+    <div id="tab-cats" class="hidden">
+      <div class="card">
+        <h2>নতুন ক্যাটাগরি</h2>
+        <div class="row">
+          <div><label for="catName">নাম (বাংলায়)</label><input id="catName"></div>
+          <div><label for="catSlug">স্লাগ (ইংরেজিতে, যেমন: travel)</label><input id="catSlug" dir="ltr"></div>
+        </div>
+        <p class="hint">স্লাগ শুধু ছোট হাতের ইংরেজি অক্ষর, সংখ্যা ও হাইফেন দিয়ে লিখুন।</p>
+        <div class="actions"><button id="saveCat">ক্যাটাগরি যোগ করুন</button></div>
+      </div>
+      <div class="card"><h2>সব ক্যাটাগরি</h2><div id="catList"></div></div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script>
+const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+const $ = id => document.getElementById(id);
+let cats = [];
+
+function show(text, ok = true) {
+  const m = $('msg');
+  m.textContent = text;
+  m.className = 'msg ' + (ok ? 'ok' : 'err');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(() => { m.className = 'msg'; }, 5000);
+}
+
+// ---------- লগইন ----------
+async function checkAdmin() {
+  const { data: { user } } = await sb.auth.getUser();
+  if (!user) return false;
+  const { data } = await sb.from('admins').select('user_id').eq('user_id', user.id).maybeSingle();
+  return !!data;
+}
+
+async function init() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session && await checkAdmin()) enterDash();
+  else if (session) { await sb.auth.signOut(); }
+}
+
+async function enterDash() {
+  $('login').classList.add('hidden');
+  $('dash').classList.remove('hidden');
+  $('logoutBtn').classList.remove('hidden');
+  await loadCats();
+  loadPosts();
+  loadEvents();
+}
+
+$('loginBtn').onclick = async () => {
+  const { error } = await sb.auth.signInWithPassword({ email: $('email').value.trim(), password: $('password').value });
+  if (error) return show('লগইন ব্যর্থ: ইমেইল বা পাসওয়ার্ড ভুল।', false);
+  if (!(await checkAdmin())) { await sb.auth.signOut(); return show('এই একাউন্টটি অ্যাডমিন নয়।', false); }
+  enterDash();
+};
+$('logoutBtn').onclick = async () => { await sb.auth.signOut(); location.reload(); };
+
+// ---------- ট্যাব ----------
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('active', x === b));
+  ['posts', 'events', 'cats'].forEach(t => $('tab-' + t).classList.toggle('hidden', t !== b.dataset.tab));
+});
+
+// ---------- ছবি আপলোড ----------
+async function uploadImage(file, folder) {
+  if (!file) return null;
+  if (file.size > 5 * 1024 * 1024) throw new Error('ছবি ৫ MB-এর কম হতে হবে।');
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const path = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const { error } = await sb.storage.from('uploads').upload(path, file, { cacheControl: '31536000', contentType: file.type });
+  if (error) throw error;
+  return sb.storage.from('uploads').getPublicUrl(path).data.publicUrl;
+}
+
+function bindPreview(inputId, imgId) {
+  $(inputId).onchange = e => {
+    const f = e.target.files[0], img = $(imgId);
+    if (f) { img.src = URL.createObjectURL(f); img.style.display = 'block'; } else img.style.display = 'none';
+  };
+}
+bindPreview('postImage', 'postPreview');
+bindPreview('eventImage', 'eventPreview');
+
+function item(img, title, sub, onEdit, onDelete) {
+  const d = document.createElement('div'); d.className = 'item';
+  if (img !== undefined) { const i = document.createElement('img'); i.alt = ''; if (img) i.src = img; d.appendChild(i); }
+  const m = document.createElement('div'); m.className = 'meta';
+  const s = document.createElement('strong'); s.textContent = title;
+  const sm = document.createElement('small'); sm.textContent = sub;
+  m.append(s, sm); d.appendChild(m);
+  if (onEdit) { const b = document.createElement('button'); b.className = 'ghost'; b.textContent = 'এডিট'; b.onclick = onEdit; d.appendChild(b); }
+  const del = document.createElement('button'); del.className = 'danger'; del.textContent = 'মুছুন'; del.onclick = onDelete; d.appendChild(del);
+  return d;
+}
+
+// ---------- ক্যাটাগরি ----------
+async function loadCats() {
+  const { data, error } = await sb.from('categories').select('*').order('sort');
+  if (error) return show('ক্যাটাগরি লোড হয়নি: ' + error.message, false);
+  cats = data;
+  $('postCat').innerHTML = '';
+  cats.forEach(c => { const o = document.createElement('option'); o.value = c.slug; o.textContent = c.name; $('postCat').appendChild(o); });
+  const list = $('catList'); list.innerHTML = '';
+  cats.forEach(c => list.appendChild(item(undefined, c.name, c.slug, null, async () => {
+    if (!confirm('ক্যাটাগরি মুছলে এর পোস্টগুলোর ক্যাটাগরি খালি হয়ে যাবে। নিশ্চিত?')) return;
+    const { error } = await sb.from('categories').delete().eq('slug', c.slug);
+    if (error) return show('মোছা যায়নি: ' + error.message, false);
+    show('ক্যাটাগরি মুছে ফেলা হয়েছে।'); loadCats();
+  })));
+}
+
+$('saveCat').onclick = async () => {
+  const name = $('catName').value.trim(), slug = $('catSlug').value.trim().toLowerCase();
+  if (!name || !/^[a-z0-9-]+$/.test(slug)) return show('নাম দিন এবং স্লাগ শুধু ইংরেজি ছোট অক্ষর/সংখ্যা/হাইফেনে লিখুন।', false);
+  const { error } = await sb.from('categories').insert({ name, slug, sort: cats.length + 1 });
+  if (error) return show('যোগ করা যায়নি: ' + error.message, false);
+  $('catName').value = ''; $('catSlug').value = '';
+  show('ক্যাটাগরি যোগ হয়েছে।'); loadCats();
+};
+
+// ---------- পোস্ট ----------
+let postImageUrl = null;
+
+function resetPost() {
+  ['postId', 'postTitle', 'postContent', 'postImage'].forEach(i => $(i).value = '');
+  postImageUrl = null; $('postPreview').style.display = 'none';
+  $('postFormTitle').textContent = 'নতুন পোস্ট আপলোড';
+  $('cancelPost').classList.add('hidden');
+}
+$('cancelPost').onclick = resetPost;
+
+async function loadPosts() {
+  const { data, error } = await sb.from('posts').select('*').order('created_at', { ascending: false });
+  if (error) return show('পোস্ট লোড হয়নি: ' + error.message, false);
+  const list = $('postList'); list.innerHTML = '';
+  if (!data.length) list.textContent = 'এখনো কোনো পোস্ট নেই। উপরের ফর্ম থেকে প্রথম পোস্টটি আপলোড করুন।';
+  data.forEach(p => {
+    const cat = (cats.find(c => c.slug === p.category) || {}).name || '—';
+    list.appendChild(item(p.image_url, p.title, cat + ' • ' + new Date(p.created_at).toLocaleDateString('bn-BD'),
+      () => {
+        $('postId').value = p.id; $('postTitle').value = p.title; $('postCat').value = p.category;
+        $('postContent').value = p.content || ''; postImageUrl = p.image_url;
+        if (p.image_url) { $('postPreview').src = p.image_url; $('postPreview').style.display = 'block'; }
+        $('postFormTitle').textContent = 'পোস্ট এডিট করুন';
+        $('cancelPost').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+      async () => {
+        if (!confirm('এই পোস্টটি মুছবেন?')) return;
+        const { error } = await sb.from('posts').delete().eq('id', p.id);
+        if (error) return show('মোছা যায়নি: ' + error.message, false);
+        show('পোস্ট মুছে ফেলা হয়েছে।'); loadPosts();
+      }));
+  });
+}
+
+$('savePost').onclick = async () => {
+  const btn = $('savePost'); btn.disabled = true;
+  try {
+    const title = $('postTitle').value.trim();
+    if (!title) throw new Error('শিরোনাম দিন।');
+    const up = await uploadImage($('postImage').files[0], 'posts');
+    const row = { title, category: $('postCat').value, content: $('postContent').value, image_url: up || postImageUrl };
+    const id = $('postId').value;
+    const { error } = id ? await sb.from('posts').update(row).eq('id', id) : await sb.from('posts').insert(row);
+    if (error) throw error;
+    show(id ? 'পোস্ট আপডেট হয়েছে।' : 'পোস্ট প্রকাশিত হয়েছে।');
+    resetPost(); loadPosts();
+  } catch (e) { show(e.message || 'সংরক্ষণ ব্যর্থ।', false); }
+  btn.disabled = false;
+};
+
+// ---------- ইভেন্ট ----------
+let eventImageUrl = null;
+
+function resetEvent() {
+  ['eventId', 'eventTitle', 'eventDate', 'eventVenue', 'eventDesc', 'eventImage'].forEach(i => $(i).value = '');
+  $('eventStatus').value = 'upcoming'; eventImageUrl = null; $('eventPreview').style.display = 'none';
+  $('eventFormTitle').textContent = 'নতুন ইভেন্ট আপলোড';
+  $('cancelEvent').classList.add('hidden');
+}
+$('cancelEvent').onclick = resetEvent;
+
+const statusBn = { upcoming: 'আসন্ন', ongoing: 'চলমান', done: 'সম্পন্ন' };
+
+async function loadEvents() {
+  const { data, error } = await sb.from('events').select('*').order('event_date', { ascending: false });
+  if (error) return show('ইভেন্ট লোড হয়নি: ' + error.message, false);
+  const list = $('eventList'); list.innerHTML = '';
+  if (!data.length) list.textContent = 'এখনো কোনো ইভেন্ট নেই।';
+  data.forEach(ev => {
+    list.appendChild(item(ev.image_url, ev.title, statusBn[ev.status] + ' • ' + (ev.event_date || '') + ' • ' + (ev.venue || ''),
+      () => {
+        $('eventId').value = ev.id; $('eventTitle').value = ev.title; $('eventDate').value = ev.event_date || '';
+        $('eventStatus').value = ev.status; $('eventVenue').value = ev.venue || ''; $('eventDesc').value = ev.description || '';
+        eventImageUrl = ev.image_url;
+        if (ev.image_url) { $('eventPreview').src = ev.image_url; $('eventPreview').style.display = 'block'; }
+        $('eventFormTitle').textContent = 'ইভেন্ট এডিট করুন';
+        $('cancelEvent').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+      async () => {
+        if (!confirm('এই ইভেন্টটি মুছবেন?')) return;
+        const { error } = await sb.from('events').delete().eq('id', ev.id);
+        if (error) return show('মোছা যায়নি: ' + error.message, false);
+        show('ইভেন্ট মুছে ফেলা হয়েছে।'); loadEvents();
+      }));
+  });
+}
+
+$('saveEvent').onclick = async () => {
+  const btn = $('saveEvent'); btn.disabled = true;
+  try {
+    const title = $('eventTitle').value.trim();
+    if (!title) throw new Error('ইভেন্টের নাম দিন।');
+    const up = await uploadImage($('eventImage').files[0], 'events');
+    const row = {
+      title, event_date: $('eventDate').value || null, status: $('eventStatus').value,
+      venue: $('eventVenue').value.trim(), description: $('eventDesc').value, image_url: up || eventImageUrl
+    };
+    const id = $('eventId').value;
+    const { error } = id ? await sb.from('events').update(row).eq('id', id) : await sb.from('events').insert(row);
+    if (error) throw error;
+    show(id ? 'ইভেন্ট আপডেট হয়েছে।' : 'ইভেন্ট প্রকাশিত হয়েছে।');
+    resetEvent(); loadEvents();
+  } catch (e) { show(e.message || 'সংরক্ষণ ব্যর্থ।', false); }
+  btn.disabled = false;
+};
+
+init();
+</script>
+</body>
+</html>
