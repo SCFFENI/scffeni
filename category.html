@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>বিভাগ | সোনাগাজী কালচারাল ফোরাম, ফেনী</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pages.css">
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <div class="brand"><strong>সোনাগাজী কালচারাল ফোরাম</strong><span>ফেনী, বাংলাদেশ</span></div>
+  <nav class="menu">
+    <a href="index.html">হোম</a>
+    <a href="about.html">আমাদের সম্পর্কে</a>
+    <a href="events.html">অনুষ্ঠান</a>
+    <a href="leaders.html">নেতৃত্ব</a>
+    <a href="gallery.html">গ্যালারি</a>
+    <a href="contact.html">যোগাযোগ</a>
+  </nav>
+</div></header>
+
+<section class="page-head">
+  <h1 id="title">সব পোস্ট</h1>
+  <p id="sub">আমাদের সব লেখা ও কার্যক্রম</p>
+</section>
+
+<main>
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="grid"><p class="state">লোড হচ্ছে…</p></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script>
+(async function () {
+  const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+  const slug = new URLSearchParams(location.search).get('c');
+  const grid = document.getElementById('grid');
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; };
+  const fmt = d => new Date(d).toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' });
+  const say = msg => { grid.innerHTML = ''; grid.appendChild(el('p', 'state', msg)); };
+
+  // ক্যাটাগরি চিপ
+  const { data: cats } = await sb.from('categories').select('*').order('sort');
+  const chips = document.getElementById('chips');
+  const all = el('a', slug ? '' : 'on', 'সব'); all.href = 'category.html'; chips.appendChild(all);
+  (cats || []).forEach(c => {
+    const a = el('a', c.slug === slug ? 'on' : '', c.name);
+    a.href = 'category.html?c=' + encodeURIComponent(c.slug);
+    chips.appendChild(a);
+    if (c.slug === slug) {
+      document.getElementById('title').textContent = c.name;
+      document.getElementById('sub').textContent = 'এই বিভাগের সব লেখা';
+      document.title = c.name + ' | সোনাগাজী কালচারাল ফোরাম';
+    }
+  });
+
+  // পোস্ট
+  let q = sb.from('posts').select('id,title,content,image_url,created_at,category,categories(name)')
+    .eq('published', true).order('created_at', { ascending: false }).limit(60);
+  if (slug) q = q.eq('category', slug);
+  const { data, error } = await q;
+  if (error) return say('পোস্ট লোড করা যায়নি। একটু পরে আবার চেষ্টা করুন।');
+  if (!data.length) return say('এই বিভাগে এখনো কোনো পোস্ট নেই।');
+
+  grid.innerHTML = '';
+  data.forEach(p => {
+    const link = 'post.html?id=' + encodeURIComponent(p.id);
+    const card = el('article', 'card');
+    if (p.image_url) { const i = el('img'); i.src = p.image_url; i.alt = p.title; i.loading = 'lazy'; card.appendChild(i); }
+    const body = el('div', 'card-body');
+    if (!slug && p.categories) body.appendChild(el('span', 'badge', p.categories.name));
+    const h = el('h3'); const a = el('a', '', p.title); a.href = link; h.appendChild(a); body.appendChild(h);
+    const text = (p.content || '').replace(/\s+/g, ' ').trim();
+    body.appendChild(el('p', 'ex', text));
+    body.appendChild(el('div', 'meta', fmt(p.created_at)));
+    const more = el('a', 'more', 'পড়ুন →'); more.href = link; body.appendChild(more);
+    card.appendChild(body); grid.appendChild(card);
+  });
+})();
+</script>
+</body>
+</html>
