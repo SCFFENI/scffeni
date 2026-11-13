@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>পোস্ট | সোনাগাজী কালচারাল ফোরাম, ফেনী</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --bg-deep:#060d0b; --bg-card:#0f2219; --accent:#2dbd72; --text:#e8f5ee; --text-muted:#7aaa90; --border:rgba(45,189,114,0.15); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg-deep); color: var(--text); font-family: 'Hind Siliguri', sans-serif; line-height: 1.8; }
+a { color: inherit; text-decoration: none; }
+.bar { background: rgba(6,13,11,0.95); border-bottom: 1px solid var(--border); padding: 0 20px; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.bar strong { font-size: .95rem; }
+.bar a.back { color: var(--accent); font-size: .9rem; }
+article { max-width: 720px; margin: 0 auto; padding: 36px 20px 80px; }
+.cat { display: inline-block; background: rgba(45,189,114,.12); color: var(--accent); border: 1px solid var(--border); border-radius: 50px; padding: 3px 14px; font-size: .8rem; }
+h1 { font-family: 'Tiro Bangla', serif; font-weight: 400; font-size: clamp(1.7rem, 5vw, 2.4rem); line-height: 1.4; margin: 14px 0 8px; }
+.date { color: var(--text-muted); font-size: .85rem; margin-bottom: 22px; }
+.cover { width: 100%; max-height: 420px; object-fit: cover; border-radius: 14px; margin-bottom: 26px; }
+.body { font-size: 1.05rem; white-space: pre-wrap; word-wrap: break-word; }
+.state { text-align: center; color: var(--text-muted); padding: 80px 0; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <strong>সোনাগাজী কালচারাল ফোরাম</strong>
+  <a class="back" href="index.html">← হোমে ফিরুন</a>
+</div>
+
+<article id="post"><p class="state">লোড হচ্ছে…</p></article>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script>
+(async function () {
+  const box = document.getElementById('post');
+  const id = new URLSearchParams(location.search).get('id');
+  const fail = msg => { box.innerHTML = ''; const p = document.createElement('p'); p.className = 'state'; p.textContent = msg; box.appendChild(p); };
+  if (!id) return fail('পোস্টটি পাওয়া যায়নি।');
+
+  const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+  const { data, error } = await sb.from('posts').select('*, categories(name)').eq('id', id).eq('published', true).maybeSingle();
+  if (error || !data) return fail('পোস্টটি পাওয়া যায়নি।');
+
+  document.title = data.title + ' | সোনাগাজী কালচারাল ফোরাম';
+  box.innerHTML = '';
+  if (data.categories) {
+    const a = document.createElement('a'); a.className = 'cat';
+    a.href = 'category/' + encodeURIComponent(data.category) + '/index.html';
+    a.textContent = data.categories.name; box.appendChild(a);
+  }
+  const h = document.createElement('h1'); h.textContent = data.title; box.appendChild(h);
+  const d = document.createElement('div'); d.className = 'date';
+  d.textContent = new Date(data.created_at).toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' });
+  box.appendChild(d);
+  if (data.image_url) { const i = document.createElement('img'); i.className = 'cover'; i.src = data.image_url; i.alt = data.title; box.appendChild(i); }
+  const b = document.createElement('div'); b.className = 'body'; b.textContent = data.content || ''; box.appendChild(b);
+})();
+</script>
+</body>
+</html>
