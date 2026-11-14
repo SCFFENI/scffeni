@@ -1,0 +1,33 @@
+name: build-post-pages
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'   # প্রতি ১৫ মিনিটে
+  workflow_dispatch:          # Actions ট্যাব থেকে হাতে চালানোর জন্য
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-post-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: পোস্ট পেজ তৈরি
+        run: node scripts/build-posts.mjs
+      - name: পরিবর্তন থাকলে commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- p sitemap.xml
+          if ! git diff --cached --quiet; then
+            git commit -m "পোস্ট পেজ আপডেট"
+            git push
+          fi
