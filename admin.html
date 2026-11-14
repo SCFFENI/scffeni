@@ -89,6 +89,8 @@
         <input type="hidden" id="postId">
         <label for="postTitle">শিরোনাম</label>
         <input id="postTitle">
+        <label for="postAuthor">লেখকের নাম</label>
+        <input id="postAuthor" placeholder="যেমন: আব্দুল্লাহ আল মারুফ">
         <label for="postCat">ক্যাটাগরি</label>
         <select id="postCat"></select>
         <label for="postContent">লেখা</label>
@@ -224,7 +226,7 @@ function bindPreview(inputId, imgId) {
 bindPreview('postImage', 'postPreview');
 bindPreview('eventImage', 'eventPreview');
 
-function item(img, title, sub, onEdit, onDelete) {
+function item(img, title, sub, onEdit, onDelete, onCopy) {
   const d = document.createElement('div'); d.className = 'item';
   if (img !== undefined) { const i = document.createElement('img'); i.alt = ''; if (img) i.src = img; d.appendChild(i); }
   const m = document.createElement('div'); m.className = 'meta';
@@ -232,6 +234,7 @@ function item(img, title, sub, onEdit, onDelete) {
   const sm = document.createElement('small'); sm.textContent = sub;
   m.append(s, sm); d.appendChild(m);
   if (onEdit) { const b = document.createElement('button'); b.className = 'ghost'; b.textContent = 'এডিট'; b.onclick = onEdit; d.appendChild(b); }
+  if (onCopy) { const cp = document.createElement('button'); cp.className = 'ghost'; cp.textContent = 'শেয়ার লিংক'; cp.onclick = onCopy; d.appendChild(cp); }
   const del = document.createElement('button'); del.className = 'danger'; del.textContent = 'মুছুন'; del.onclick = onDelete; d.appendChild(del);
   return d;
 }
@@ -265,7 +268,7 @@ $('saveCat').onclick = async () => {
 let postImageUrl = null;
 
 function resetPost() {
-  ['postId', 'postTitle', 'postContent', 'postImage'].forEach(i => $(i).value = '');
+  ['postId', 'postTitle', 'postAuthor', 'postContent', 'postImage'].forEach(i => $(i).value = '');
   postImageUrl = null; $('postPreview').style.display = 'none';
   $('postFormTitle').textContent = 'নতুন পোস্ট আপলোড';
   $('cancelPost').classList.add('hidden');
@@ -281,7 +284,7 @@ async function loadPosts() {
     const cat = (cats.find(c => c.slug === p.category) || {}).name || '—';
     list.appendChild(item(p.image_url, p.title, cat + ' • ' + new Date(p.created_at).toLocaleDateString('bn-BD'),
       () => {
-        $('postId').value = p.id; $('postTitle').value = p.title; $('postCat').value = p.category;
+        $('postId').value = p.id; $('postTitle').value = p.title; $('postAuthor').value = p.author || ''; $('postCat').value = p.category;
         $('postContent').value = p.content || ''; postImageUrl = p.image_url;
         if (p.image_url) { $('postPreview').src = p.image_url; $('postPreview').style.display = 'block'; }
         $('postFormTitle').textContent = 'পোস্ট এডিট করুন';
@@ -293,6 +296,11 @@ async function loadPosts() {
         const { error } = await sb.from('posts').delete().eq('id', p.id);
         if (error) return show('মোছা যায়নি: ' + error.message, false);
         show('পোস্ট মুছে ফেলা হয়েছে।'); loadPosts();
+      },
+      async () => {
+        const url = 'https://scffeni.github.io/scffeni/p/' + p.id + '.html';
+        try { await navigator.clipboard.writeText(url); show('শেয়ার লিংক কপি হয়েছে। নতুন পোস্টের লিংক ১৫ মিনিট পর থেকে কাজ করবে।'); }
+        catch (e) { prompt('এই লিংকটি কপি করুন:', url); }
       }));
   });
 }
@@ -303,7 +311,7 @@ $('savePost').onclick = async () => {
     const title = $('postTitle').value.trim();
     if (!title) throw new Error('শিরোনাম দিন।');
     const up = await uploadImage($('postImage').files[0], 'posts');
-    const row = { title, category: $('postCat').value, content: $('postContent').value, image_url: up || postImageUrl };
+    const row = { title, author: $('postAuthor').value.trim() || null, category: $('postCat').value, content: $('postContent').value, image_url: up || postImageUrl };
     const id = $('postId').value;
     const { error } = id ? await sb.from('posts').update(row).eq('id', id) : await sb.from('posts').insert(row);
     if (error) throw error;
