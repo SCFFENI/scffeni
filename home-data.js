@@ -24,7 +24,7 @@
     const grid = document.getElementById('home-posts-grid');
     if (!grid) return;
     const { data, error } = await sb.from('posts')
-      .select('id,title,content,image_url,created_at,category,categories(name)')
+      .select('id,title,author,content,image_url,created_at,category,categories(name)')
       .eq('published', true).order('created_at', { ascending: false }).limit(4);
     if (error || !data || !data.length) return;
     grid.innerHTML = data.map(p => {
@@ -45,7 +45,7 @@
         <h3 class="post-card-title"><a href="${link}">${esc(p.title)}</a></h3>
         <p class="post-card-excerpt">${esc(excerpt)}</p>
         <div class="post-card-footer">
-          <span class="post-author">✍ সোনাগাজী কালচারাল ফোরাম</span>
+          <span class="post-author">✍ ${esc(p.author || 'সোনাগাজী কালচারাল ফোরাম')}</span>
           <a href="${link}" class="post-read-btn">পড়ুন →</a>
         </div>
       </article>`;
