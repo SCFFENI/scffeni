@@ -58,7 +58,7 @@
   });
 
   // পোস্ট
-  let q = sb.from('posts').select('id,title,content,image_url,created_at,category,categories(name)')
+  let q = sb.from('posts').select('id,title,author,content,image_url,created_at,category,categories(name)')
     .eq('published', true).order('created_at', { ascending: false }).limit(60);
   if (slug) q = q.eq('category', slug);
   const { data, error } = await q;
@@ -75,7 +75,7 @@
     const h = el('h3'); const a = el('a', '', p.title); a.href = link; h.appendChild(a); body.appendChild(h);
     const text = (p.content || '').replace(/\s+/g, ' ').trim();
     body.appendChild(el('p', 'ex', text));
-    body.appendChild(el('div', 'meta', fmt(p.created_at)));
+    body.appendChild(el('div', 'meta', (p.author ? '✍ ' + p.author + ' • ' : '') + fmt(p.created_at)));
     const more = el('a', 'more', 'পড়ুন →'); more.href = link; body.appendChild(more);
     card.appendChild(body); grid.appendChild(card);
   });
