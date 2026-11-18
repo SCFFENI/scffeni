@@ -217,6 +217,25 @@ async function uploadImage(file, folder) {
   return sb.storage.from('uploads').getPublicUrl(path).data.publicUrl;
 }
 
+// ফেসবুক/হোয়াটসঅ্যাপের জন্য স্ট্যান্ডার্ড ১২০০×৬৩০ শেয়ার ছবি (মাঝখান থেকে ক্রপ) বানিয়ে আপলোড করে
+async function makeShareImage(file) {
+  try {
+    const bmp = await createImageBitmap(file);
+    const W = 1200, H = 630;
+    const c = document.createElement('canvas'); c.width = W; c.height = H;
+    const ctx = c.getContext('2d');
+    const scale = Math.max(W / bmp.width, H / bmp.height);
+    const w = bmp.width * scale, h = bmp.height * scale;
+    ctx.drawImage(bmp, (W - w) / 2, (H - h) / 2, w, h);
+    const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.85));
+    if (!blob) return null;
+    const path = `share/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
+    const { error } = await sb.storage.from('uploads').upload(path, blob, { cacheControl: '31536000', contentType: 'image/jpeg' });
+    if (error) return null;
+    return sb.storage.from('uploads').getPublicUrl(path).data.publicUrl;
+  } catch (e) { return null; }
+}
+
 function bindPreview(inputId, imgId) {
   $(inputId).onchange = e => {
     const f = e.target.files[0], img = $(imgId);
@@ -266,10 +285,11 @@ $('saveCat').onclick = async () => {
 
 // ---------- পোস্ট ----------
 let postImageUrl = null;
+let postShareUrl = null;
 
 function resetPost() {
   ['postId', 'postTitle', 'postAuthor', 'postContent', 'postImage'].forEach(i => $(i).value = '');
-  postImageUrl = null; $('postPreview').style.display = 'none';
+  postImageUrl = null; postShareUrl = null; $('postPreview').style.display = 'none';
   $('postFormTitle').textContent = 'নতুন পোস্ট আপলোড';
   $('cancelPost').classList.add('hidden');
 }
@@ -285,7 +305,7 @@ async function loadPosts() {
     list.appendChild(item(p.image_url, p.title, cat + ' • ' + new Date(p.created_at).toLocaleDateString('bn-BD'),
       () => {
         $('postId').value = p.id; $('postTitle').value = p.title; $('postAuthor').value = p.author || ''; $('postCat').value = p.category;
-        $('postContent').value = p.content || ''; postImageUrl = p.image_url;
+        $('postContent').value = p.content || ''; postImageUrl = p.image_url; postShareUrl = p.share_image || null;
         if (p.image_url) { $('postPreview').src = p.image_url; $('postPreview').style.display = 'block'; }
         $('postFormTitle').textContent = 'পোস্ট এডিট করুন';
         $('cancelPost').classList.remove('hidden');
@@ -310,8 +330,10 @@ $('savePost').onclick = async () => {
   try {
     const title = $('postTitle').value.trim();
     if (!title) throw new Error('শিরোনাম দিন।');
-    const up = await uploadImage($('postImage').files[0], 'posts');
-    const row = { title, author: $('postAuthor').value.trim() || null, category: $('postCat').value, content: $('postContent').value, image_url: up || postImageUrl };
+    const file = $('postImage').files[0];
+    const up = await uploadImage(file, 'posts');
+    const sh = file ? await makeShareImage(file) : null;
+    const row = { title, author: $('postAuthor').value.trim() || null, category: $('postCat').value, content: $('postContent').value, image_url: up || postImageUrl, share_image: file ? sh : postShareUrl };
     const id = $('postId').value;
     const { error } = id ? await sb.from('posts').update(row).eq('id', id) : await sb.from('posts').insert(row);
     if (error) throw error;
