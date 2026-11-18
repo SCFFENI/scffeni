@@ -18,7 +18,7 @@ async function renderPost(request, rawId) {
 
   if (!/^[0-9a-fA-F-]{36}$/.test(id)) return html('<p>পোস্টটি পাওয়া যায়নি।</p>', 404, 'no-store');
 
-  const q = `select=id,title,author,content,image_url,created_at,category,categories(name)&id=eq.${id}&published=eq.true&limit=1`;
+  const q = `select=id,title,author,content,image_url,share_image,created_at,category,categories(name)&id=eq.${id}&published=eq.true&limit=1`;
   let rows;
   try {
     const r = await fetch(`${SUPABASE_URL}/rest/v1/posts?${q}`, { headers: { apikey: SUPABASE_KEY } });
@@ -33,10 +33,18 @@ async function renderPost(request, rawId) {
   const text = (p.content || '').replace(/\s+/g, ' ').trim();
   const desc = text.length > 160 ? text.slice(0, 157) + '…' : text;
   const url = `${origin}/p/${p.id}`;
-  const img = p.image_url || `${origin}/galla.jpg`;
+  const img = p.share_image || p.image_url || `${origin}/galla.jpg`;
+  const sized = !!p.share_image;  // ১২০০×৬৩০ ছবি বানানো থাকলে মাপ জানানো হয়
   const cat = p.categories?.name || '';
   const date = new Date(p.created_at).toLocaleDateString('bn-BD',
     { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Dhaka' });
+
+  const ld = JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'Article', headline: p.title, description: desc,
+    image: [img], datePublished: p.created_at, mainEntityOfPage: url,
+    ...(p.author ? { author: { '@type': 'Person', name: p.author } } : {}),
+    publisher: { '@type': 'Organization', name: SITE }
+  }).replace(/</g, '\\u003c');
 
   return html(`<!DOCTYPE html>
 <html lang="bn">
@@ -50,10 +58,18 @@ async function renderPost(request, rawId) {
 <meta property="og:site_name" content="${SITE}">
 <meta property="og:title" content="${esc(p.title)}">
 <meta property="og:description" content="${esc(desc)}">
+<meta property="og:locale" content="bn_BD">
 <meta property="og:image" content="${esc(img)}">
+<meta property="og:image:alt" content="${esc(p.title)}">
+${sized ? '<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta property="og:image:type" content="image/jpeg">\n' : ''}
 <meta property="og:url" content="${url}">
 <meta property="article:published_time" content="${esc(p.created_at)}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(p.title)}">
+<meta name="twitter:description" content="${esc(desc)}">
+<meta name="twitter:image" content="${esc(img)}">
+${cat ? `<meta property="article:section" content="${esc(cat)}">\n` : ''}${p.author ? `<meta name="author" content="${esc(p.author)}">\n` : ''}<meta name="theme-color" content="#0b1a16">
+<script type="application/ld+json">${ld}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
