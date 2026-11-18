@@ -298,8 +298,8 @@ async function loadPosts() {
         show('পোস্ট মুছে ফেলা হয়েছে।'); loadPosts();
       },
       async () => {
-        const url = 'https://scffeni.github.io/scffeni/p/' + p.id + '.html';
-        try { await navigator.clipboard.writeText(url); show('শেয়ার লিংক কপি হয়েছে। নতুন পোস্টের লিংক ১৫ মিনিট পর থেকে কাজ করবে।'); }
+        const url = new URL('p/' + p.id, location.href.replace(/[^/]*$/, '')).href;  // সাইটের নিজের ঠিকানা অনুযায়ী
+        try { await navigator.clipboard.writeText(url); show('শেয়ার লিংক কপি হয়েছে। এটা ফেসবুকে দিন।'); }
         catch (e) { prompt('এই লিংকটি কপি করুন:', url); }
       }));
   });
