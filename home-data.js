@@ -30,7 +30,7 @@
     grid.innerHTML = data.map(p => {
       const text = (p.content || '').replace(/\s+/g, ' ').trim();
       const excerpt = text.length > 140 ? text.slice(0, 140) + '…' : text;
-      const link = 'post.html?id=' + encodeURIComponent(p.id);
+      const link = 'p/' + encodeURIComponent(p.id);
       const catName = p.categories ? p.categories.name : '';
       return `
       <article class="category-post-card">
