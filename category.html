@@ -67,7 +67,7 @@
 
   grid.innerHTML = '';
   data.forEach(p => {
-    const link = 'post.html?id=' + encodeURIComponent(p.id);
+    const link = 'p/' + encodeURIComponent(p.id);
     const card = el('article', 'card');
     if (p.image_url) { const i = el('img'); i.src = p.image_url; i.alt = p.title; i.loading = 'lazy'; card.appendChild(i); }
     const body = el('div', 'card-body');
