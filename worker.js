@@ -46,6 +46,29 @@ async function renderPost(request, rawId) {
     publisher: { '@type': 'Organization', name: SITE }
   }).replace(/</g, '\\u003c');
 
+  const eu = encodeURIComponent(url), et = encodeURIComponent(p.title);
+  const shareBar = cls => `<div class="share${cls}" data-url="${esc(url)}" data-title="${esc(p.title)}">
+<span>শেয়ার করুন:</span>
+<a class="s-fb" href="https://www.facebook.com/sharer/sharer.php?u=${eu}" target="_blank" rel="noopener noreferrer">Facebook</a>
+<a class="s-wa" href="https://wa.me/?text=${et}%20${eu}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+<a class="s-tg" href="https://t.me/share/url?url=${eu}&text=${et}" target="_blank" rel="noopener noreferrer">Telegram</a>
+<a class="s-x" href="https://twitter.com/intent/tweet?url=${eu}&text=${et}" target="_blank" rel="noopener noreferrer">X</a>
+<button type="button" class="s-nat" hidden>আরও…</button>
+<button type="button" class="s-cp">লিংক কপি</button>
+</div>`;
+  const shareJs = `<script>
+document.querySelectorAll('.share').forEach(function(box){
+  var url=box.dataset.url,title=box.dataset.title;
+  var cp=box.querySelector('.s-cp'),nat=box.querySelector('.s-nat');
+  cp.onclick=function(){
+    var done=function(){cp.textContent='কপি হয়েছে ✓';setTimeout(function(){cp.textContent='লিংক কপি'},2000)};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,function(){prompt('লিংকটি কপি করুন:',url)})}
+    else{prompt('লিংকটি কপি করুন:',url)}
+  };
+  if(navigator.share){nat.hidden=false;nat.onclick=function(){navigator.share({title:title,url:url}).catch(function(){})}}
+});
+</script>`;
+
   return html(`<!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -85,6 +108,13 @@ h1{font-family:'Tiro Bangla',serif;font-weight:400;font-size:clamp(1.7rem,5vw,2.
 .date{color:var(--muted);font-size:.85rem;margin-bottom:22px}
 .cover{width:100%;max-height:420px;object-fit:cover;border-radius:14px;margin-bottom:26px}
 .body{font-size:1.05rem;white-space:pre-wrap;word-wrap:break-word}
+.share{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0}
+.share.end{margin-top:36px;padding-top:20px;border-top:1px solid var(--border)}
+.share span{font-size:.85rem;color:var(--muted);margin-right:4px}
+.share a,.share button{font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;border:0;border-radius:50px;padding:7px 16px;color:#fff}
+.s-fb{background:#1877f2}.s-wa{background:#1fa855}.s-tg{background:#229ed9}.s-x{background:#1d1d1d;border:1px solid #444!important}
+.s-cp,.s-nat{background:rgba(45,189,114,.18);color:var(--accent)!important;border:1px solid var(--border)!important}
+.share a:hover,.share button:hover{filter:brightness(1.15)}
 </style>
 </head>
 <body>
@@ -92,8 +122,11 @@ h1{font-family:'Tiro Bangla',serif;font-weight:400;font-size:clamp(1.7rem,5vw,2.
 <article>
 ${cat ? `<a class="cat" href="/category.html?c=${encodeURIComponent(p.category)}">${esc(cat)}</a>\n` : ''}<h1>${esc(p.title)}</h1>
 <div class="date">${p.author ? '✍ ' + esc(p.author) + ' • ' : ''}${date}</div>
+${shareBar('')}
 ${p.image_url ? `<img class="cover" src="${esc(p.image_url)}" alt="${esc(p.title)}">\n` : ''}<div class="body">${esc(p.content || '')}</div>
+${shareBar(' end')}
 </article>
+${shareJs}
 </body>
 </html>
 `);
