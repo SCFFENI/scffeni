@@ -82,7 +82,135 @@
     });
   }
 
+  // ---------- লোগো ----------
+  async function loadLogo() {
+    const { data } = await sb.from('settings').select('value').eq('key', 'logo_url').maybeSingle();
+    if (!data || !data.value) return;
+    document.querySelectorAll('.nav-logo, .footer-icon').forEach(el => {
+      el.innerHTML = `<img src="${esc(data.value)}" alt="লোগো" style="width:100%;height:100%;object-fit:contain;border-radius:inherit">`;
+      el.style.background = 'transparent';
+    });
+    let ic = document.querySelector('link[rel~="icon"]');
+    if (!ic) { ic = document.createElement('link'); ic.rel = 'icon'; document.head.appendChild(ic); }
+    ic.href = data.value;
+  }
+
+  // ---------- স্লাইডার ----------
+  async function loadSlides() {
+    const wrap = document.querySelector('.mySwiper .swiper-wrapper');
+    if (!wrap) return;
+    const { data, error } = await sb.from('slides').select('*')
+      .order('sort', { ascending: true }).order('created_at', { ascending: false });
+    if (error || !data || !data.length) return;
+    try { if (typeof swiper !== 'undefined' && swiper && swiper.destroy) swiper.destroy(true, false); } catch (e) { }
+    wrap.innerHTML = data.map(s => `
+      <div class="swiper-slide">
+        <img src="${esc(s.image_url)}" alt="${esc(s.caption || '')}">
+        ${s.caption ? `<div class="slide-caption">${esc(s.caption)}</div>` : ''}
+      </div>`).join('');
+    if (window.Swiper) {
+      const many = data.length > 1;
+      new Swiper('.mySwiper', {
+        loop: many,
+        autoplay: many ? { delay: 3500, disableOnInteraction: false } : false,
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+      });
+    }
+  }
+
+  // ---------- নেতৃত্ব ----------
+  const socialLink = (url, icon, label) => url
+    ? `<a class="leader-social" href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}"><i class="${icon}"></i></a>` : '';
+
+  async function loadLeaders() {
+    const grid = document.querySelector('.leadership-grid');
+    if (!grid) return;
+    const { data, error } = await sb.from('leaders').select('*')
+      .order('sort', { ascending: true }).order('created_at', { ascending: true }).limit(4);
+    if (error || !data || !data.length) return;
+    grid.innerHTML = data.map((l, i) => {
+      const initial = esc((l.name || '?').trim().charAt(0));
+      const socials = socialLink(l.facebook, 'fa-brands fa-facebook-f', 'ফেসবুক')
+        + socialLink(l.youtube, 'fa-brands fa-youtube', 'ইউটিউব')
+        + socialLink(l.linkedin, 'fa-brands fa-linkedin-in', 'লিংকডইন');
+      return `
+      <div class="leader-card">
+        <div class="leader-card-inner">
+          <div class="leader-avatar">
+            ${l.photo_url ? `<img src="${esc(l.photo_url)}" alt="${esc(l.name)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : ''}
+            <span class="avatar-fallback" ${l.photo_url ? '' : 'style="display:flex"'}>${initial}</span>
+          </div>
+          <div class="leader-info">
+            ${l.role ? `<span class="leader-badge ${i % 2 ? 'badge-teal' : 'badge-blue'}"><i class="fa-solid fa-user-tie"></i> ${esc(l.role)}</span>` : ''}
+            <p class="leader-name">${esc(l.name)}</p>
+            ${l.bio ? `<p class="leader-desc">${esc(l.bio)}</p>` : ''}
+          </div>
+        </div>
+        ${socials ? `<div class="leader-footer">${socials}</div>` : ''}
+      </div>`;
+    }).join('');
+  }
+
+  // ---------- গ্যালারি ----------
+  async function loadGallery() {
+    const grid = document.querySelector('.bento-grid');
+    if (!grid) return;
+    const { data, count, error } = await sb.from('gallery').select('*', { count: 'exact' })
+      .order('created_at', { ascending: false }).limit(5);
+    if (error || !data || !data.length) return;
+    const bento = data.length >= 5;
+    if (!bento) { grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(200px, 1fr))'; grid.style.gridTemplateRows = 'none'; grid.style.gridAutoRows = '200px'; }
+    grid.innerHTML = data.map((g, i) => `
+      <div class="bento-item ${bento ? 'b' + (i + 1) : ''}">
+        <img src="${esc(g.image_url)}" alt="${esc(g.title || 'গ্যালারির ছবি')}" loading="lazy">
+        <div class="bento-overlay"><div class="bento-overlay-inner">
+          ${g.category ? `<span class="bento-overlay-cat">${esc(g.category)}</span>` : ''}
+          ${g.title ? `<p class="bento-overlay-title">${esc(g.title)}</p>` : ''}
+        </div></div>
+      </div>`).join('');
+    const num = document.querySelector('.gallery-count-text span');
+    if (num && count != null) num.textContent = count.toLocaleString('bn-BD');
+  }
+
+  // ---------- ভিডিও ----------
+  function ytId(url) {
+    const m = (url || '').match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/);
+    return m ? m[1] : '';
+  }
+
+  async function loadVideos() {
+    const grid = document.querySelector('.video-grid');
+    if (!grid) return;
+    const { data, error } = await sb.from('videos').select('*')
+      .order('sort', { ascending: true }).order('created_at', { ascending: false }).limit(3);
+    if (error || !data || !data.length) return;
+    grid.innerHTML = data.map(v => {
+      const fb = v.platform === 'facebook';
+      const id = ytId(v.url);
+      const thumb = v.thumb_url || (id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : 'galla.jpg');
+      return `
+      <a class="vcard" href="${esc(v.url)}" target="_blank" rel="noopener">
+        <div class="vthumb">
+          <img src="${esc(thumb)}" alt="${esc(v.title)}" loading="lazy">
+          <div class="vplay-btn"><div class="vplay-circle ${fb ? 'fb' : 'yt'}"><i class="fa-solid fa-play"></i></div></div>
+          ${v.duration ? `<span class="vduration">${esc(v.duration)}</span>` : ''}
+        </div>
+        <div class="vbody">
+          <span class="vplatform ${fb ? 'fb' : 'yt'}"><i class="fa-brands ${fb ? 'fa-facebook-f' : 'fa-youtube'}"></i> ${fb ? 'Facebook' : 'YouTube'}</span>
+          <p class="vtitle">${esc(v.title)}</p>
+          ${v.meta ? `<div class="vmeta">${esc(v.meta)}</div>` : ''}
+        </div>
+      </a>`;
+    }).join('');
+  }
+
   fixCategoryLinks();
+  loadLogo();
+  loadSlides();
+  loadLeaders();
+  loadGallery();
+  loadVideos();
   loadPosts();
   loadEvents();
 })();
