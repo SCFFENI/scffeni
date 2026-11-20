@@ -6,23 +6,11 @@
 <title>নেতৃত্ব | সোনাগাজী কালচারাল ফোরাম, ফেনী</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chrome.css">
 <link rel="stylesheet" href="pages.css">
 </head>
 <body>
-<header class="top"><div class="top-in">
-  <div class="brand-wrap">
-    <img id="logo" class="logo" alt="লোগো" hidden>
-    <div class="brand"><strong>সোনাগাজী কালচারাল ফোরাম</strong><span>ফেনী, বাংলাদেশ</span></div>
-  </div>
-  <nav class="menu">
-    <a href="index.html">হোম</a>
-    <a href="about.html">আমাদের সম্পর্কে</a>
-    <a href="events.html">অনুষ্ঠান</a>
-    <a href="leaders.html" class="active">নেতৃত্ব</a>
-    <a href="gallery.html">গ্যালারি</a>
-    <a href="contact.html">যোগাযোগ</a>
-  </nav>
-</div></header>
+<div id="site-header"></div>
 
 <section class="page-head">
   <h1>আমাদের নেতৃত্ব</h1>
@@ -33,6 +21,8 @@
   <div class="grid" id="grid"><p class="state">লোড হচ্ছে…</p></div>
 </main>
 
+<div id="site-footer"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="config.js"></script>
 <script>
@@ -41,9 +31,6 @@
   const grid = document.getElementById('grid');
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; };
 
-  sb.from('settings').select('value').eq('key', 'logo_url').maybeSingle().then(({ data }) => {
-    if (data && data.value) { const i = document.getElementById('logo'); i.src = data.value; i.hidden = false; }
-  });
 
   const { data, error } = await sb.from('leaders').select('*')
     .order('sort', { ascending: true }).order('created_at', { ascending: true });
@@ -67,5 +54,6 @@
   });
 })();
 </script>
+<script src="chrome.js"></script>
 </body>
 </html>
