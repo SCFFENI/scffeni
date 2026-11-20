@@ -6,20 +6,11 @@
 <title>সাংস্কৃতিক অনুষ্ঠান | সোনাগাজী কালচারাল ফোরাম, ফেনী</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chrome.css">
 <link rel="stylesheet" href="pages.css">
 </head>
 <body>
-<header class="top"><div class="top-in">
-  <div class="brand"><strong>সোনাগাজী কালচারাল ফোরাম</strong><span>ফেনী, বাংলাদেশ</span></div>
-  <nav class="menu">
-    <a href="index.html">হোম</a>
-    <a href="about.html">আমাদের সম্পর্কে</a>
-    <a href="events.html" class="active">অনুষ্ঠান</a>
-    <a href="leaders.html">নেতৃত্ব</a>
-    <a href="gallery.html">গ্যালারি</a>
-    <a href="contact.html">যোগাযোগ</a>
-  </nav>
-</div></header>
+<div id="site-header"></div>
 
 <section class="page-head">
   <h1>সাংস্কৃতিক অনুষ্ঠান</h1>
@@ -35,6 +26,8 @@
   </div>
   <div class="grid" id="grid"><p class="state">লোড হচ্ছে…</p></div>
 </main>
+
+<div id="site-footer"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="config.js"></script>
@@ -75,5 +68,6 @@
   render('all');
 })();
 </script>
+<script src="chrome.js"></script>
 </body>
 </html>
