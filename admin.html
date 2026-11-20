@@ -80,6 +80,11 @@
       <button data-tab="posts" class="active">পোস্ট</button>
       <button data-tab="events">ইভেন্ট</button>
       <button data-tab="cats">ক্যাটাগরি</button>
+      <button data-tab="slides">স্লাইডার</button>
+      <button data-tab="leaders">নেতৃত্ব</button>
+      <button data-tab="gallery">গ্যালারি</button>
+      <button data-tab="videos">ভিডিও</button>
+      <button data-tab="settings">লোগো</button>
     </div>
 
     <!-- পোস্ট -->
@@ -151,6 +156,11 @@
       </div>
       <div class="card"><h2>সব ক্যাটাগরি</h2><div id="catList"></div></div>
     </div>
+    <div id="tab-slides" class="hidden"></div>
+    <div id="tab-leaders" class="hidden"></div>
+    <div id="tab-gallery" class="hidden"></div>
+    <div id="tab-videos" class="hidden"></div>
+    <div id="tab-settings" class="hidden"></div>
   </section>
 </main>
 
@@ -190,6 +200,8 @@ async function enterDash() {
   await loadCats();
   loadPosts();
   loadEvents();
+  Object.keys(MGR).forEach(buildManager);
+  buildSettings();
 }
 
 $('loginBtn').onclick = async () => {
@@ -203,7 +215,7 @@ $('logoutBtn').onclick = async () => { await sb.auth.signOut(); location.reload(
 // ---------- ট্যাব ----------
 document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
   document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('active', x === b));
-  ['posts', 'events', 'cats'].forEach(t => $('tab-' + t).classList.toggle('hidden', t !== b.dataset.tab));
+  ['posts', 'events', 'cats', 'slides', 'leaders', 'gallery', 'videos', 'settings'].forEach(t => $('tab-' + t).classList.toggle('hidden', t !== b.dataset.tab));
 });
 
 // ---------- ছবি আপলোড ----------
@@ -399,6 +411,233 @@ $('saveEvent').onclick = async () => {
   } catch (e) { show(e.message || 'সংরক্ষণ ব্যর্থ।', false); }
   btn.disabled = false;
 };
+
+// ================= সাধারণ ম্যানেজার: স্লাইডার, নেতৃত্ব, গ্যালারি, ভিডিও =================
+async function resizeToBlob(file, max) {
+  try {
+    const bmp = await createImageBitmap(file);
+    const k = Math.min(1, max / Math.max(bmp.width, bmp.height));
+    const c = document.createElement('canvas');
+    c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+    c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+    return await new Promise(r => c.toBlob(r, 'image/jpeg', 0.85)) || file;
+  } catch (e) { return file; }
+}
+
+// ছবি ছোট করে (resize থাকলে) আপলোড করে, পাবলিক URL ফেরত দেয়
+async function uploadAny(file, folder, resize) {
+  const body = resize ? await resizeToBlob(file, resize) : file;
+  const converted = body !== file;
+  const ext = converted ? 'jpg' : ((file.name || '').split('.').pop().toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg');
+  const type = converted ? 'image/jpeg' : (file.type || 'image/jpeg');
+  if (body.size > 8 * 1024 * 1024) throw new Error('ছবি ৮ MB-এর কম হতে হবে।');
+  const path = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const { error } = await sb.storage.from('uploads').upload(path, body, { cacheControl: '31536000', contentType: type });
+  if (error) throw error;
+  return sb.storage.from('uploads').getPublicUrl(path).data.publicUrl;
+}
+
+function ytThumb(url) {
+  const m = (url || '').match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/);
+  return m ? `https://img.youtube.com/vi/${m[1]}/mqdefault.jpg` : '';
+}
+
+const MGR = {
+  slides: {
+    table: 'slides', title: 'স্লাইড', order: [['sort', true], ['created_at', false]],
+    fields: [
+      { k: 'image_url', l: 'ছবি', t: 'image', folder: 'slides', resize: 1800, req: true },
+      { k: 'caption', l: 'ক্যাপশন', t: 'text' },
+      { k: 'sort', l: 'ক্রম (ছোট সংখ্যা আগে দেখাবে)', t: 'number', def: 1 }
+    ],
+    row: r => [r.image_url, r.caption || '(ক্যাপশন নেই)', 'ক্রম ' + r.sort]
+  },
+  leaders: {
+    table: 'leaders', title: 'নেতৃত্ব', order: [['sort', true], ['created_at', true]],
+    fields: [
+      { k: 'photo_url', l: 'ছবি (ঐচ্ছিক)', t: 'image', folder: 'leaders', resize: 600 },
+      { k: 'name', l: 'নাম', t: 'text', req: true },
+      { k: 'role', l: 'পদবি (যেমন: সভাপতি)', t: 'text' },
+      { k: 'bio', l: 'সংক্ষিপ্ত পরিচিতি', t: 'textarea' },
+      { k: 'facebook', l: 'ফেসবুক লিংক (ঐচ্ছিক)', t: 'text' },
+      { k: 'youtube', l: 'ইউটিউব লিংক (ঐচ্ছিক)', t: 'text' },
+      { k: 'linkedin', l: 'লিংকডইন লিংক (ঐচ্ছিক)', t: 'text' },
+      { k: 'sort', l: 'ক্রম (ছোট সংখ্যা আগে দেখাবে)', t: 'number', def: 1 }
+    ],
+    row: r => [r.photo_url, r.name, (r.role || '') + ' • ক্রম ' + r.sort]
+  },
+  gallery: {
+    table: 'gallery', title: 'ছবি', multi: true, order: [['created_at', false]],
+    fields: [
+      { k: 'image_url', l: 'ছবি (একসাথে অনেকগুলো বাছাই করা যাবে)', t: 'image', folder: 'gallery', resize: 1600, req: true },
+      { k: 'title', l: 'শিরোনাম/ক্যাপশন (একসাথে দিলে সবগুলোতে একই)', t: 'text' },
+      { k: 'category', l: 'বিভাগ (যেমন: সাংস্কৃতিক অনুষ্ঠান)', t: 'text' }
+    ],
+    row: r => [r.image_url, r.title || '(শিরোনাম নেই)', r.category || '']
+  },
+  videos: {
+    table: 'videos', title: 'ভিডিও', order: [['sort', true], ['created_at', false]],
+    fields: [
+      { k: 'title', l: 'শিরোনাম', t: 'text', req: true },
+      { k: 'platform', l: 'কোথায়', t: 'select', opts: [['youtube', 'YouTube'], ['facebook', 'Facebook']] },
+      { k: 'url', l: 'ভিডিওর লিংক', t: 'text', req: true },
+      { k: 'thumb_url', l: 'থাম্বনেইল ছবি (YouTube হলে না দিলেও চলে, Facebook-এ দেওয়া ভালো)', t: 'image', folder: 'videos', resize: 800 },
+      { k: 'duration', l: 'সময় (যেমন: ৫:৩২)', t: 'text' },
+      { k: 'meta', l: 'অতিরিক্ত তথ্য (যেমন: ১.২ হাজার ভিউ · এপ্রিল ২০২৬)', t: 'text' },
+      { k: 'sort', l: 'ক্রম (ছোট সংখ্যা আগে দেখাবে)', t: 'number', def: 1 }
+    ],
+    row: r => [r.thumb_url || ytThumb(r.url), r.title, (r.platform === 'facebook' ? 'Facebook' : 'YouTube') + ' • ক্রম ' + r.sort]
+  }
+};
+
+function mk(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
+
+function buildManager(key) {
+  const cfg = MGR[key], box = $('tab-' + key);
+  box.innerHTML = '';
+  let editId = null;
+  const kept = {};      // সম্পাদনার সময় আগের ছবির URL
+  const inputs = {};
+
+  const card = mk('div', 'card'), head = mk('h2', '', 'নতুন ' + cfg.title + ' যোগ করুন');
+  card.appendChild(head);
+  cfg.fields.forEach(f => {
+    const lab = mk('label', '', f.l); card.appendChild(lab);
+    let inp;
+    if (f.t === 'textarea') { inp = mk('textarea'); inp.style.minHeight = '90px'; }
+    else if (f.t === 'select') { inp = mk('select'); f.opts.forEach(o => { const op = mk('option', '', o[1]); op.value = o[0]; inp.appendChild(op); }); }
+    else if (f.t === 'image') {
+      inp = mk('input'); inp.type = 'file'; inp.accept = 'image/*';
+      if (cfg.multi) inp.multiple = true;
+      const pv = mk('img', 'preview'); pv.alt = '';
+      inp.onchange = () => { const x = inp.files[0]; if (x) { pv.src = URL.createObjectURL(x); pv.style.display = 'block'; } else if (!kept[f.k]) pv.style.display = 'none'; };
+      inputs[f.k + '_pv'] = pv;
+      card.appendChild(inp); card.appendChild(pv); inputs[f.k] = inp; return;
+    }
+    else { inp = mk('input'); inp.type = f.t === 'number' ? 'number' : 'text'; }
+    if (f.def !== undefined) inp.value = f.def;
+    card.appendChild(inp); inputs[f.k] = inp;
+  });
+
+  const act = mk('div', 'actions'), saveB = mk('button', '', 'সংরক্ষণ করুন'), cancelB = mk('button', 'ghost hidden', 'বাতিল');
+  act.append(saveB, cancelB); card.appendChild(act);
+  const listCard = mk('div', 'card'); listCard.appendChild(mk('h2', '', 'সব ' + cfg.title));
+  const list = mk('div'); listCard.appendChild(list);
+  box.append(card, listCard);
+
+  function reset() {
+    editId = null; head.textContent = 'নতুন ' + cfg.title + ' যোগ করুন'; cancelB.classList.add('hidden');
+    cfg.fields.forEach(f => {
+      if (f.t === 'image') { inputs[f.k].value = ''; inputs[f.k + '_pv'].style.display = 'none'; kept[f.k] = null; inputs[f.k].multiple = !!cfg.multi; }
+      else inputs[f.k].value = f.def !== undefined ? f.def : (f.t === 'select' ? f.opts[0][0] : '');
+    });
+  }
+  cancelB.onclick = reset;
+
+  function fill(r) {
+    editId = r.id; head.textContent = cfg.title + ' এডিট করুন'; cancelB.classList.remove('hidden');
+    cfg.fields.forEach(f => {
+      if (f.t === 'image') {
+        kept[f.k] = r[f.k] || null; inputs[f.k].value = ''; inputs[f.k].multiple = false;
+        const pv = inputs[f.k + '_pv']; if (r[f.k]) { pv.src = r[f.k]; pv.style.display = 'block'; } else pv.style.display = 'none';
+      } else inputs[f.k].value = r[f.k] == null ? '' : r[f.k];
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function load() {
+    let q = sb.from(cfg.table).select('*');
+    cfg.order.forEach(o => { q = q.order(o[0], { ascending: o[1] }); });
+    const { data, error } = await q;
+    if (error) return show(cfg.title + ' লোড হয়নি: ' + error.message, false);
+    list.innerHTML = '';
+    if (!data.length) list.textContent = 'এখনো কিছু যোগ করা হয়নি।';
+    data.forEach(r => {
+      const [img, title, sub] = cfg.row(r);
+      list.appendChild(item(img || '', title, sub, () => fill(r), async () => {
+        if (!confirm('এটি মুছে ফেলবেন?')) return;
+        const { error } = await sb.from(cfg.table).delete().eq('id', r.id);
+        if (error) return show('মোছা যায়নি: ' + error.message, false);
+        show('মুছে ফেলা হয়েছে।'); load();
+      }));
+    });
+  }
+
+  saveB.onclick = async () => {
+    saveB.disabled = true;
+    try {
+      const row = {}, imgFields = [];
+      for (const f of cfg.fields) {
+        if (f.t === 'image') { imgFields.push(f); continue; }
+        let v = inputs[f.k].value.trim();
+        if (f.t === 'number') v = parseInt(v, 10) || f.def || 0;
+        else if (f.t === 'select') v = inputs[f.k].value;
+        else if (!v) v = null;
+        if (f.req && (v === null || v === '')) throw new Error(f.l.split(' (')[0] + ' দিন।');
+        row[f.k] = v;
+      }
+      // একাধিক ছবি একসাথে (শুধু নতুন যোগের সময়, গ্যালারিতে)
+      if (cfg.multi && !editId) {
+        const f = imgFields[0], files = Array.from(inputs[f.k].files);
+        if (!files.length) throw new Error('অন্তত একটি ছবি বাছাই করুন।');
+        for (let i = 0; i < files.length; i++) {
+          saveB.textContent = `আপলোড হচ্ছে ${i + 1}/${files.length}…`;
+          const url = await uploadAny(files[i], f.folder, f.resize);
+          const { error } = await sb.from(cfg.table).insert({ ...row, [f.k]: url });
+          if (error) throw error;
+        }
+      } else {
+        for (const f of imgFields) {
+          const file = inputs[f.k].files[0];
+          const url = file ? await uploadAny(file, f.folder, f.resize) : (kept[f.k] || null);
+          if (f.req && !url) throw new Error('ছবি বাছাই করুন।');
+          row[f.k] = url;
+        }
+        const { error } = editId ? await sb.from(cfg.table).update(row).eq('id', editId) : await sb.from(cfg.table).insert(row);
+        if (error) throw error;
+      }
+      show('সংরক্ষণ হয়েছে।'); reset(); load();
+    } catch (e) { show(e.message || 'সংরক্ষণ ব্যর্থ।', false); }
+    saveB.textContent = 'সংরক্ষণ করুন'; saveB.disabled = false;
+  };
+
+  reset(); load();
+}
+
+// ================= লোগো =================
+async function buildSettings() {
+  const box = $('tab-settings'); box.innerHTML = '';
+  const card = mk('div', 'card'); card.appendChild(mk('h2', '', 'সাইটের লোগো'));
+  const cur = mk('img', 'preview'); cur.alt = 'বর্তমান লোগো';
+  const hint = mk('p', 'hint', 'ছোট বর্গাকার ছবি (PNG, স্বচ্ছ ব্যাকগ্রাউন্ডসহ) সবচেয়ে ভালো দেখায়। এটি মেনু, ফুটার ও ব্রাউজারের ট্যাবের আইকনে আসবে।');
+  const inp = mk('input'); inp.type = 'file'; inp.accept = 'image/*';
+  const act = mk('div', 'actions'), saveB = mk('button', '', 'লোগো সংরক্ষণ করুন'), delB = mk('button', 'ghost', 'লোগো সরান');
+  act.append(saveB, delB);
+  card.append(cur, mk('label', '', 'নতুন লোগো বাছাই করুন'), inp, hint, act); box.appendChild(card);
+
+  async function refresh() {
+    const { data } = await sb.from('settings').select('value').eq('key', 'logo_url').maybeSingle();
+    if (data && data.value) { cur.src = data.value; cur.style.display = 'block'; } else cur.style.display = 'none';
+  }
+  saveB.onclick = async () => {
+    const file = inp.files[0]; if (!file) return show('আগে একটি ছবি বাছাই করুন।', false);
+    saveB.disabled = true;
+    try {
+      const url = await uploadAny(file, 'logo', 0);
+      const { error } = await sb.from('settings').upsert({ key: 'logo_url', value: url });
+      if (error) throw error;
+      inp.value = ''; show('লোগো সংরক্ষণ হয়েছে।'); refresh();
+    } catch (e) { show(e.message || 'সংরক্ষণ ব্যর্থ।', false); }
+    saveB.disabled = false;
+  };
+  delB.onclick = async () => {
+    if (!confirm('লোগো সরিয়ে আগের আইকন ফেরাবেন?')) return;
+    const { error } = await sb.from('settings').delete().eq('key', 'logo_url');
+    if (error) return show('সরানো যায়নি: ' + error.message, false);
+    show('লোগো সরানো হয়েছে।'); refresh();
+  };
+  refresh();
+}
 
 init();
 </script>
