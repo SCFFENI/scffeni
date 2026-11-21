@@ -152,6 +152,15 @@ export default {
     const m = pathname.match(/^\/p\/([^/]+)\/?$/);
     if (m && request.method === 'GET') return renderPost(request, decodeURIComponent(m[1]));
     if (pathname === '/sitemap.xml' && request.method === 'GET') return renderSitemap(request);
-    return env.ASSETS.fetch(request);
+
+    const res = await env.ASSETS.fetch(request);
+    // সব HTML পেজের শেষে (অ্যাডমিন ছাড়া) chrome.js নিজে থেকে জুড়ে দেয়: মেনু, ফুটার ও লোগো
+    const isAdmin = /^\/admin(\.html)?\/?$/.test(pathname);
+    if (request.method === 'GET' && !isAdmin && (res.headers.get('content-type') || '').includes('text/html')) {
+      return new HTMLRewriter()
+        .on('body', { element(el) { el.append('<script src="/chrome.js"></script>', { html: true }); } })
+        .transform(res);
+    }
+    return res;
   }
 };
