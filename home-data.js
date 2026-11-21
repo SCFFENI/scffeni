@@ -82,17 +82,10 @@
     });
   }
 
-  // ---------- লোগো ----------
-  async function loadLogo() {
-    const { data } = await sb.from('settings').select('value').eq('key', 'logo_url').maybeSingle();
-    if (!data || !data.value) return;
-    document.querySelectorAll('.nav-logo, .footer-icon').forEach(el => {
-      el.innerHTML = `<img src="${esc(data.value)}" alt="লোগো" style="width:100%;height:100%;object-fit:contain;border-radius:inherit">`;
-      el.style.background = 'transparent';
-    });
-    let ic = document.querySelector('link[rel~="icon"]');
-    if (!ic) { ic = document.createElement('link'); ic.rel = 'icon'; document.head.appendChild(ic); }
-    ic.href = data.value;
+  // ---------- লোগো (সব পেজের জন্য একই chrome.js) ----------
+  function loadLogo() {
+    if (document.querySelector('script[src*="chrome.js"]')) return;
+    const sc = document.createElement('script'); sc.src = 'chrome.js'; document.head.appendChild(sc);
   }
 
   // ---------- স্লাইডার ----------
