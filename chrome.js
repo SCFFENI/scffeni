@@ -1,9 +1,12 @@
-// মূল মেনু (navbar), ফুটার ও "উপরে যান" বাটন সব পেজে বসায়।
+// মূল মেনু (navbar), ফুটার, "উপরে যান" বাটন এবং সাইটের লোগো, সব এই এক ফাইলে।
 // যেকোনো পেজে </body>-এর আগে এই এক লাইন বসালেই চলবে:   <script src="/chrome.js"></script>
-// পেজে আগে থেকে মেনু/ফুটার থাকলে (যেমন index.html) সেটা আর দ্বিতীয়বার বসায় না।
+// পেজে আগে থেকে মেনু/ফুটার থাকলে (যেমন index.html) সেটা আর দ্বিতীয়বার বসায় না, শুধু লোগো বসায়।
 (function () {
   if (window.__chromeLoaded) return;
   window.__chromeLoaded = true;
+
+  const self = document.currentScript;
+  const base = self && self.src ? self.src.replace(/chrome\.js.*$/, '') : '/';
 
   // ===== মেনুর লিংক (এখান থেকেই বদলানো যাবে) =====
   const NAV = [
@@ -73,38 +76,93 @@
     Object.keys(attrs).forEach(k => e.setAttribute(k, attrs[k]));
     document.head.appendChild(e); return e;
   }
+  const load = src => new Promise((res, rej) => {
+    const e = head('script', { src }); e.onload = res; e.onerror = rej;
+  });
 
+  // ===== লোগো =====
+  const LOGO_KEY = 'scf_logo';
+
+  function logoImg(url, h) {
+    const i = document.createElement('img');
+    i.src = url; i.alt = 'লোগো';
+    i.style.cssText = `height:${h}px;width:auto;max-width:200px;object-fit:contain;display:block;border-radius:0`;
+    return i;
+  }
+
+  function applyLogo(url, h) {
+    let ic = document.querySelector('link[rel~="icon"]');
+    if (!ic) ic = head('link', { rel: 'icon' });
+    ic.href = url;
+
+    let done = false;
+    document.querySelectorAll('.nav-logo, .footer-icon').forEach(el => {
+      el.innerHTML = ''; el.appendChild(logoImg(url, h));
+      el.style.cssText += ';width:auto;height:auto;min-width:0;background:transparent;border:0;border-radius:0';
+      done = true;
+    });
+    document.querySelectorAll('img#logo, img.logo').forEach(el => {
+      el.src = url; el.hidden = false; el.alt = 'লোগো';
+      el.style.height = h + 'px'; el.style.width = 'auto'; el.style.maxWidth = '200px';
+      done = true;
+    });
+    if (!done) {
+      const old = document.querySelector('[data-auto-logo]');
+      if (old) { old.innerHTML = ''; old.appendChild(logoImg(url, h)); return; }
+      const host = document.querySelector('.navbar, header, nav');
+      if (host) {
+        const wrap = document.createElement('a'); wrap.href = '/'; wrap.setAttribute('data-auto-logo', '1');
+        wrap.style.cssText = 'display:inline-flex;align-items:center;margin-right:10px';
+        wrap.appendChild(logoImg(url, h)); host.insertBefore(wrap, host.firstChild);
+      }
+    }
+  }
+
+  async function initLogo() {
+    // আগের বার দেখা লোগো সাথে সাথে বসায়, যাতে পেজ খোলার সময় ঝলক না লাগে
+    try { const c = JSON.parse(localStorage.getItem(LOGO_KEY) || 'null'); if (c && c.url) applyLogo(c.url, c.h); } catch (e) { }
+    try {
+      if (!window.supabase) await load('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js');
+      if (!window.SUPABASE_URL) await load(base + 'config.js');
+      const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+      const { data, error } = await sb.from('settings').select('key,value').in('key', ['logo_url', 'logo_height']);
+      if (error) return;
+      const m = {}; (data || []).forEach(r => { m[r.key] = r.value; });
+      if (!m.logo_url) { try { localStorage.removeItem(LOGO_KEY); } catch (e) { } return; }
+      const h = Math.min(56, Math.max(24, parseInt(m.logo_height, 10) || 40));
+      try { localStorage.setItem(LOGO_KEY, JSON.stringify({ url: m.logo_url, h })); } catch (e) { }
+      applyLogo(m.logo_url, h);
+    } catch (e) { /* লোগো না এলে সাইট যেমন ছিল তেমনই থাকবে */ }
+  }
+
+  // ===== মেনু ও ফুটার =====
   function run() {
-    if (!document.querySelector('link[href*="chrome.css"]')) head('link', { rel: 'stylesheet', href: '/chrome.css' });
-    if (!document.querySelector('link[href*="font-awesome"]'))
-      head('link', { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css' });
+    const needHeader = !document.querySelector('nav.navbar');
+    const needFooter = !document.querySelector('footer');
 
-    let injectedHeader = false, injectedFooter = false;
+    if (needHeader || needFooter) {
+      if (!document.querySelector('link[href*="chrome.css"]')) head('link', { rel: 'stylesheet', href: base + 'chrome.css' });
+      if (!document.querySelector('link[href*="font-awesome"]'))
+        head('link', { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css' });
+    }
 
-    if (!document.querySelector('nav.navbar')) {
+    if (needHeader) {
       const slot = document.getElementById('site-header');
       if (slot) slot.outerHTML = HEADER; else document.body.insertAdjacentHTML('afterbegin', HEADER);
-      document.body.classList.add('has-chrome'); injectedHeader = true;
-    }
-    if (!document.querySelector('footer')) {
-      const slot = document.getElementById('site-footer');
-      if (slot) slot.outerHTML = FOOTER; else document.body.insertAdjacentHTML('beforeend', FOOTER);
-      injectedFooter = true;
-    }
-
-    if (injectedHeader) {
+      document.body.classList.add('has-chrome');
       const hb = document.getElementById('hamburger'), mn = document.getElementById('mobileNav');
       hb.addEventListener('click', () => mn.classList.toggle('open'));
       document.addEventListener('click', e => { if (!hb.contains(e.target) && !mn.contains(e.target)) mn.classList.remove('open'); });
     }
-    const top = document.getElementById('goTopBtn');
-    if (top && injectedFooter) {
+    if (needFooter) {
+      const slot = document.getElementById('site-footer');
+      if (slot) slot.outerHTML = FOOTER; else document.body.insertAdjacentHTML('beforeend', FOOTER);
+      const top = document.getElementById('goTopBtn');
       window.addEventListener('scroll', () => top.classList.toggle('show', window.scrollY > 300));
       top.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
 
-    // লোগো (অ্যাডমিন থেকে দেওয়া) মেনু ও ফুটারে বসাতে
-    if (!document.querySelector('script[src*="site-logo.js"]')) head('script', { src: '/site-logo.js' });
+    initLogo();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
