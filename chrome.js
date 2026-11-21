@@ -83,55 +83,62 @@
   // ===== লোগো =====
   const LOGO_KEY = 'scf_logo';
 
-  function logoImg(url, h) {
+  function logoCss(h, shape) {
+    if (shape === 'original') return `height:${h}px;width:auto;max-width:200px;object-fit:contain;display:block;border-radius:0`;
+    const r = shape === 'round' ? '10px' : '50%';   // ডিফল্ট: গোলাকার
+    return `height:${h}px;width:${h}px;object-fit:cover;display:block;border-radius:${r}`;
+  }
+
+  function logoImg(url, h, shape) {
     const i = document.createElement('img');
     i.src = url; i.alt = 'লোগো';
-    i.style.cssText = `height:${h}px;width:auto;max-width:200px;object-fit:contain;display:block;border-radius:0`;
+    i.style.cssText = logoCss(h, shape);
     return i;
   }
 
-  function applyLogo(url, h) {
+  function applyLogo(url, h, shape) {
     let ic = document.querySelector('link[rel~="icon"]');
     if (!ic) ic = head('link', { rel: 'icon' });
     ic.href = url;
 
     let done = false;
     document.querySelectorAll('.nav-logo, .footer-icon').forEach(el => {
-      el.innerHTML = ''; el.appendChild(logoImg(url, h));
-      el.style.cssText += ';width:auto;height:auto;min-width:0;background:transparent;border:0;border-radius:0';
+      el.innerHTML = ''; el.appendChild(logoImg(url, h, shape));
+      el.style.cssText += ';width:auto;height:auto;min-width:0;background:transparent;border:0;border-radius:0;overflow:visible';
       done = true;
     });
     document.querySelectorAll('img#logo, img.logo').forEach(el => {
       el.src = url; el.hidden = false; el.alt = 'লোগো';
-      el.style.height = h + 'px'; el.style.width = 'auto'; el.style.maxWidth = '200px';
+      el.style.cssText += ';' + logoCss(h, shape);
       done = true;
     });
     if (!done) {
       const old = document.querySelector('[data-auto-logo]');
-      if (old) { old.innerHTML = ''; old.appendChild(logoImg(url, h)); return; }
+      if (old) { old.innerHTML = ''; old.appendChild(logoImg(url, h, shape)); return; }
       const host = document.querySelector('.navbar, header, nav');
       if (host) {
         const wrap = document.createElement('a'); wrap.href = '/'; wrap.setAttribute('data-auto-logo', '1');
         wrap.style.cssText = 'display:inline-flex;align-items:center;margin-right:10px';
-        wrap.appendChild(logoImg(url, h)); host.insertBefore(wrap, host.firstChild);
+        wrap.appendChild(logoImg(url, h, shape)); host.insertBefore(wrap, host.firstChild);
       }
     }
   }
 
   async function initLogo() {
     // আগের বার দেখা লোগো সাথে সাথে বসায়, যাতে পেজ খোলার সময় ঝলক না লাগে
-    try { const c = JSON.parse(localStorage.getItem(LOGO_KEY) || 'null'); if (c && c.url) applyLogo(c.url, c.h); } catch (e) { }
+    try { const c = JSON.parse(localStorage.getItem(LOGO_KEY) || 'null'); if (c && c.url) applyLogo(c.url, c.h, c.shape); } catch (e) { }
     try {
       if (!window.supabase) await load('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js');
       if (!window.SUPABASE_URL) await load(base + 'config.js');
       const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-      const { data, error } = await sb.from('settings').select('key,value').in('key', ['logo_url', 'logo_height']);
+      const { data, error } = await sb.from('settings').select('key,value').in('key', ['logo_url', 'logo_height', 'logo_shape']);
       if (error) return;
       const m = {}; (data || []).forEach(r => { m[r.key] = r.value; });
       if (!m.logo_url) { try { localStorage.removeItem(LOGO_KEY); } catch (e) { } return; }
       const h = Math.min(56, Math.max(24, parseInt(m.logo_height, 10) || 40));
-      try { localStorage.setItem(LOGO_KEY, JSON.stringify({ url: m.logo_url, h })); } catch (e) { }
-      applyLogo(m.logo_url, h);
+      const shape = ['circle', 'round', 'original'].includes(m.logo_shape) ? m.logo_shape : 'circle';
+      try { localStorage.setItem(LOGO_KEY, JSON.stringify({ url: m.logo_url, h, shape })); } catch (e) { }
+      applyLogo(m.logo_url, h, shape);
     } catch (e) { /* লোগো না এলে সাইট যেমন ছিল তেমনই থাকবে */ }
   }
 
