@@ -609,22 +609,34 @@ async function buildSettings() {
   const box = $('tab-settings'); box.innerHTML = '';
   const card = mk('div', 'card'); card.appendChild(mk('h2', '', 'সাইটের লোগো'));
   const cur = mk('img', 'preview'); cur.alt = 'বর্তমান লোগো';
-  const hint = mk('p', 'hint', 'ছোট বর্গাকার ছবি (PNG, স্বচ্ছ ব্যাকগ্রাউন্ডসহ) সবচেয়ে ভালো দেখায়। এটি মেনু, ফুটার ও ব্রাউজারের ট্যাবের আইকনে আসবে।');
   const inp = mk('input'); inp.type = 'file'; inp.accept = 'image/*';
-  const act = mk('div', 'actions'), saveB = mk('button', '', 'লোগো সংরক্ষণ করুন'), delB = mk('button', 'ghost', 'লোগো সরান');
+  const hInp = mk('input'); hInp.type = 'number'; hInp.min = 24; hInp.max = 56; hInp.value = 40;
+  const shSel = mk('select');
+  [['circle', 'গোলাকার (ডিফল্ট)'], ['round', 'গোল কোণযুক্ত বর্গ'], ['original', 'মূল ছবি যেমন আছে']].forEach(o => { const op = mk('option', '', o[1]); op.value = o[0]; shSel.appendChild(op); });
+  const hint = mk('p', 'hint', 'গোলাকার বা গোল কোণ বাছলে ছবির মাঝখান থেকে বর্গাকারে কেটে নেওয়া হয় (ছবির চারপাশের সাদা কোণ বাদ যায়)। চওড়া লোগো হলে "মূল ছবি যেমন আছে" বাছুন। ছবি বদলাতে না চাইলে শুধু উচ্চতা বা আকৃতি বদলে সংরক্ষণ করুন। উচ্চতা ২৪ থেকে ৫৬ px-এর মধ্যে দিন (মেনুর মাপের মধ্যে থাকার জন্য)। স্বচ্ছ ব্যাকগ্রাউন্ডসহ PNG সবচেয়ে ভালো দেখায়।');
+  const act = mk('div', 'actions'), saveB = mk('button', '', 'সংরক্ষণ করুন'), delB = mk('button', 'ghost', 'লোগো সরান');
   act.append(saveB, delB);
-  card.append(cur, mk('label', '', 'নতুন লোগো বাছাই করুন'), inp, hint, act); box.appendChild(card);
+  card.append(cur, mk('label', '', 'নতুন লোগো বাছাই করুন'), inp, mk('label', '', 'লোগোর উচ্চতা (px)'), hInp, mk('label', '', 'লোগোর আকৃতি'), shSel, hint, act);
+  box.appendChild(card);
 
+  let hasLogo = false;
   async function refresh() {
-    const { data } = await sb.from('settings').select('value').eq('key', 'logo_url').maybeSingle();
-    if (data && data.value) { cur.src = data.value; cur.style.display = 'block'; } else cur.style.display = 'none';
+    const { data } = await sb.from('settings').select('key,value').in('key', ['logo_url', 'logo_height', 'logo_shape']);
+    const m = {}; (data || []).forEach(r => { m[r.key] = r.value; });
+    hasLogo = !!m.logo_url;
+    if (m.logo_shape) shSel.value = m.logo_shape;
+    if (m.logo_url) { cur.src = m.logo_url; cur.style.display = 'block'; } else cur.style.display = 'none';
+    if (m.logo_height) hInp.value = m.logo_height;
   }
   saveB.onclick = async () => {
-    const file = inp.files[0]; if (!file) return show('আগে একটি ছবি বাছাই করুন।', false);
+    const file = inp.files[0];
+    if (!file && !hasLogo) return show('আগে একটি লোগো বাছাই করুন।', false);
     saveB.disabled = true;
     try {
-      const url = await uploadAny(file, 'logo', 0);
-      const { error } = await sb.from('settings').upsert({ key: 'logo_url', value: url });
+      const h = Math.min(56, Math.max(24, parseInt(hInp.value, 10) || 40));
+      const rows = [{ key: 'logo_height', value: String(h) }, { key: 'logo_shape', value: shSel.value }];
+      if (file) rows.push({ key: 'logo_url', value: await uploadAny(file, 'logo', 0) });
+      const { error } = await sb.from('settings').upsert(rows);
       if (error) throw error;
       inp.value = ''; show('লোগো সংরক্ষণ হয়েছে।'); refresh();
     } catch (e) { show(e.message || 'সংরক্ষণ ব্যর্থ।', false); }
@@ -632,7 +644,7 @@ async function buildSettings() {
   };
   delB.onclick = async () => {
     if (!confirm('লোগো সরিয়ে আগের আইকন ফেরাবেন?')) return;
-    const { error } = await sb.from('settings').delete().eq('key', 'logo_url');
+    const { error } = await sb.from('settings').delete().in('key', ['logo_url', 'logo_height', 'logo_shape']);
     if (error) return show('সরানো যায়নি: ' + error.message, false);
     show('লোগো সরানো হয়েছে।'); refresh();
   };
